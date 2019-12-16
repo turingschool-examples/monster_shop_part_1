@@ -39,4 +39,29 @@ RSpec.describe 'As a visitor' do
     expect(page).to have_content(flash)
     expect(page).to have_content("#{name}'s Profile")
   end
+
+  it "returns flash message, if all required fields are not completed" do
+
+    visit "/register"
+
+    name = 'Billy Bobby'
+    address = '123 Maine Street'
+    city = 'Denver'
+    state = 'CO'
+    zip = '80211'
+    email = 'billyboy@gmail.com'
+    password = 'secret'
+
+    fill_in :name, with: name
+    fill_in :city, with: city
+    fill_in :state, with: state
+    fill_in :zip_code, with: zip
+    fill_in :email, with: email
+    fill_in :password, with: password
+    fill_in :password_confirmation, with: password
+
+    click_button "Create User"
+    expect(page).to have_button("Create User")
+    expect(page).to have_content("Address can't be blank")
+  end
 end
