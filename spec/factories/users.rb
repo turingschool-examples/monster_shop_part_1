@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user do
+  factory :random_user, class: User do
     name { "MyString" }
     address { "MyString" }
     city { "MyString" }
