@@ -1,18 +1,20 @@
-<%= form_tag "/register", method: :post do %>
-  <%= label_tag :Name %>
-  <%= text_field_tag :name %>
-  <%= label_tag :Street_Address %>
-  <%= text_field_tag :street_address %>
-  <%= label_tag :City %>
-  <%= text_field_tag :city %>
-  <%= label_tag :State %>
-  <%= text_field_tag :state %>
-  <%= label_tag :Zip %>
-  <%= number_field_tag :zip %>
-	<%= label_tag :Email %>
-	<%= text_field_tag :email %>
-	<%= label_tag :Password %>
-	<%= password_field_tag :password %>
-
-  <%= submit_tag 'Submit' %>
-<% end %>
+<section>
+  <%= form_tag "/register", class: "user-register-form" do %>
+    <%= label_tag :Name %>
+    <%= text_field_tag :name %>
+    <%= label_tag :Street_Address %>
+    <%= text_field_tag :street_address %>
+    <%= label_tag :City %>
+    <%= text_field_tag :city %>
+    <%= label_tag :State %>
+    <%= text_field_tag :state %>
+    <%= label_tag :Zip %>
+    <%= number_field_tag :zip %>
+  	<%= label_tag :Email %>
+  	<%= text_field_tag :email %>
+  	<%= label_tag :Password %>
+  	<%= password_field_tag :password %>
+  
+    <%= submit_tag 'Register', class: "btn-1" %>
+  <% end %>
+</section>
