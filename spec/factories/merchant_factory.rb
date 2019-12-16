@@ -1,4 +1,5 @@
-require 'rails_helper'
+
+#require 'rails_helper'
 
 FactoryBot.define do
   factory :random_merchant, class: Merchant do
