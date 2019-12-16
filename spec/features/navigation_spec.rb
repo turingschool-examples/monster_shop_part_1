@@ -31,7 +31,19 @@ RSpec.describe 'Site Navigation' do
       within 'nav' do
         expect(page).to have_content("Cart: 0")
       end
+		end
 
-    end
+		it "I can see the registration link in the nav bar" do
+
+			visit '/merchants'
+
+			within 'nav' do
+				expect(page).to have_content("Register")
+			end
+
+			click_on 'Register'
+
+			expect(current_path).to eq("/register")
+		end
   end
 end
