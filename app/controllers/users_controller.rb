@@ -1,16 +1,23 @@
 class UsersController < ApplicationController
 
   def index
-		@users = User.all 
+		@users = User.all
   end
 
-  def new
+	def profile
+		@user = User.find(params[:id])
+	end
+
+  def register
 	end
 
 	def create
-		User.create(user_params)
-		redirect_to	'/profile'
+		user = User.create(user_params)
+		user.save
+		
+		redirect_to	"/users"
 	end
+
 
 	private
 		def user_params
