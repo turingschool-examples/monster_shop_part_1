@@ -37,5 +37,6 @@ RSpec.describe 'As a visitor' do
 
     expect(current_path).to eq('/profile')
     expect(page).to have_content(flash)
+    expect(page).to have_content("#{name}'s Profile")
   end
 end
