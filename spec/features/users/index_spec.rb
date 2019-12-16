@@ -24,5 +24,6 @@ RSpec.describe 'index /profile', type: :feature do
 			expect(page).to have_content(@alex.state)
 			expect(page).to have_content(@alex.zip)
 			expect(page).to have_content(@alex.email)
+		end
 	end
 end
