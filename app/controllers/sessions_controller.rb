@@ -5,10 +5,12 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    login(user)
-    
-    session[:user_id] = user.id
-    flash[:success] = "Welcome, #{user.name}, you are logged in!"
+    if user
+      login(user)
+    else
+      flash[:error] = 'Invalid email or password'
+      render :new
+    end
   end
 
   private
@@ -21,6 +23,8 @@ class SessionsController < ApplicationController
     elsif user.admin?
       redirect_to '/admin/dashboard'
     end
+    session[:user_id] = user.id
+    flash[:success] = "Welcome, #{user.name}, you are logged in!"
   end
 
 end
