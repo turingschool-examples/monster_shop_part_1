@@ -62,6 +62,27 @@ RSpec.describe "as a visitor" do
 
         expect(page).to have_content('Please complete all required fields')
       end
+
+      it 'fails to register user with non-unique email' do
+        user = create :random_user
+
+        visit '/register'
+
+        fill_in :name, with: 'kjhkjhlhkljh'
+        fill_in :address, with: '100 million drive'
+        fill_in :city, with: 'denver'
+        fill_in :state, with: 'co'
+        fill_in :zip, with: 80023
+        fill_in :email, with: user.email
+        fill_in :password, with: "password"
+        fill_in :confirm_password, with: "password"
+
+        click_button "Create New User"
+
+        expect(current_path).to eq('/register')
+
+        expect(User.last.name).to_not eq('kjhkjhlhkljh')
+      end
     end
   end
 end
