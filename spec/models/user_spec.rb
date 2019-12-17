@@ -11,4 +11,36 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of :email }
     it { should validate_presence_of :password }
   end
+
+  describe 'roles' do
+    it "can be created as a default user" do
+      user = User.create!(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: 'dementors',
+                          password_confirmation: 'dementors',
+                          role: 0)
+
+      expect(user.role).to eq('default')
+      expect(user.default?).to be_truthy
+    end
+
+    it "can be created as a merchant user" do
+      user = User.create!(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: 'dementors',
+                          password_confirmation: 'dementors',
+                          role: 2)
+
+      expect(user.role).to eq('merchant')
+      expect(user.merchant?).to be_truthy
+    end
+  end
 end
