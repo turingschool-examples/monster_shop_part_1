@@ -3,17 +3,11 @@ require "rails_helper"
 describe 'new user' do
 	it 'I should be able to register as a new user' do
 
-		visit '/merchants'
+		visit '/'
 
-		click_on 'Register'
+		click_on 'Register as a User'
 
-		expect(current_path).to eq("/register")
-		expect(page).to have_content("Name")
-		expect(page).to have_content("City")
-		expect(page).to have_content("State")
-		expect(page).to have_content("Zip")
-		expect(page).to have_content("Email")
-		expect(page).to have_content("Password")
+		expect(current_path).to eq("/users/register")
 
 		name = "Ryan Allen"
 		street_address = "45433 fake st."
@@ -31,11 +25,13 @@ describe 'new user' do
 		fill_in :email, with: email
 		fill_in :password, with: password
 
-		click_on 'Register User'
+		click_on 'Create User'
 
-		new_user = User.last
-
-		expect(current_path).to eq("/users")
-		# expect(page).to have_content(name)
+		expect(page).to have_content("Welcome, #{name}")
+		expect(page).to have_content(street_address)
+		expect(page).to have_content(city)
+		expect(page).to have_content(state)
+		expect(page).to have_content(zip)
+		expect(page).to have_content(email)
 	end
 end

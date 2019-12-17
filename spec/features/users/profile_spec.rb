@@ -1,21 +1,20 @@
-require 'rails_helper'
+RSpec.describe "User registration form" do
 
-RSpec.describe 'user profile page', type: :feature do
-	describe 'As a user' do
-		before :each do
-			@sebastian = User.create!(name: "Sebastian", street_address: "8901 Fake st.", city:"Denver", state: "Colorado", zip: 80235, email: "sebastian@fake.com", password_digest: "Originalfaker")
-		end
+  it "keeps a user logged in after registering" do
+    visit "/"
 
-		it "I can see the individual user information." do
+    click_on "Register as a User"
 
-			visit "/users/#{@sebastian.id}"
+    name = "funbucket13"
+    password = "test"
 
-			expect(page).to have_content(@sebastian.name)
-			expect(page).to have_content(@sebastian.street_address)
-			expect(page).to have_content(@sebastian.city)
-			expect(page).to have_content(@sebastian.state)
-			expect(page).to have_content(@sebastian.zip)
-			expect(page).to have_content(@sebastian.email)
-		end
-	end
+    fill_in :name, with: name
+    fill_in :password, with: password
+
+    click_on "Create User"
+
+    visit '/profile'
+
+    expect(page).to have_content("Hello, #{name}!")
+  end
 end

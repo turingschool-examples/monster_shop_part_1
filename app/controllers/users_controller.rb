@@ -5,17 +5,17 @@ class UsersController < ApplicationController
   end
 
 	def profile
-		@user = User.find(params[:id])
+		@user = User.find(session[:user_id])
 	end
 
   def register
 	end
 
 	def create
-		user = User.create(user_params)
-		user.save
-		
-		redirect_to	"/users"
+		new_user = User.create(user_params)
+		flash[:success] = "Welcome, #{new_user.name}"
+		session[:user_id] = new_user.id
+		redirect_to "/"
 	end
 
 
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 				:state,
 				:zip,
 				:email,
-				:password_digest
+				:password
 			)
 		end
 end
