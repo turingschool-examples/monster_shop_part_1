@@ -32,6 +32,43 @@ RSpec.describe "as a user" do
     end
   end
 
+  it "cannot login with invalid credentials" do
+    user = User.create!(name: "Jordan",
+                        address: "394 High St",
+                        city: "Denver",
+                        state: "CO",
+                        zip_code: "80602",
+                        email: "hotones@hotmail.com",
+                        password: "password",
+                        password_confirmation: "password",
+                        role: 0)
+
+    visit '/login'
+
+    fill_in :email, with: 'prisonmike@gmail.com'
+    fill_in :password, with: user.password
+
+    click_button 'Login'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+
+    fill_in :email, with: user.email
+    fill_in :password, with: 'jumbalaya'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+
+    fill_in :email, with: 'prisonmike@gmail.com'
+    fill_in :password, with: 'jumbalaya'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+  end
+
   it "cannot login to admin or merchant dashboard if user is default user" do
     user = User.create!(name: "Jordan",
                         address: "394 High St",
@@ -53,22 +90,7 @@ RSpec.describe "as a user" do
 
   end
 
-  it "does not allow a default user to see merchant dashboard" do
-    user = User.create(name: "Jordan",
-      address: "394 High St",
-      city: "Denver",
-      state: "CO",
-      zip_code: "80602",
-      email: "hotones@hotmail.com",
-      password: "password",
-      password_confirmation: "password")
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-
-      visit "/merchant/dashboard"
-
-      expect(page).to have_content("The page you were looking for doesn't exist.")
-    end
 
   describe 'as a merchant' do
     it "redirects me to merchant dashboard after login" do
