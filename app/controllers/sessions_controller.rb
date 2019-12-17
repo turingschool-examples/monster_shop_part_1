@@ -5,10 +5,15 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-
-    if user.authenticate(params[:password])
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to '/profile'
+       if user.admin?
+         redirect_to '/admin/dashboard'
+       elsif user.merchant?
+         redirect_to '/merchant/dashboard'
+       else
+         redirect_to '/profile'
+      end
       flash[:happy] = "Welcome, #{user.name}!"
     else
       flash[:sad] = 'Credentials were incorrect'
@@ -16,5 +21,5 @@ class SessionsController < ApplicationController
     end
   end
 
-  
+
 end

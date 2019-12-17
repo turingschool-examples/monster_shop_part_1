@@ -31,7 +31,16 @@ RSpec.describe 'Site Navigation' do
       within 'nav' do
         expect(page).to have_content("Cart: 0")
       end
+    end
 
+    it 'can go to login form' do
+      visit '/'
+
+      within 'nav' do
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq('/login')
     end
   end
 end

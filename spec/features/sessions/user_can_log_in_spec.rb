@@ -12,6 +12,28 @@ RSpec.describe 'when a user logs in', type: :feature do
       zip: '80123',
       password: 'pass123'
     )
+
+    @admin_user = User.create(
+      name: 'Matt',
+      email: 'werwer@sefsdfsdfsdfsdfsdf',
+      address: '123 poop ln',
+      city: 'Denver',
+      state: 'CO',
+      zip: '80000',
+      password: 'pass123',
+      role: 1
+    )
+
+    @merchant_user = User.create(
+      name: 'Matt',
+      email: 'wersdfsdfsdfawdqwevdhtjtyhgrfgeer@sefsdfsdfsdfsdfsdf',
+      address: '123 poop ln',
+      city: 'Denver',
+      state: 'CO',
+      zip: '80000',
+      password: 'pass123',
+      role: 2
+    )
   end
 
   it 'will log in user and create new session' do
@@ -34,6 +56,28 @@ RSpec.describe 'when a user logs in', type: :feature do
     click_button 'Log In'
     expect(current_path).to eq('/login')
     expect(page).to have_content('Credentials were incorrect')
+  end
+
+  it 'will log in merchant user' do
+    visit '/login'
+
+    fill_in :email, with: @merchant_user.email
+    fill_in :password, with: 'pass123'
+
+    click_button 'Log In'
+
+    expect(current_path).to eq('/merchant/dashboard')
+  end
+
+  it 'will log in admin user' do
+    visit '/login'
+
+    fill_in :email, with: @admin_user.email
+    fill_in :password, with: 'pass123'
+
+    click_button 'Log In'
+
+    expect(current_path).to eq('/admin/dashboard')
   end
 
 end
