@@ -19,7 +19,7 @@ RSpec.describe "As an admin" do
 
     fill_in :email, with: user.email
     fill_in :password, with: user.password
-
+    
     click_button "Login"
 
     expect(current_path).to eq("/admin/dashboard")
