@@ -10,7 +10,7 @@ describe User, type: :model do
 		it {should validate_presence_of :zip}
 		it {should validate_presence_of :email}
 		it {should validate_presence_of :password}
-		
+
 		it {should validate_uniqueness_of :email}
 		it {should validate_uniqueness_of :name}
 	end
@@ -25,6 +25,7 @@ describe User, type: :model do
 				zip: "80210",
 				email: "fake@gmail.com",
 				password: "wordpass",
+				role: 1
 			)
 
 			expect(user.role).to eq("admin")
@@ -40,11 +41,11 @@ describe User, type: :model do
 				zip: "80210",
 				email: "fake@gmail.com",
 				password: "wordpass",
+				role: 0
 			)
 
 			expect(user.role).to eq("default")
 			expect(user.default?).to be_truthy
-
 		end
 
 		it "can be created as a merchant user" do
@@ -56,6 +57,7 @@ describe User, type: :model do
 				zip: "80210",
 				email: "fake@gmail.com",
 				password: "wordpass",
+				role: 2
 			)
 
 			expect(user.role).to eq("merchant")
