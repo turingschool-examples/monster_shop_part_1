@@ -12,12 +12,14 @@ RSpec.describe "as a visitor" do
     -password
     -confirmation for password" do 
 
+      visit "/merchants"
+
       click_link "Register"
 
       expect(current_path).to eq("/register")
 
       fill_in :name, with: 'Bob'
-      fill_in :street_address, with: '100 million drive'
+      fill_in :address, with: '100 million drive'
       fill_in :city, with: 'denver'
       fill_in :state, with: 'co'
       fill_in :zip, with: 80023
@@ -25,11 +27,18 @@ RSpec.describe "as a visitor" do
       fill_in :password, with: "password"
       fill_in :confirm_password, with: "password"
 
-      click_button "Submit"
+      click_button "Create New User"
 
       user = User.last
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Welcome #{user.name}")
+
+      expect(page).to have_content("#{user.name}")
+      expect(page).to have_content("#{user.address}")
+      expect(page).to have_content("#{user.city}")
+      expect(page).to have_content("#{user.state}")
+      expect(page).to have_content("#{user.zip}")
+      expect(page).to have_content("#{user.email}")
     end
   end
 end
