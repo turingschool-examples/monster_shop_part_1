@@ -39,6 +39,21 @@ RSpec.describe 'user login' do
       expect(current_path).to eq('/login')
       expect(page).to have_content("Login credentials are incorrect. Please try again.")
     end
+
+    it "after I have logged in, when I visit login page I am redirected to my profile page" do
+      user = User.create!(name: "Polly Esther", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemail@gmail.com", password: "polyester", password_confirmation: "polyester")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit '/'
+
+      within '.topnav' do
+        click_link "Log In"
+      end
+
+      expect(current_path).to eq('/profile')
+      expect(page).to have_content("You are already logged in.")
+    end
   end
 
   # describe 'as a merchant user' do

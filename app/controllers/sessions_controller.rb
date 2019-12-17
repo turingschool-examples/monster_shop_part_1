@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
   def new
+    if current_user != nil
+      flash[:notice] = "You are already logged in."
+      redirect_to '/profile'
+    end
   end
 
   def create
@@ -11,5 +15,12 @@ class SessionsController < ApplicationController
       flash[:error] = "Login credentials are incorrect. Please try again."
       render :new
     end
+  end
+
+  def destroy
+    session.delete(:cart)
+    session.delete(:user_id)
+    redirect_to "/"
+    flash[:notice] = "You have been logged out."
   end
 end
