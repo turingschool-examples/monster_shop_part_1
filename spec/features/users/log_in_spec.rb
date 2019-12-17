@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Logging In" do
   it "can log in with valid credentials" do
-    user = User.create(username: "funbucket13", password: "test")
+    user = User.create(name: "funbucket13", password: "test")
 
     visit "/"
 
@@ -10,7 +10,7 @@ RSpec.describe "Logging In" do
 
     expect(current_path).to eq('/login')
 
-    fill_in :name, with: user.name
+    fill_in :name, with: "funbucket13"
     fill_in :password, with: user.password
 
     click_on "Log In"

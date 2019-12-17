@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'index /profile', type: :feature do
 	describe 'As a user' do
 		before :each do
-			@kevin = User.create!(name: "Kevin", street_address: "1234 Fake st.", city: "Denver", state: "Colorado", zip: 80230, email: "kevin@fakemail.com", password_digest: "fakemcfackerson")
-			@alex = User.create!(name: "Alex", street_address: "4567 Fake st.", city: "Denver", state: "Colorado", zip: 80221, email: "alex@fakemail.com", password_digest: "fakemcfackersonthesecond")
+			@kevin = User.create!(name: "Kevin", street_address: "1234 Fake st.", city: "Denver", state: "Colorado", zip: 80230, email: "kevin@fakemail.com", password: "fakemcfackerson")
+			@alex = User.create!(name: "Alex", street_address: "4567 Fake st.", city: "Denver", state: "Colorado", zip: 80221, email: "alex@fakemail.com", password: "fakemcfackersonthesecond")
 		end
 
 		it 'I can see the users name, address, city, state, email' do

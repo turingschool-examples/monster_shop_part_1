@@ -43,7 +43,7 @@ RSpec.describe 'Site Navigation' do
 
 			click_on 'Register'
 
-			expect(current_path).to eq("/register")
+			expect(current_path).to eq("/users/new")
 		end
   end
 end

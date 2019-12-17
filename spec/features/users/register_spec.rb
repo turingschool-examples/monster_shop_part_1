@@ -7,7 +7,7 @@ describe 'new user' do
 
 		click_on 'Register as a User'
 
-		expect(current_path).to eq("/users/register")
+		expect(current_path).to eq("/users/new")
 
 		name = "Ryan Allen"
 		street_address = "45433 fake st."

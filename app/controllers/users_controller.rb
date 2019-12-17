@@ -4,11 +4,11 @@ class UsersController < ApplicationController
 		@users = User.all
   end
 
-	def profile
-		@user = User.find(session[:user_id])
+	def show
+		@user = User.find(session[:id])
 	end
 
-  def register
+  def new
 	end
 
 	def create
