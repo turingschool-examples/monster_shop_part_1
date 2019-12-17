@@ -45,11 +45,7 @@ RSpec.describe 'user login' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-      visit '/'
-
-      within '.topnav' do
-        click_link "Log In"
-      end
+      visit '/login'
 
       expect(current_path).to eq('/profile')
       expect(page).to have_content("You are already logged in.")
