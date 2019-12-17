@@ -1,0 +1,12 @@
+<section>
+  <h2>User Profiles</h2>
+
+	<% @users.each do |user| %>
+		<%= user.name %>
+		<%= user.street_address %>
+		<%= user.city %>
+		<%= user.state %>
+		<%= user.zip %>
+		<%= user.email %>
+	<% end %>
+</section>
