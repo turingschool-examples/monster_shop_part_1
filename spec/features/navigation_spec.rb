@@ -63,4 +63,20 @@ RSpec.describe 'Site Navigation' do
       expect(current_path).to eq("/")
     end
   end
+
+  describe "as a merchant" do
+    it "I see the same links as a regular user plus a link to my merchant dashboard" do
+      merchant = User.create!(name: "Ima Merchant", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemail@gmail.com", password: "polyester", password_confirmation: "polyester", role: 2)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit '/'
+
+      within 'nav' do
+        click_link "Dashboard"
+      end
+
+      expect(current_path).to eq("/merchant")
+    end
+  end
 end
