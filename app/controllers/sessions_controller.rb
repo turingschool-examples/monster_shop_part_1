@@ -1,6 +1,12 @@
 class SessionsController < ApplicationController
 
   def new
+    if current_user
+      login(current_user)
+      flash[:success] = "#{current_user.name}, you are already logged in!"
+    # else
+    #   render :new
+    end
   end
 
   def create
@@ -11,6 +17,7 @@ class SessionsController < ApplicationController
       flash[:error] = 'Invalid email or password'
       render :new
     end
+
   end
 
   private
