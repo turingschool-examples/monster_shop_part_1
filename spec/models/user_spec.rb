@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User, type: :model do
+RSpec.describe User, type: :model do
 	describe 'validations' do
 
 		it {should validate_presence_of :name}
@@ -17,16 +17,16 @@ describe User, type: :model do
 
 	describe "roles" do
 		it "can be created as an admin" do
-			user = User.create(
-				name: "Joey",
-				street_address: "123 Five Street",
-				city: "Denver",
-				state: "CO",
-				zip: "80210",
-				email: "fake@gmail.com",
-				password: "wordpass",
-				role: 1
-			)
+				user = User.create(
+					name: "Chandler",
+					street_address: "123 Five Street",
+					city: "Denver",
+					state: "CO",
+					zip: "80210",
+					email: "fake@gmail.com",
+					password: "wordpass",
+					role: 1
+				)
 
 			expect(user.role).to eq("admin")
 			expect(user.admin?).to be_truthy
