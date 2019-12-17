@@ -28,6 +28,21 @@ RSpec.describe User, type: :model do
       expect(user.default?).to be_truthy
     end
 
+    it "can be created as admin" do
+      user = User.create!(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: 'dementors',
+                          password_confirmation: 'dementors',
+                          role: 1)
+
+      expect(user.role).to eq('admin')
+      expect(user.admin?).to be_truthy
+    end
+
     it "can be created as a merchant user" do
       user = User.create!(name: "Jordan",
                           address: "394 High St",
@@ -44,3 +59,4 @@ RSpec.describe User, type: :model do
     end
   end
 end
+
