@@ -1,26 +1,30 @@
 class UsersController < ApplicationController
   def new
-  end   
+  end
 
   def create
-    new_user = User.create!(user_params)
+    new_user = User.new(user_params)
     if user_params[:password] != params[:confirm_password]
       flash.now[:warning]= "Please make sure your passwords match"
       render :new
-    else 
+    end
+    if new_user.save
       flash[:notice]= "Welcome #{new_user.name}"
       session[:user_id] = new_user.id
       redirect_to '/profile'
-    end 
+    else
+      flash[:notice] = 'Please complete all required fields'
+      redirect_back fallback_location: "/register"
+    end
   end
 
-  def show 
+  def show
     @user = User.find(session[:user_id])
-  end 
+  end
 
-  private 
+  private
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
-  end 
+  end
 end

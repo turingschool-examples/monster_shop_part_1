@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "as a visitor" do 
+RSpec.describe "as a visitor" do
   describe "when I click on the register link in the nav bar" do
     it "takes me to user registration page where I see a form with do
     -name
@@ -8,9 +8,9 @@ RSpec.describe "as a visitor" do
     -city
     -state
     -zip
-    -email 
+    -email
     -password
-    -confirmation for password" do 
+    -confirmation for password" do
 
       visit "/merchants"
 
@@ -40,6 +40,28 @@ RSpec.describe "as a visitor" do
       expect(page).to have_content("#{user.zip}")
       expect(page).to have_content("#{user.email}")
     end
+
+    describe 'User Registration Missing Details' do
+      it 'can display a flash message if fields are missing' do
+        visit "/merchants"
+
+        click_link "Register"
+
+        fill_in :name, with: 'Bob'
+        fill_in :address, with: ''
+        fill_in :city, with: 'denver'
+        fill_in :state, with: 'co'
+        fill_in :zip, with: 80023
+        fill_in :email, with: "bob@bob.com"
+        fill_in :password, with: "password"
+        fill_in :confirm_password, with: "password"
+
+        click_button "Create New User"
+
+        expect(current_path).to eq("/register")
+
+        expect(page).to have_content('Please complete all required fields')
+      end
+    end
   end
 end
-
