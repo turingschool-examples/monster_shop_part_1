@@ -30,6 +30,23 @@ RSpec.describe "as a user" do
       expect(page).not_to have_link("Register")
       expect(page).to have_link("Log Out")
     end
+  end
 
+  it "cannot login to admin dashboard if user is default user" do
+    user = User.create!(name: "Jordan",
+                        address: "394 High St",
+                        city: "Denver",
+                        state: "CO",
+                        zip_code: "80602",
+                        email: "hotones@hotmail.com",
+                        password: "password",
+                        password_confirmation: "password",
+                        role: 0)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit "/admin/dashboard"
+
+    expect(page).to have_content("The page you were looking for doesn't exist.")
   end
 end
