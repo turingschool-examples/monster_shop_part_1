@@ -10,7 +10,56 @@ describe User, type: :model do
 		it {should validate_presence_of :zip}
 		it {should validate_presence_of :email}
 		it {should validate_presence_of :password}
+		
 		it {should validate_uniqueness_of :email}
 		it {should validate_uniqueness_of :name}
+	end
+
+	describe "roles" do
+		it "can be created as an admin" do
+			user = User.create(
+				name: "Joey",
+				street_address: "123 Five Street",
+				city: "Denver",
+				state: "CO",
+				zip: "80210",
+				email: "fake@gmail.com",
+				password: "wordpass",
+			)
+
+			expect(user.role).to eq("admin")
+			expect(user.admin?).to be_truthy
+		end
+
+		it "can be created as a default user" do
+			user = User.create(
+				name: "Chandler",
+				street_address: "123 Five Street",
+				city: "Denver",
+				state: "CO",
+				zip: "80210",
+				email: "fake@gmail.com",
+				password: "wordpass",
+			)
+
+			expect(user.role).to eq("default")
+			expect(user.default?).to be_truthy
+
+		end
+
+		it "can be created as a merchant user" do
+			user = User.create(
+				name: "Ross",
+				street_address: "123 Five Street",
+				city: "Denver",
+				state: "CO",
+				zip: "80210",
+				email: "fake@gmail.com",
+				password: "wordpass",
+			)
+
+			expect(user.role).to eq("merchant")
+			expect(user.merchant?).to be_truthy
+		end
 	end
 end
