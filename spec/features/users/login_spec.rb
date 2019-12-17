@@ -32,7 +32,7 @@ RSpec.describe "as a user" do
     end
   end
 
-  it "cannot login to admin dashboard if user is default user" do
+  it "cannot login to admin or merchant dashboard if user is default user" do
     user = User.create!(name: "Jordan",
                         address: "394 High St",
                         city: "Denver",
@@ -46,7 +46,10 @@ RSpec.describe "as a user" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
     visit "/admin/dashboard"
-
     expect(page).to have_content("The page you were looking for doesn't exist.")
+
+    visit "/merchant/dashboard"
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+
   end
 end
