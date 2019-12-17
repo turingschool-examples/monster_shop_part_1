@@ -40,8 +40,14 @@ Rails.application.routes.draw do
 	get "/profile", to: 'users#show'
 	post "/users", to: 'users#create'
 
-
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
 
+	namespace :admin do
+		get "/profile", to: 'users#show'
+	end
+
+	namespace :merchants do
+		get "/profile", to: 'users#show'
+	end
 end
