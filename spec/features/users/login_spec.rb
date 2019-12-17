@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "as a user" do
   it "can login with valid credentials" do
-    user = User.create!(name: "Jordan",
+    user = User.create(name: "Jordan",
                         address: "394 High St",
                         city: "Denver",
                         state: "CO",
@@ -31,5 +31,46 @@ RSpec.describe "as a user" do
       expect(page).to have_link("Log Out")
     end
 
+  end
+
+  it "does not allow a default user to see merchant dashboard" do
+    user = User.create(name: "Jordan",
+      address: "394 High St",
+      city: "Denver",
+      state: "CO",
+      zip_code: "80602",
+      email: "hotones@hotmail.com",
+      password: "password",
+      password_confirmation: "password")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit "/merchant/dashboard"
+
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+
+  describe 'as a merchant' do
+    it "redirects me to merchant dashboard after login" do
+      merchant = User.create(name: "Jordan",
+                             address: "394 High St",
+                             city: "Denver",
+                             state: "CO",
+                             zip_code: "80602",
+                             email: "hotones@hotmail.com",
+                             password: "password",
+                             password_confirmation: "password",
+                             role: 2)
+
+      visit '/login'
+
+      fill_in :email, with: merchant.email
+      fill_in :password, with: merchant.password
+
+      click_button "Login"
+
+      expect(current_path).to eq('/merchant/dashboard')
+      expect(page).to have_content("Welcome, #{merchant.name}, you are logged in!")
+    end
   end
 end
