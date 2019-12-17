@@ -28,6 +28,7 @@ RSpec.describe 'user registration' do
       fill_in :zip, with: 80207
       fill_in :email, with: "liz_anya05@gmail.com"
       fill_in :password, with: "password123"
+      fill_in :password_confirmation, with: "password123"
       click_button "Register as a User"
 
       expect(current_path).to eq('/profile')
@@ -46,6 +47,7 @@ RSpec.describe 'user registration' do
       fill_in :zip, with: 80207
       fill_in :email, with: ""
       fill_in :password, with: "password123"
+      fill_in :password_confirmation, with: "password123"
       click_button "Register as a User"
 
       expect(current_path).to eq('/users')
@@ -53,7 +55,7 @@ RSpec.describe 'user registration' do
     end
 
     it "I cannot register without a unique email" do
-      user = User.create(name: "Polly Esther", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemail@gmail.com", password: "polyester")
+      user = User.create(name: "Polly Esther", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemail@gmail.com", password: "polyester", password_confirmation: "polyester")
 
       visit '/'
 
@@ -66,6 +68,7 @@ RSpec.describe 'user registration' do
       fill_in :zip, with: 80201
       fill_in :email, with: "veryoriginalemail@gmail.com"
       fill_in :password, with: "turing"
+      fill_in :password_confirmation, with: "turing"
       click_button "Register as a User"
 
       expect(current_path).to eq('/users')
