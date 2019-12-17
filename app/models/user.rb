@@ -4,5 +4,7 @@ class User < ApplicationRecord
   validates_presence_of :password_confirmation, require: true
   validates :email, uniqueness: true, presence: true
 
+  enum role: %w(default admin merchant)
+
   has_secure_password
 end
