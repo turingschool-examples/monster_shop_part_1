@@ -52,45 +52,45 @@ RSpec.describe 'user login' do
     end
   end
 
-  # describe 'as a merchant user' do
-  #   it "when I login, I am redirected to my merchant dashboard page and see flash message that I'm logged in" do
-  #     merchant = User.create!(name: "Robyn Banks", address: "1832 West Street", city: "Denver", state: "CO", zip: 37293, email: "robynbanks@gmail.com", password: "apples", password_confirmation: "apples", role: 2)
-  #
-  #     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
-  #
-  #     within '.topnav' do
-  #       click_link "Log In"
-  #     end
-  #
-  #     expect(current_path).to eq('/login')
-  #
-  #     fill_in :email, with: "robynbanks@gmail.com"
-  #     fill_in :password, with: "apples"
-  #     click_button "Log In"
-  #
-  #     expect(current_path).to eq("/merchant/#{merchant.id}/dashboard")
-  #     expect(page).to have_content("Hello, #{merchant.name}. You are now logged in.")
-  #   end
-  # end
-  #
-  # describe 'as an admin user' do
-  #   it "when I login, I am redirected to my admin dashboard page and see flash message that I'm logged in" do
-  #     admin = User.create!(name: "Rick O'Shea", address: "1738 West Street", city: "Denver", state: "CO", zip: 92739, email: "rickoshea@gmail.com", password: "bananas", password_confirmation: "bananas", role: 1)
-  #
-  #     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-  #
-  #     within '.topnav' do
-  #       click_link "Log In"
-  #     end
-  #
-  #     expect(current_path).to eq('/login')
-  #
-  #     fill_in :email, with: "rickoshea@gmail.com"
-  #     fill_in :password, with: "bananas"
-  #     click_button "Log In"
-  #
-  #     expect(current_path).to eq("/admin/#{admin.id}/dashboard")
-  #     expect(page).to have_content("Hello, #{admin.name}. You are now logged in.")
-  #   end
-  # end
+  describe 'as a merchant admin user' do
+    it "when I login, I am redirected to my merchant dashboard page and see flash message that I'm logged in" do
+      merchant = User.create!(name: "Robyn Banks", address: "1832 West Street", city: "Denver", state: "CO", zip: 37293, email: "robynbanks@gmail.com", password: "apples", password_confirmation: "apples", role: 2)
+
+      visit '/'
+
+      within '.topnav' do
+        click_link "Log In"
+      end
+
+      expect(current_path).to eq('/login')
+
+      fill_in :email, with: "robynbanks@gmail.com"
+      fill_in :password, with: "apples"
+      click_button "Log In"
+
+      expect(current_path).to eq("/merchant")
+      expect(page).to have_content("Hello, #{merchant.name}. You are now logged in.")
+    end
+  end
+
+  describe 'as an admin user' do
+    it "when I login, I am redirected to my admin dashboard page and see flash message that I'm logged in" do
+      admin = User.create!(name: "Rick O'Shea", address: "1738 West Street", city: "Denver", state: "CO", zip: 92739, email: "rickoshea@gmail.com", password: "bananas", password_confirmation: "bananas", role: 3)
+
+      visit '/'
+
+      within '.topnav' do
+        click_link "Log In"
+      end
+
+      expect(current_path).to eq('/login')
+
+      fill_in :email, with: "rickoshea@gmail.com"
+      fill_in :password, with: "bananas"
+      click_button "Log In"
+
+      expect(current_path).to eq("/admin")
+      expect(page).to have_content("Hello, #{admin.name}. You are now logged in.")
+    end
+  end
 end
