@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def new
-    
+
   end
 
   def create
@@ -15,8 +15,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(session[:user_id])
+  def edit_pw
+    @user = User.find(current_user) if current_user
+    render '/errors/404' unless current_user
+  end
+
+  def update
+    user = User.find(current_user)
+    user.update(user_params)
   end
 
   private
