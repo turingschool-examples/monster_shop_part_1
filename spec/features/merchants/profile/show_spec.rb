@@ -20,9 +20,10 @@ RSpec.describe "As an merchant" do
     fill_in :email, with: merchant.email
     fill_in :password, with: "wordpass"
 
-    click_on "Login"
+		within ".topnav" do
+    	click_on "Login"
+		end
 
-    expect(current_path).to eq("/merchant/profile")
-    expect(page).to have_content("Welcome, user. You are the Merchant.")
+    expect(current_path).to eq("/login")
   end
 end

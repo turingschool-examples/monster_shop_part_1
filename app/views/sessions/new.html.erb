@@ -1,3 +1,4 @@
+<section class = "log-in-form">
 <%= form_tag '/login', method: :post do %>
   <%= label_tag :email %>
   <%= text_field_tag :email %>
@@ -5,3 +6,4 @@
   <%= password_field_tag :password %>
   <%= submit_tag "Login" %>
 <% end %>
+</section>

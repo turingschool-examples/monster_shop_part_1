@@ -64,10 +64,10 @@ RSpec.describe 'Site Navigation' do
 			visit '/merchants'
 
 			within 'nav' do
-				expect(page).to have_content("User Login")
+				expect(page).to have_content("Login")
 			end
 
-			click_on 'User Login'
+			click_on 'Login'
 
 			expect(current_path).to eq("/login")
 		end
