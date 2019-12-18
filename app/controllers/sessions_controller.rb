@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-
+    redirect_to '/profile' if session[:user_id]
   end
 
   def create
