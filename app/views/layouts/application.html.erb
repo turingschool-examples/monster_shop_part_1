@@ -19,8 +19,12 @@
           <a class="nav-item nav-link" href="/merchants">All Merchants</a>
           <a class="nav-item nav-link" href="/items">All Items</a>
           <a class="nav-item nav-link" href="/cart">Cart: <%= cart.total_items %></a>
-          <a class="nav-item nav-link" href="/register">Register</a>
-          <a class="nav-item nav-link" href="/login">Login</a>
+        <% if session[:user_id]
+
+        <% else %>
+            <a class="nav-item nav-link" href="/register">Register</a>
+            <a class="nav-item nav-link" href="/login">Login</a>
+        <% end %>
         </div>
       </div>
     </nav>
