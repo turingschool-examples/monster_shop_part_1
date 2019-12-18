@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 		redirect_to '/users/profile'
 		flash[:success] = "Welcome, #{user.name}!"
 	else
-		redirect_to "/banana"
+		redirect_to "/"
 	end
 	end
 end
