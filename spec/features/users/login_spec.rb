@@ -32,6 +32,43 @@ RSpec.describe "as a user" do
     end
   end
 
+  it "cannot login with invalid credentials" do
+    user = User.create!(name: "Jordan",
+                        address: "394 High St",
+                        city: "Denver",
+                        state: "CO",
+                        zip_code: "80602",
+                        email: "hotones@hotmail.com",
+                        password: "password",
+                        password_confirmation: "password",
+                        role: 0)
+
+    visit '/login'
+
+    fill_in :email, with: 'prisonmike@gmail.com'
+    fill_in :password, with: user.password
+
+    click_button 'Login'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+
+    fill_in :email, with: user.email
+    fill_in :password, with: 'jumbalaya'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+
+    fill_in :email, with: 'prisonmike@gmail.com'
+    fill_in :password, with: 'jumbalaya'
+
+    expect(current_path).to eq('/login')
+    expect(page).not_to have_link('Logout')
+    expect(page).to have_content('Invalid email or password')
+  end
+
   it "cannot login to admin or merchant dashboard if user is default user" do
     user = User.create!(name: "Jordan",
                         address: "394 High St",
@@ -53,22 +90,7 @@ RSpec.describe "as a user" do
 
   end
 
-  it "does not allow a default user to see merchant dashboard" do
-    user = User.create(name: "Jordan",
-      address: "394 High St",
-      city: "Denver",
-      state: "CO",
-      zip_code: "80602",
-      email: "hotones@hotmail.com",
-      password: "password",
-      password_confirmation: "password")
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-
-      visit "/merchant/dashboard"
-
-      expect(page).to have_content("The page you were looking for doesn't exist.")
-    end
 
   describe 'as a merchant' do
     it "redirects me to merchant dashboard after login" do
@@ -106,7 +128,7 @@ RSpec.describe "as a user" do
                           password_confirmation: "password",
                           role: 0)
 
-allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
 
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -118,6 +140,79 @@ allow_any_instance_of(ApplicationController).to receive(:current_user).and_retur
       expect(current_path).to eq("/")
       expect(page).to have_content("You have been logged out")
       expect(page).to have_content("Cart: 0")
+
+  describe 'as an admin/merchant/user when logged in' do
+    it 'redirects when they visit the login path for admin' do
+    admin = User.create(name: "Danny",
+                         address: "394 low St",
+                         city: "Auora",
+                         state: "CO",
+                         zip_code: "80221",
+                         email: "hottwos@hotmail.com",
+                         password: "password2",
+                         password_confirmation: "password2",
+                         role: 1)
+
+
+       visit '/login'
+
+       fill_in :email, with: admin.email
+       fill_in :password, with: admin.password
+
+       click_button "Login"
+
+       visit '/login'
+
+       expect(current_path).to eq('/admin/dashboard')
+       expect(page).to have_content("#{admin.name}, you are already logged in!")
+     end
+
+     it 'redirects when they visit the login path for merchant' do
+
+       merchant = User.create(name: "Jordan",
+                              address: "394 High St",
+                              city: "Denver",
+                              state: "CO",
+                              zip_code: "80602",
+                              email: "hotones@hotmail.com",
+                              password: "password",
+                              password_confirmation: "password",
+                              role: 2)
+
+        visit '/login'
+
+        fill_in :email, with: merchant.email
+        fill_in :password, with: merchant.password
+
+        click_button "Login"
+
+        visit '/login'
+        expect(current_path).to eq('/merchant/dashboard')
+        expect(page).to have_content("#{merchant.name}, you are already logged in!")
+      end
+
+
+     it 'redirects when they visit the login path for a user' do
+       user = User.create(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: "password",
+                          password_confirmation: "password",
+                          role: 0)
+
+        visit '/login'
+
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+
+        click_button "Login"
+
+        visit '/login'
+        expect(current_path).to eq('/profile')
+        expect(page).to have_content("#{user.name}, you are already logged in!")
     end
   end
 end
