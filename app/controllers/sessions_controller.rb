@@ -21,6 +21,13 @@ class SessionsController < ApplicationController
     flash[:happy] = 'Goodbye!'
   end
 
+  def show
+    render '/errors/404' unless current_user
+    @user = User.find(session[:user_id]) if current_user
+  end
+
+
+
   private
 
   def user_redirect(user)
