@@ -24,13 +24,11 @@ Rails.application.routes.draw do
 
   get '/register', to: 'users#new'
   post '/users', to: "users#create"
-  get '/profile', to: "users#show"
-  get '/users/password', to: 'users#edit_pw'
-  patch '/users', to: 'users#update'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  get '/profile', to: "sessions#show"
 
 
   namespace :admin do
@@ -40,5 +38,13 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'
+  end
+
+  unless Rails.application.config.consider_all_requests_local
+    get '*path', to: 'errors#error_404', via: :all
+  end
+
+  Rails.application.routes.draw do
+    match '*path' => 'errors#error_404', via: :all
   end
 end
