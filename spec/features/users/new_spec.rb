@@ -41,11 +41,9 @@ RSpec.describe 'As a visitor' do
   end
 
   it "returns flash message, if all required fields are not completed" do
-
     visit "/register"
 
     name = 'Billy Bobby'
-    address = '123 Maine Street'
     city = 'Denver'
     state = 'CO'
     zip = '80211'
@@ -66,7 +64,6 @@ RSpec.describe 'As a visitor' do
   end
 
   it "does not allow duplicate email" do
-
     user = create(:random_user)
 
     visit "/register"
