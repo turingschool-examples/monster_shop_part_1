@@ -1,4 +1,4 @@
-class Merchant::MerchantAdminsController < ApplicationController
+class Merchant::MerchantAdminsController < Merchant::BaseController
   def show
 
   end
