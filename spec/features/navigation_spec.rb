@@ -79,4 +79,26 @@ RSpec.describe 'Site Navigation' do
       expect(page).to have_content("Logged in as #{user.name}")
     end
   end
+  describe 'as a merchant' do
+    it 'shows same links as any registered user plus link to merchant dashboard' do
+      user = create(:random_user, role: 2)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit "/"
+
+      expect(page).to have_link("Profile")
+      expect(page).to have_link("Log Out")
+      expect(page).to have_link("Monster Shop")
+      expect(page).to have_link("All Items")
+      expect(page).to have_link("All Merchants")
+      expect(page).to have_link("Cart: 0")
+      expect(page).to have_content("Logged in as #{user.name}")
+
+      expect(page).not_to have_link("Login")
+      expect(page).not_to have_link("Register")
+
+      expect(page).to have_link("Merchant Dashboard")
+    end
+  end
 end
