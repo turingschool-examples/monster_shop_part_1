@@ -7,10 +7,4 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
-
-  def self.most_popular
-    ItemOrder.select(:sum).group(:item).sum(:quantity)
-    require "pry"; binding.pry
-    # select item_id, sum(quantity) FROM item_orders GROUP BY item_id ORDER BY sum desc;
-  end
 end
