@@ -9,6 +9,8 @@ class SessionsController < ApplicationController
   flash[:success] = "Welcome, #{user.name}!"
 		if user.admin?
 			redirect_to '/admin/profile'
+		elsif user.merchant?
+			redirect_to '/merchants/profile'
 		end
 	end
 end
