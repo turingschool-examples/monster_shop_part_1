@@ -106,12 +106,7 @@ RSpec.describe "as a user" do
                           password_confirmation: "password",
                           role: 0)
 
-  visit '/login'
-
-  fill_in :email, with: "hotones@hotmail.com"
-  fill_in :password, with: "password"
-
-  click_button 'Login'
+allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
 
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -122,6 +117,7 @@ RSpec.describe "as a user" do
       click_on "Log Out"
       expect(current_path).to eq("/")
       expect(page).to have_content("You have been logged out")
+      expect(page).to have_content("Cart: 0")
     end
   end
 end
