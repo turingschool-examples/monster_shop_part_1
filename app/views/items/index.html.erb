@@ -15,12 +15,12 @@
         <p> <%= item.description unless @merchant%> </p>
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
-      </section>
       <% if item.active? %>
         <p>Active</p>
       <% else %>
         <p>Inactive</p>
       <% end %>
+    </section>
     <% end %>
-    <% end %>
-  </section>
+  <% end %>
+</section>
