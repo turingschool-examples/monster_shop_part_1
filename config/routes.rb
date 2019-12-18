@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/', to: 'welcome#home'
 
   resources :merchants
-  resources :items
+  resources :items, except: [:new, :create]
 
   resources :merchants do
     resources :items, only: [:index, :new, :create]
