@@ -3,11 +3,15 @@ Rails.application.routes.draw do
 	get "/", to: "welcome#index"
 
 	namespace :merchants do
-		get "/profile", to: 'users#show'
+		get "/profile", to: 'dashboard#show'
 	end
 
 	namespace :admin do
-		get "/profile", to: 'users#show'
+		get "/profile", to: 'dashboard#show'
+	end
+
+	namespace :users do
+		get "/profile", to: 'dashboard#show'
 	end
 
   get "/merchants", to: "merchants#index"
