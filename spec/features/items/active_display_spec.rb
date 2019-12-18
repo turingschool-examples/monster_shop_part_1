@@ -9,9 +9,9 @@ RSpec.describe "As any kind of user" do
 
     visit "/items"
 
-    # expect(page).to have_css("item-#{pull_toy.id}")
+    expect(page).to have_css("#item-#{pull_toy.id}")
     expect(page).to have_content(pull_toy.name)
-    # expect(page).not_to have_css("item-#{dog_bone.id}")
+    expect(page).not_to have_css("#item-#{dog_bone.id}")
     expect(page).not_to have_content(dog_bone.name)
   end
 end
