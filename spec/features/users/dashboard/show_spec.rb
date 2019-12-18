@@ -20,6 +20,7 @@ RSpec.describe "As an user" do
     click_on "Login"
 
     expect(current_path).to eq("/users/profile")
+    expect(page).to have_content("Welcome user, #{user.name}!")
     expect(page).to have_content("Welcome, user. You are the User.")
   end
 end
