@@ -19,12 +19,15 @@
           <a class="nav-item nav-link" href="/merchants">All Merchants</a>
           <a class="nav-item nav-link" href="/items">All Items</a>
           <a class="nav-item nav-link" href="/cart">Cart: <%= cart.total_items %></a>
-          <% if current_user %>
-            <%= link_to 'Logout' %>
-          <% else %>
+        <% if current_user %>
+            <%= link_to 'Profile','/profile', class: 'nav-item nav-link' if current_user.default? %>
+            <%= link_to 'Dashboard','/merchant/dashboard', class: 'nav-item nav-link' if current_user.merchant? %>
+            <%= link_to 'Dashboard','/admin/dashboard', class: 'nav-item nav-link' if current_user.admin? %>
+            <%= link_to 'Log Out','/logout', method: :delete, class: 'nav-item nav-link' %>
+        <% else %>
             <a class="nav-item nav-link" href="/register">Register</a>
             <a class="nav-item nav-link" href="/login">Login</a>
-          <% end %>
+        <% end %>
         </div>
       </div>
     </nav>
