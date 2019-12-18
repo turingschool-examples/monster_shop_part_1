@@ -37,7 +37,6 @@ describe ItemOrder, type: :model do
       item_order_1 = order_1.item_orders.create!(item: pedal, price: pedal.price, quantity: 10)
       item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 7)
       item_order_2 = order_2.item_orders.create!(item: bike, price: bike.price, quantity: 20)
-
       expect(ItemOrder.most_popular).to eq([pedal, tire, bike])
     end
   end
