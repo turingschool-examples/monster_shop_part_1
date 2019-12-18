@@ -80,4 +80,19 @@ RSpec.describe 'when a user logs in', type: :feature do
     expect(current_path).to eq('/admin/dashboard')
   end
 
+  it 'will not log in if user is logged in' do
+    visit '/login'
+
+    fill_in :email, with: @user.email
+    fill_in :password, with: 'pass123'
+
+    click_button 'Log In'
+    expect(current_path).to eq('/profile')
+    expect(page).to have_content("Welcome, #{@user.name}")
+
+    visit '/login'
+
+    expect(current_path).to eq('/profile')
+  end
+
 end
