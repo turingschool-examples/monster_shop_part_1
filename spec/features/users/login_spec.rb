@@ -85,18 +85,18 @@ RSpec.describe "as a user" do
       it 'can log out as a registered user' do
         user = create(:random_user)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
-      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      visit "/items/#{@tire.id}"
-      click_on "Add To Cart"
-      click_on "Log Out"
+        @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        visit "/items/#{@tire.id}"
+        click_on "Add To Cart"
+        click_on "Log Out"
 
-      expect(current_path).to eq("/")
-      expect(page).to have_content("You have been logged out")
-      expect(page).to have_content("Cart: 0")
+        expect(current_path).to eq("/")
+        expect(page).to have_content("You have been logged out")
+        expect(page).to have_content("Cart: 0")
     end
   end
 
