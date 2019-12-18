@@ -52,11 +52,11 @@ section[id*='review'] {
   text-align: center;
  }
 
- .404 img {
-   vertical-align: middle;
-   margin-left: auto;
-   margin-right: auto;
-   width: 50%;
+ .404-img {
+   position: absolute;
+   width: 50rem;
+   top: 20%;
+   left: 35%;
  }
 
  .grid-container{
