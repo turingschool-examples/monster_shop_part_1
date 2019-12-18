@@ -7,9 +7,13 @@ RSpec.describe "Items Index Page" do
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      
+      @coffee = create_list(:item, 10, merchant: @meg)
+      @orders = create_list(:order,10)
+      #@orders[1].items << @coffee[1]
+      #@item_order = ItemOrder.create!(item_id: @coffee[1].id, order_id: @orders[1].id, 2, 3)  
 
       User.destroy_all
       @user = User.create(
@@ -89,5 +93,35 @@ RSpec.describe "Items Index Page" do
       expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
       expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
     end
+
+    it "shows me a page with statistics of my items" do 
+
+      visit '/items'
+
+        item_1 = create(:item)
+        create(:item_order, item_id: item_1.id, quantity: 5)
+
+        item_2 = create(:item)
+        create(:item_order, item_id: item_2.id, quantity: 4)
+
+        item_3 = create(:item)
+        create(:item_order, item_id: item_3.id, quantity: 3)
+
+        item_4 = create(:item)
+        create(:item_order, item_id: item_4.id, quantity: 2)
+
+        item_5 = create(:item)
+        create(:item_order, item_id: item_5.id, quantity: 1)
+
+        item_6 = create(:item)
+        create(:item_order, item_id: item_6.id, quantity: 1)
+
+        top_five = Item.top_five
+        expect(page).to have_content([item_1.name, item_2, item_3, item_4, item_5])
+
+    end 
   end
 end
+
+
+
