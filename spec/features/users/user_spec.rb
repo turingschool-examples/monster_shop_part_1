@@ -7,7 +7,7 @@ RSpec.describe 'As a user' do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-    expect(user.role).to eq('default')
+    expect(user.role).to eq("default")
 
     visit '/admin/dashboard'
     expect(page).to have_content("The page you were looking for doesn't exist (404)")
