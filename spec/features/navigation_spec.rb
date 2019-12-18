@@ -33,5 +33,16 @@ RSpec.describe 'Site Navigation' do
       end
 
     end
+
+    it "has link to return to home page" do
+      visit "/items"
+
+      within "nav" do
+        click_link ("Monster Shop")
+
+        expect(current_path).to eq("/")
+      end
+
+    end
   end
 end
