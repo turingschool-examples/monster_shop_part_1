@@ -13,7 +13,7 @@
       <%= link_to 'Welcome Page', "/" %>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
-      <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+      <%= link_to "Cart: #{cart.total_items}", "/cart" unless current_user && current_user.admin? %>
 
       <% if current_user %>
         <% if current_user.user? %>
@@ -23,6 +23,7 @@
           <%= link_to "Dashboard", "/merchant" %>
         <% elsif current_user.admin? %>
           <%= link_to "Dashboard", "/admin" %>
+          <%= link_to "See All Users", "/admin/users" %>
         <% end %>
         <%= link_to "Log Out", "/logout", method: :delete %>
         <% else %>
