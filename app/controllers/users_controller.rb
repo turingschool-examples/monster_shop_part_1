@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
+
   def new
   end
 
   def create
     @new_user = User.new(user_params)
     if @new_user.save
+      session[:user_id] = @new_user.id
       flash[:success] = "Welcome, #{@new_user.name}! You are now logged in."
       redirect_to '/profile'
     else
@@ -14,12 +16,12 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    render file: '/public/404' unless current_user && current_user.user?
   end
 
   private
 
-  def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
-  end
+    def user_params
+      params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    end
 end
