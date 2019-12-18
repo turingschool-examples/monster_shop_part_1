@@ -79,4 +79,26 @@ RSpec.describe 'Site Navigation' do
       expect(current_path).to eq("/merchant")
     end
   end
+
+  describe "as an admin" do
+    it "I see the same links as a regular user plus links to my admin dashboard and link to see all users" do
+      admin = User.create!(name: "Im N. Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemail@gmail.com", password: "polyester", password_confirmation: "polyester", role: 3)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit '/'
+
+      within 'nav' do
+        expect(page).to_not have_link('Cart: 0')
+        click_link "Dashboard"
+      end
+
+      expect(current_path).to eq("/admin")
+
+      within 'nav' do
+        click_link "See All Users"
+      end
+      expect(current_path).to eq("/admin/users")
+    end
+  end
 end
