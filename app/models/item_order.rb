@@ -9,7 +9,10 @@ class ItemOrder <ApplicationRecord
   end
 
   def self.most_popular
-    x = ItemOrder.select(:item, 'sum(quantity)').group(:item_id)
+    x = ItemOrder.select(:sum).group(:item).sum(:quantity)
+    y = x.map do |item, quantity|
+
+    end
     require "pry"; binding.pry
 
     # select item_id, sum(quantity) FROM item_orders GROUP BY item_id ORDER BY sum desc;
