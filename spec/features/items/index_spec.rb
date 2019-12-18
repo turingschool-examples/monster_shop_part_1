@@ -12,18 +12,23 @@ RSpec.describe "Items Index Page" do
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
-    it "all items or merchant names are links" do
+    it "all items, merchant names, and images are links" do
       visit '/items'
 
       expect(page).to have_link(@tire.name)
       expect(page).to have_link(@tire.merchant.name)
+      click_on "#{@tire.id}-photo"
+      expect(current_path).to eq("/items/#{@tire.id}")
+
+      visit '/items'
+
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      expect(page).to have_link(@dog_bone.name)
-      expect(page).to have_link(@dog_bone.merchant.name)
+      click_on "#{@pull_toy.id}-photo"
+      expect(current_path).to eq("/items/#{@pull_toy.id}")
     end
 
-    it "I can see a list of all of the items "do
+    it "I can see a list of all of the items that are not disabled" do
 
       visit '/items'
 
@@ -47,15 +52,8 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_content(@dog_bone.description)
-        expect(page).to have_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_content("Inactive")
-        expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_link(@brian.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      end
+      expect(page).to_not have_css("#item-#{@dog_bone.id}")
+      expect(page).to_not have_content("#{@dog_bone.name}")
     end
   end
 end
