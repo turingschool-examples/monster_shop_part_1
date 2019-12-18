@@ -9,13 +9,19 @@ class UsersController < ApplicationController
 	end
 
   def new
+    @user = User.new(user_params)
 	end
 
 	def create
-		@new_user = User.create(user_params)
-		flash[:success] = "Welcome, #{@new_user.name}"
-		session[:user_id] = @new_user.id
-		redirect_to "/profile"
+		@user = User.new(user_params)
+    if @user.save
+      flash[:success] = "Welcome, #{@user.name}"
+      redirect_to "/profile"
+      session[:user_id] = @user.id
+    else
+      flash[:error] = @user.errors.full_messages.to_sentence
+      render :new
+    end
 	end
 
 
