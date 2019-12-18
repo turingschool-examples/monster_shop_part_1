@@ -1,4 +1,5 @@
 require 'rails_helper'
+# user story 17 feature test included
 
 RSpec.describe "Items Index Page" do
   describe "When I visit the items index page" do
@@ -12,15 +13,17 @@ RSpec.describe "Items Index Page" do
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
-    it "all items or merchant names are links" do
+    it "all items, merchant names, and images are links" do
       visit '/items'
 
       expect(page).to have_link(@tire.name)
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      expect(page).to have_link(@dog_bone.name)
-      expect(page).to have_link(@dog_bone.merchant.name)
+
+      # can add href tests later
+      expect(page).to have_link("img[src*='#{@tire.image}']")
+      expect(page).to have_link("img[src*='#{@tire.image}']")
     end
 
     it "I can see a list of all of the items "do
@@ -47,15 +50,11 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_content(@dog_bone.description)
-        expect(page).to have_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_content("Inactive")
-        expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_link(@brian.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      end
+      # do not include disabled dog_bone on items index
+      expect(page).not_to have_css("#item-#{@dog_bone.id}")
+      expect(page).not_to have_link(@dog_bone.name)
+      expect(page).not_to have_content(@dog_bone.description)
+      expect(page).not_to have_css("img[src*='#{@dog_bone.image}']")
     end
   end
 end
