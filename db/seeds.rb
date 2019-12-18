@@ -14,6 +14,16 @@ User.destroy_all
 # dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 merchants = FactoryBot.create_list(:random_merchant, 12)
 users = FactoryBot.create_list(:random_user, 100)
+admin = User.create(
+  name: 'admin',
+  email: 'admin@coffee.io',
+  password: 'password',
+  address: '420 Coffee St',
+  city: 'Coffeetown',
+  state: 'CO',
+  zip: '80000',
+  role: 1
+)
 merchants.each do |merchant|
   FactoryBot.create_list(:random_item, 30, merchant: merchant)
 end
