@@ -47,5 +47,49 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it "top_five" do 
+      item_1 = create(:item)
+      create(:item_order, item_id: item_1.id, quantity: 5)
+
+      item_2 = create(:item)
+      create(:item_order, item_id: item_2.id, quantity: 4)
+
+      item_3 = create(:item)
+      create(:item_order, item_id: item_3.id, quantity: 3)
+
+      item_4 = create(:item)
+      create(:item_order, item_id: item_4.id, quantity: 2)
+
+      item_5 = create(:item)
+      create(:item_order, item_id: item_5.id, quantity: 1)
+
+      item_6 = create(:item)
+      create(:item_order, item_id: item_6.id, quantity: 1)
+
+      top_five = Item.top_five
+      expect(top_five).to eq([item_1, item_2, item_3, item_4, item_5])
+
+      expect(top_five[3].quantity).to eq(2)
+    end 
+
+    it "bottom_five" do 
+      #adding
+      item_1 = create(:item)
+      create(:item_order, item_id: item_1.id, quantity: 5)
+      item_2 = create(:item)
+      create(:item_order, item_id: item_2.id, quantity: 4)
+      item_3 = create(:item)
+      create(:item_order, item_id: item_3.id, quantity: 3)
+      item_4 = create(:item)
+      create(:item_order, item_id: item_4.id, quantity: 2)
+      item_5 = create(:item)
+      create(:item_order, item_id: item_5.id, quantity: 1)
+
+      bottom_five = Item.bottom_five
+      expect(bottom_five).to eq([item_5, item_4, item_3, item_2, item_1])
+
+      expect(bottom_five[3].quantity).to eq(4)
+    end 
   end
 end
