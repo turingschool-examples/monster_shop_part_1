@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 		get "/profile", to: 'users#show'
 	end
 
+	namespace :admin do
+		get "/profile", to: 'users#show'
+	end
+
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -47,7 +51,4 @@ Rails.application.routes.draw do
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
 
-	namespace :admin do
-		get "/profile", to: 'users#show'
-	end
 end
