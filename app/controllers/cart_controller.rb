@@ -7,7 +7,8 @@ class CartController < ApplicationController
   end
 
   def show
-    @items = cart.items
+    @items = cart.items unless current_user.admin?
+    render 'errors/404' if current_user.admin?
   end
 
   def empty
