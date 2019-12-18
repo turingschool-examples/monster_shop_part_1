@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    if session[:user_id]
-
+    user_redirect(current_user) if current_user
   end
 
   def create
@@ -14,6 +13,12 @@ class SessionsController < ApplicationController
       flash[:sad] = 'Credentials were incorrect'
       render :new
     end
+  end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to '/'
+    flash[:happy] = 'Goodbye!'
   end
 
   private
