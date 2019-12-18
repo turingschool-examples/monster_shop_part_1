@@ -21,6 +21,7 @@ RSpec.describe "As an admin" do
     click_on "Login"
 
     expect(current_path).to eq("/admin/profile")
+    expect(page).to have_content("Welcome admin, #{admin.name}!")
     expect(page).to have_content("Welcome, user. You are the Admin.")
   end
 end
