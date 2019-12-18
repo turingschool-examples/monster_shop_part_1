@@ -1,10 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe 'As a regular user', type: :feature do
+RSpec.describe 'As an admin', type: :feature do
   before :each do
-    @user = create :random_user
-    @user.update(role: 1)
-    current_user = @user.id
+    @user = create :random_admin_user
+
+    visit '/login'
+
+    fill_in :email, with: @user.email
+    fill_in :password, with: 'password'
+
+    click_button 'Log In'
+  end
+
+  it 'is an admin' do
+    expect(@user.admin?)
   end
 
   it 'will prevent me from visiting /merchant' do

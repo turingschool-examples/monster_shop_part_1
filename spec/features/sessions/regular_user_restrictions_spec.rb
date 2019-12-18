@@ -2,8 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'As a regular user', type: :feature do
   before :each do
-    @user = create :random_user
-    current_user = @user.id
+    @user = create :random_reg_user_test
+
+    visit '/login'
+
+    fill_in :email, with: @user.email
+    fill_in :password, with: 'password'
+
+    click_button 'Log In'
   end
 
   it 'will prevent me from visiting /admin' do
