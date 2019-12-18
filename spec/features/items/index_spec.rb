@@ -25,10 +25,7 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_link(@pull_toy.merchant.name)
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).not_to have_link(@dog_bone.name)
-        expect(page).not_to have_link(@dog_bone.merchant.name)
-      end
+      expect(page).not_to have_css("#item-#{@dog_bone.id}")
     end
 
     it "I can see a list of all of the items" do
