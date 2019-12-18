@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "As an admin" do
-  it "" do
+  it "I go to my admin profile page" do
     admin = User.create(
       name: "Joey",
       street_address: "123 Five Street",
