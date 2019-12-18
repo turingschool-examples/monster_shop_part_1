@@ -45,5 +45,31 @@ RSpec.describe 'Site Navigation' do
 
 			expect(current_path).to eq("/register")
 		end
+
+		it "I can see the welcome link in the nav bar" do
+
+			visit '/merchants'
+
+			within 'nav' do
+				expect(page).to have_content("Welcome")
+			end
+
+			click_on 'Welcome'
+
+			expect(current_path).to eq("/")
+		end
+
+		it "I can see the Login link in the nav bar" do
+
+			visit '/merchants'
+
+			within 'nav' do
+				expect(page).to have_content("User Login")
+			end
+
+			click_on 'User Login'
+
+			expect(current_path).to eq("/login")
+		end
   end
 end
