@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def new
   end
 
@@ -15,12 +16,12 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    render file: '/public/404' unless current_user && current_user.user?
   end
 
   private
 
-  def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
-  end
+    def user_params
+      params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    end
 end
