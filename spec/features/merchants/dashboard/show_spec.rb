@@ -21,7 +21,8 @@ RSpec.describe "As an merchant" do
     click_on "Login"
 
     expect(current_path).to eq("/merchants/profile")
+        expect(page).to have_content("Welcome merchant, #{merchant.name}!")
     expect(page).to have_content("Welcome, user. You are the Merchant.")
-    expect(page).to have_content("Welcome, #{merchant.name}!")
+
   end
 end
