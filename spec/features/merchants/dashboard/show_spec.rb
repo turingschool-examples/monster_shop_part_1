@@ -18,7 +18,7 @@ RSpec.describe "As an merchant" do
     fill_in :email, with: merchant.email
     fill_in :password, with: "wordpass"
 
-    click_on "Login"
+    click_on "Sign In"
 
     expect(current_path).to eq("/merchants/profile")
     expect(page).to have_content("Welcome merchant, #{merchant.name}!")

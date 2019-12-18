@@ -18,7 +18,7 @@ RSpec.describe "As an admin" do
     fill_in :email, with: admin.email
     fill_in :password, with: "wordpass"
 
-    click_on "Login"
+    click_on "Sign In"
 
     expect(current_path).to eq("/admin/profile")
     expect(page).to have_content("Welcome admin, #{admin.name}!")

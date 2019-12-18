@@ -17,7 +17,7 @@ RSpec.describe "As an user" do
     fill_in :email, with: user.email
     fill_in :password, with: "wordpass"
 
-    click_on "Login"
+    click_on "Sign In"
 
     expect(current_path).to eq("/users/profile")
     expect(page).to have_content("Welcome user, #{user.name}!")
