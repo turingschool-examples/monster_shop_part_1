@@ -140,6 +140,8 @@ RSpec.describe "as a user" do
       expect(current_path).to eq("/")
       expect(page).to have_content("You have been logged out")
       expect(page).to have_content("Cart: 0")
+    end
+  end
 
   describe 'as an admin/merchant/user when logged in' do
     it 'redirects when they visit the login path for admin' do
