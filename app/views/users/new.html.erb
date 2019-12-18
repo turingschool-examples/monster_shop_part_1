@@ -2,15 +2,15 @@
 
 <%= form_tag '/users' do %>
   <%= label_tag :name %>
-  <%= text_field_tag :name %>
+  <%= text_field_tag :name, (@new_user.name if @new_user) %>
   <%= label_tag :address %>
-  <%= text_field_tag :address %>
+  <%= text_field_tag :address, (@new_user.address if @new_user) %>
   <%= label_tag :city %>
-  <%= text_field_tag :city %>
+  <%= text_field_tag :city, (@new_user.city if @new_user) %>
   <%= label_tag :state %>
-  <%= text_field_tag :state %>
+  <%= text_field_tag :state, (@new_user.state if @new_user) %>
   <%= label_tag :zip %>
-  <%= text_field_tag :zip %>
+  <%= text_field_tag :zip, (@new_user.zip if @new_user) %>
   <%= label_tag :email %>
   <%= text_field_tag :email %>
   <%= label_tag :password %>
