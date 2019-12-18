@@ -1,6 +1,6 @@
 <h1>Register</h1>
 
-<%= form_tag '/users' do %>
+<%= form_tag '/register' do %>
   <%= label_tag :name %>
   <%= text_field_tag :name, (@new_user.name if @new_user) %>
   <%= label_tag :address %>
