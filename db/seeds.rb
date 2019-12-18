@@ -19,3 +19,33 @@ tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never po
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+
+user = User.create(name: "Jordan",
+                    address: "394 High St",
+                    city: "Denver",
+                    state: "CO",
+                    zip_code: "80602",
+                    email: "prisonmike@hotmail.com",
+                    password: "password",
+                    password_confirmation: "password",
+                    role: 0)
+
+admin = User.create(name: "Admin",
+                    address: "394 High St",
+                    city: "Denver",
+                    state: "CO",
+                    zip_code: "80602",
+                    email: "admin@hotmail.com",
+                    password: "password",
+                    password_confirmation: "password",
+                    role: 1)
+
+merchant = User.create(name: "Merchant",
+              address: "394 High St",
+              city: "Denver",
+              state: "CO",
+              zip_code: "80602",
+              email: "merchant@hotmail.com",
+              password: "password",
+              password_confirmation: "password",
+              role: 2)

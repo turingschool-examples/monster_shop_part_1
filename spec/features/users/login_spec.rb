@@ -116,6 +116,31 @@ RSpec.describe "as a user" do
     end
   end
 
+  describe "all users can log out" do
+      it 'can log out as a registered user' do
+      user = User.create(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: "password",
+                          password_confirmation: "password",
+                          role: 0)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      visit "/items/#{@tire.id}"
+      click_on "Add To Cart"
+      click_on "Log Out"
+      expect(current_path).to eq("/")
+      expect(page).to have_content("You have been logged out")
+      expect(page).to have_content("Cart: 0")
+
   describe 'as an admin/merchant/user when logged in' do
     it 'redirects when they visit the login path for admin' do
     admin = User.create(name: "Danny",
@@ -168,35 +193,26 @@ RSpec.describe "as a user" do
 
 
      it 'redirects when they visit the login path for a user' do
-     user = User.create(name: "Jordan",
-                        address: "394 High St",
-                        city: "Denver",
-                        state: "CO",
-                         zip_code: "80602",
-                        email: "hotones@hotmail.com",
-                        password: "password",
-                        password_confirmation: "password",
-                        role: 0)
+       user = User.create(name: "Jordan",
+                          address: "394 High St",
+                          city: "Denver",
+                          state: "CO",
+                          zip_code: "80602",
+                          email: "hotones@hotmail.com",
+                          password: "password",
+                          password_confirmation: "password",
+                          role: 0)
 
-      visit '/login'
+        visit '/login'
 
-      fill_in :email, with: user.email
-      fill_in :password, with: user.password
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
 
-      click_button "Login"
+        click_button "Login"
 
-      visit '/login'
-      expect(current_path).to eq('/profile')
-      expect(page).to have_content("#{user.name}, you are already logged in!")
+        visit '/login'
+        expect(current_path).to eq('/profile')
+        expect(page).to have_content("#{user.name}, you are already logged in!")
     end
   end
 end
-
-
-
-# As a registered user, merchant, or admin
-# When I visit the login path
-# If I am a regular user, I am redirected to my profile page
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that tells me I am already logged in

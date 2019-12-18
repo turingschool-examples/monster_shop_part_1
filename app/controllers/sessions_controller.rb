@@ -17,7 +17,12 @@ class SessionsController < ApplicationController
       flash[:error] = 'Invalid email or password'
       render :new
     end
+  end
 
+  def destroy
+    session.clear
+    flash[:success] = "You have been logged out"
+    redirect_to '/'
   end
 
   private
