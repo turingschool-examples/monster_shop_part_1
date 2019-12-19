@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def new
 
-    
+
   end
 
   def create
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def edit_pw
-    @user = User.find(current_user) if current_user
+    @user = User.find(current_user.id) if current_user
     render '/errors/404' unless current_user
   end
 
