@@ -1,0 +1,36 @@
+require 'rails_helper'
+
+RSpec.describe 'User logging out', type: :feature do
+  let!(:user) { create(:user) }
+  before {
+    visit "/login"
+
+    fill_in :email, with: user.email
+    fill_in :password, with: user.password
+
+    click_on "Sign In"
+  }
+  it "they are logged in" do
+    expect(current_path).to eq("/users/profile")
+  end
+  
+  context 'they are currently logged in' do
+    before { click_on "Logout" }
+
+
+    it 'they are logged out redirected to the "/welcome/home" URI' do
+      expect(current_path).to eq("/welcome/home")
+    end
+
+    it 'they see a flash message indicated they are logged out' do
+      expect(page).to have_content("You have been signed out.")
+      expect(page).to have_content("Register as a User")
+      expect(page).to have_content("I already have an account")
+    end
+
+    xit 'their shopping cart is empty' do
+
+    end
+
+  end
+end
