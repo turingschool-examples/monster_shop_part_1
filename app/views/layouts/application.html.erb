@@ -10,15 +10,14 @@
 
   <body>
     <nav class = "topnav">
-      <%= link_to "Monster Shop", "/" %>
-      <%= link_to "All Merchants", "/merchants"%>
-      <%= link_to "All Items", "/items"%>
-      <%= link_to "Cart: #{cart.total_items}", "/cart" %>
-      <% if current_user %>
-        <%= link_to "Log Out", '/logout', method: :delete %>
+      <% if current_merchant? %>
+        <%= render "shared/merchantnav" %>
+      <% elsif current_admin? %>
+        <%= render "shared/adminnav" %>
+      <% elsif current_user %>
+        <%= render "shared/currentuser" %>
       <% else %>
-        <%= link_to 'Register', '/register' %>
-        <%= link_to "Login", '/login' %>
+        <%= render "shared/visitor" %>
       <% end %>
     </nav>
     <% flash.each do |name, msg| %>
