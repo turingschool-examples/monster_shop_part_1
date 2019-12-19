@@ -23,9 +23,14 @@ RSpec.describe 'User logging out', type: :feature do
     end
 
     it 'they see a flash message indicated they are logged out' do
-      expect(page).to have_content("You have been signed out.")
-      expect(page).to have_content("Register as a User")
-      expect(page).to have_content("I already have an account")
+      within "#main-flash" do
+        expect(page).to have_content("You have been signed out.")
+      end
+
+      within "#top-nav" do
+        expect(page).to have_content("Register as a User")
+        expect(page).to have_content("I already have an account")
+      end
     end
 
     xit 'their shopping cart is empty' do
