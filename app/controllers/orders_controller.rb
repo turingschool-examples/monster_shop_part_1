@@ -19,13 +19,18 @@ class OrdersController <ApplicationController
           })
       end
       session.delete(:cart)
-      redirect_to "/orders/#{order.id}"
+      redirect_to "/profile/orders"
+      flash[:notice] = "Your order was created!"
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
     end
   end
 
+  def index
+    @orders = Order.all
+
+  end
 
   private
 
