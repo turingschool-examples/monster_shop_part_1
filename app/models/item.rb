@@ -25,4 +25,11 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.most_popular
+    joins(:item_orders).select('items.*, sum(item_orders.quantity) as quantity').group(:id).order('quantity desc').limit(5)
+  end
+
+  def self.least_popular
+    joins(:item_orders).select('items.*, sum(item_orders.quantity) as quantity').group(:id).order('quantity').limit(5)
+  end
 end
