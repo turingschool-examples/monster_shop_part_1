@@ -30,13 +30,6 @@ describe 'new user' do
 		within('.success-flash') do
 			expect(page).to have_content("Welcome, Ryan Allen")
 		end
-
-		expect(page).to have_content("Welcome, #{name}")
-		expect(page).to have_content(street_address)
-		expect(page).to have_content(city)
-		expect(page).to have_content(state)
-		expect(page).to have_content(zip)
-		expect(page).to have_content(email)
 	end
 
 	it 'I should not be able register if form is incomplete' do
