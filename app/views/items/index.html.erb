@@ -24,3 +24,22 @@
     <% end %>
   <% end %>
   </section>
+
+  <section id="stats">
+    <section id="most-popular">
+      <p>Most popular items on the site:</p>
+      <% @items.popularity("desc").each do |item| %>
+        <ol>
+          <li><%= "#{item.name}: #{item.quantity}" %></li>
+        </ol>
+      <% end %>
+    </section>
+    <section id="least-popular">
+      <p>Not our best sellers:</p>
+      <% @items.popularity.each do |item| %>
+        <ol>
+          <li><%= "#{item.name}: #{item.quantity}" %></li>
+        </ol>
+      <% end %>
+    </section>
+  </section>
