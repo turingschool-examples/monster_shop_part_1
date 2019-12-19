@@ -9,11 +9,16 @@
   </head>
 
   <body>
-    <nav class = "topnav">
+    <nav class = "topnav" id="top-nav">
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
       <%= link_to "Cart: #{cart.total_items}", "/cart" %>
 			<%= link_to "Register", "/register" %>
+      <% if current_merchant? %>
+			<%= link_to "Merchant Dashboard", "/merchant/dashboard" %>
+      <% end %>
+
+
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
