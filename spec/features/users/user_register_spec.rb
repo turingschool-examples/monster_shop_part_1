@@ -68,6 +68,7 @@ RSpec.describe "as a visitor" do
 
         visit '/register'
 
+
         fill_in :name, with: 'billy'
         fill_in :address, with: '100 million drive'
         fill_in :city, with: 'denver'
@@ -85,6 +86,7 @@ RSpec.describe "as a visitor" do
         expect(page).to_not have_content('denver')
         expect(page).to_not have_content('co')
         expect(page).to_not have_content(80023)
+
         expect(page).to have_content('Email has already been taken')
 
       end

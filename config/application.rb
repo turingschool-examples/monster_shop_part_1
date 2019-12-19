@@ -27,5 +27,7 @@ module MonsterShopStarter
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.consider_all_requests_local
+    config.force_ssl 
   end
 end

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def new
-    
+
+
   end
 
   def create
@@ -11,12 +12,18 @@ class UsersController < ApplicationController
       redirect_to '/profile'
     else
       flash[:notice] = @new_user.errors.full_messages.to_sentence
-      redirect_back fallback_location: '/register'
+      render :new
     end
   end
 
-  def show
-    @user = User.find(session[:user_id])
+  def edit_pw
+    @user = User.find(current_user.id) if current_user
+    render '/errors/404' unless current_user
+  end
+
+  def update
+    user = User.find(current_user)
+    user.update(user_params)
   end
 
   private

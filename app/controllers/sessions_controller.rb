@@ -21,15 +21,8 @@ class SessionsController < ApplicationController
     flash[:happy] = 'Goodbye!'
   end
 
-  private
-
-  def user_redirect(user)
-    if user.admin?
-      redirect_to '/admin/dashboard'
-    elsif user.merchant?
-      redirect_to '/merchant/dashboard'
-    else
-      redirect_to '/profile'
-   end
+  def show
+    render '/errors/404' unless current_user
+    @user = User.find(session[:user_id]) if current_user
   end
 end
