@@ -1,26 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe "As an user" do
-  it "I go to my user profile page" do
-    user = User.create(
-      name: "Monica",
-      street_address: "123 Five Street",
-      city: "Denver",
-      state: "CO",
-      zip: "80210",
-      email: "fake@gmail.com",
-      password: "wordpass",
-      role: 0
-    )
+RSpec.describe "As a default user" do
+  let!(:user) { create(:user, :default_user) }
+  before {
     visit "/login"
 
     fill_in :email, with: user.email
-    fill_in :password, with: "wordpass"
+    fill_in :password, with: user.password
 
     click_on "Sign In"
+  }
 
-    expect(current_path).to eq("/users/profile")
-    expect(page).to have_content("Welcome user, #{user.name}!")
-    expect(page).to have_content("Welcome, user. You are the User.")
+  context 'when I visit my dashboard' do
+    it 'it should display content relevant to my role' do
+      expect(page).to have_content("User Dashboard")
+    end
   end
+
 end
