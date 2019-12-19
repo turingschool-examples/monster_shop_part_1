@@ -81,16 +81,34 @@ RSpec.describe "Items Index Page" do
       expect(current_path).to eq("/items/#{pull_toy.id}")
     end
 
-    xit "text" do
+    xit "shows most popular items" do
       visit '/items'
+
+      item_1 = create(:random_item, merchant_id: @meg.id)
+      item_2 = create(:random_item, merchant_id: @meg.id)
+      item_3 = create(:random_item, merchant_id: @meg.id)
+      item_4 = create(:random_item, merchant_id: @meg.id)
+      item_5 = create(:random_item, merchant_id: @meg.id)
+      item_6 = create(:random_item, merchant_id: @meg.id)
+      item_7 = create(:random_item, merchant_id: @meg.id)
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_2 = Order.create!(name: 'Madi', address: '123 Hi Ave', city: 'Denver', state: 'CO', zip: '80211')
+
+      ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
+      ItemOrder.create!(item: item_1, order: order_2, price: item_1.price, quantity: 3)
+      ItemOrder.create!(item: item_2, order: order_1, price: item_2.price, quantity: 9)
+      ItemOrder.create!(item: item_3, order: order_1, price: item_3.price, quantity: 4)
+      ItemOrder.create!(item: item_3, order: order_2, price: item_3.price, quantity: 2)
+      ItemOrder.create!(item: item_4, order: order_2, price: item_4.price, quantity: 7)
+      ItemOrder.create!(item: item_5, order: order_2, price: item_5.price, quantity: 12)
+      ItemOrder.create!(item: item_6, order: order_2, price: item_6.price, quantity: 3)
+      ItemOrder.create!(item: item_7, order: order_2, price: item_7.price, quantity: 10)
 
       within "#stats" do
         within "#most-popular" do
           expect(page).to have_content("Most popular items on the site:")
-        end
-
-        within "#least-popular" do
-          expect(page).to have_content("Least popular items on the site:")
+          expect(page).to have_content("")
         end
       end
     end
