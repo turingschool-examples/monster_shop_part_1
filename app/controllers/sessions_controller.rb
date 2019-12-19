@@ -25,18 +25,4 @@ class SessionsController < ApplicationController
     render '/errors/404' unless current_user
     @user = User.find(session[:user_id]) if current_user
   end
-
-
-
-  private
-
-  def user_redirect(user)
-    if user.admin?
-      redirect_to '/admin/dashboard'
-    elsif user.merchant?
-      redirect_to '/merchant/dashboard'
-    else
-      redirect_to '/profile'
-   end
-  end
 end
