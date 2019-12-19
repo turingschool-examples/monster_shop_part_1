@@ -4,6 +4,25 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+<% if @items.popular != [] %>
+  <section id="most-popular">
+    <p>The Hottest Items on the Shelves!</p>
+    <ol>
+      <% @items.popular.each do |item| %>
+        <li> <%= item.name %> - Quantity ordered: <%= item.total_quantity %></li>
+      <% end %>
+    </ol>
+  </section>
+  <section id="least-popular">
+    <p>The Coldest Items on the Shelves!</p>
+    <ol>
+      <% @items.popular("asc").each do |item| %>
+        <li> <%= item.name %> - Quantity ordered: <%= item.total_quantity %></li>
+      <% end %>
+    </ol>
+  </section>
+<% end %>
+
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
