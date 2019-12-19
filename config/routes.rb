@@ -3,15 +3,15 @@ Rails.application.routes.draw do
 	get "/", to: "welcome#index"
 
 	namespace :merchants do
-		get "/profile", to: 'dashboard#show'
+		get "/dashboard", to: 'dashboard#show'
 	end
 
 	namespace :admin do
-		get "/profile", to: 'dashboard#show'
+		get "/dashboard", to: 'dashboard#show'
 	end
 
 	namespace :users do
-		get "/profile", to: 'dashboard#show'
+		get "/profile", to: 'profile#show'
 	end
 
   get "/merchants", to: "merchants#index"
@@ -55,4 +55,6 @@ Rails.application.routes.draw do
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
 
+	# via: :all includes all Restful verbs
+	match '*path' => 'errors#show', via: :all
 end
