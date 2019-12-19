@@ -20,7 +20,7 @@ RSpec.describe "As an merchant" do
 
     click_on "Sign In"
 
-    expect(current_path).to eq("/merchants/profile")
+    expect(current_path).to eq("/merchants/dashboard")
     expect(page).to have_content("Merchant Dashboard")
   end
 end
