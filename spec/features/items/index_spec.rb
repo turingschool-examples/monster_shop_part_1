@@ -96,28 +96,50 @@ RSpec.describe "Items Index Page" do
 
     it "shows me a page with statistics of my items" do 
 
-      visit '/items'
-
         item_1 = create(:item)
-        create(:item_order, item_id: item_1.id, quantity: 5)
+        item_order_1 = create(:item_order, item_id: item_1.id, quantity: 5)
+        item_order_7 = create(:item_order, item_id: item_1.id, quantity: 5)
 
         item_2 = create(:item)
-        create(:item_order, item_id: item_2.id, quantity: 4)
+        item_order_2 = create(:item_order, item_id: item_2.id, quantity: 4)
 
         item_3 = create(:item)
-        create(:item_order, item_id: item_3.id, quantity: 3)
+        item_order_3 = create(:item_order, item_id: item_3.id, quantity: 3)
 
         item_4 = create(:item)
-        create(:item_order, item_id: item_4.id, quantity: 2)
+        item_order_4 = create(:item_order, item_id: item_4.id, quantity: 2)
 
         item_5 = create(:item)
-        create(:item_order, item_id: item_5.id, quantity: 1)
+        item_order_5 = create(:item_order, item_id: item_5.id, quantity: 1)
 
         item_6 = create(:item)
-        create(:item_order, item_id: item_6.id, quantity: 1)
+        item_order_6 = create(:item_order, item_id: item_6.id, quantity: 1)
 
-        top_five = Item.top_five
-        expect(page).to have_content([item_1.name, item_2, item_3, item_4, item_5])
+        visit '/items'
+
+        within ".top_five_0" do 
+          expect(page).to have_content(item_1.name)
+          expect(page).to have_content(10)
+        end
+        within ".top_five_1" do 
+          expect(page).to have_content(item_2.name)
+          expect(page).to have_content(4)
+        end
+        within ".top_five_2" do 
+          expect(page).to have_content(item_3.name)
+          expect(page).to have_content(3)
+        end
+        within ".top_five_3" do 
+          expect(page).to have_content(item_4.name)
+          expect(page).to have_content(2)
+        end
+        within ".top_five_4" do 
+          expect(page).to have_content(item_5.name)
+          expect(page).to have_content(1)
+        end
+        within ".top" do 
+          expect(page).to_not have_content(item_6.name)
+        end
 
     end 
   end
