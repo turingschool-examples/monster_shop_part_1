@@ -21,15 +21,15 @@ RSpec.describe "As a registered user" do
     fill_in :address, with: "123 Powerpuff Lane"
     fill_in :city, with: "Townsville"
     fill_in :state, with: "USA"
-    fill_in :zip, with: "12345"
+    fill_in :zip_code, with: "12345"
 
     click_on "Submit"
     expect(current_path).to eql("/profile")
 
     expect(page).to have_content("You have successfully edited your profile!")
 
-    expect(page).to have_content("Name: Mojo Jojojo")
-    expect(page).to have_content("Address: 123 Powerpull Lane")
+    expect(page).to have_content("Mojo Jojojo")
+    expect(page).to have_content("Address: 123 Powerpuff Lane")
     expect(page).to have_content("City: Townsville")
     expect(page).to have_content("State: USA")
     expect(page).to have_content("Zip Code: 12345")
