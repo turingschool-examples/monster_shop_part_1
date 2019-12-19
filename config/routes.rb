@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
+  
+  delete "/cart/:item_id/quantity", to: "cart#remove_item_quantity"
 
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
@@ -41,6 +43,8 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+  get "/profile/edit", to: "users#edit"
+  patch "/profile", to: "users#update"
 
   namespace :merchant do
     get '/', to: "merchant_admins#show"
