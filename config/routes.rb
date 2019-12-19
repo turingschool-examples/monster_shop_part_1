@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+  get "/profile/edit", to: "users#edit"
+  patch "/profile", to: "users#update"
 
   namespace :merchant do
     get '/', to: "merchant_admins#show"
