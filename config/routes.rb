@@ -39,7 +39,9 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
+  get "/users", to: "sessions#show"
   get "/profile", to: "users#show"
+  get "/profile/orders", to: "orders#index"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
