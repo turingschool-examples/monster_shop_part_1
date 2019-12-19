@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def new
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
   end
 
   def create
@@ -11,7 +14,7 @@ class UsersController < ApplicationController
       redirect_to '/profile'
     else
       flash[:notice] = @new_user.errors.full_messages.to_sentence
-      redirect_back fallback_location: '/register'
+      render :new
     end
   end
 

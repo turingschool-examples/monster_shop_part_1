@@ -23,7 +23,11 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :create, :show]
 
   get '/register', to: 'users#new'
+<<<<<<< HEAD
   post '/users', to: "users#create"
+=======
+  post '/register', to: "users#create"
+>>>>>>> master
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
