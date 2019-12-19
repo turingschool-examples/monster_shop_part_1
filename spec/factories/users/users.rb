@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :default do
+  factory :user do
     name  { Faker::Name.first_name }
     street_address { Faker::Address.street_address }
     city { Faker::Address.city }
