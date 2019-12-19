@@ -11,11 +11,12 @@ Rails.application.routes.draw do
 
   resources :items do
     resources :reviews, only: [:new, :create]
-  end
+  end 
 
   resources :reviews, only: [:edit, :update, :destroy]
 
   post "/cart/:item_id", to: "cart#add_item"
+  patch "/cart", to: "cart#increment_decrement"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
