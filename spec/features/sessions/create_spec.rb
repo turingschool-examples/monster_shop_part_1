@@ -4,11 +4,10 @@ RSpec.describe 'User logging in' do
   let(:user) { create(:user, :default_user) }
   let(:admin) { create(:user, :admin_user) }
   let(:merchant) { create(:user, :merchant_user) }
-  before {
-    visit "/login"
-  }
+  before { visit "/login" }
 
   context 'with valid credentials' do
+
     context 'user is an admin' do
       before {
         fill_in :email, with: admin.email
@@ -71,7 +70,8 @@ RSpec.describe 'User logging in' do
   end
 
   context 'with invalid credentials' do
-    context 'prevents them from logging in' do
+
+    describe 'prevents them from logging in' do
       before(:each) { fill_in :password, with: "wrongPassword" }
       after(:each) do
         click_on "Sign In"
@@ -92,6 +92,45 @@ RSpec.describe 'User logging in' do
       it 'as a user' do
         fill_in :email, with: user.email
       end
+    end
+  end
+
+  context 'they are already logged in' do
+
+    describe 'they are redirected' do
+      after(:each) {
+        within '#main-flash' do
+          expect(page).to have_content("You are already logged in.")
+        end
+      }
+
+      it 'if an admin, back to their admin dashboard' do
+        fill_in :email, with: admin.email
+        fill_in :password, with: admin.password
+        click_on "Sign In"
+
+        visit "/login"
+        expect(current_path).to eq("/admin/profile")
+      end
+
+      it 'if an merchant, back to their merchant dashboard' do
+        fill_in :email, with: merchant.email
+        fill_in :password, with: merchant.password
+        click_on "Sign In"
+
+        visit "/login"
+        expect(current_path).to eq("/merchants/profile")
+      end
+
+      it 'if an user, back to their user dashboard' do
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+        click_on "Sign In"
+
+        visit "/login"
+        expect(current_path).to eq("/users/profile")
+      end
+
     end
   end
 end
