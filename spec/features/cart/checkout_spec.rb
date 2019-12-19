@@ -40,7 +40,16 @@ RSpec.describe 'Cart show' do
           expect(page).to_not have_link("Checkout")
           expect(page).to have_link('login')
           expect(page).to have_link('register')
+          click_link 'register'
         end
+        expect(current_path).to eq('/register')
+
+        visit '/cart'
+
+        within "#checkout" do
+          click_link 'login'
+        end
+        expect(current_path).to eq('/login')
       end
     end
   end
