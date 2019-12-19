@@ -27,7 +27,7 @@ class CartController < ApplicationController
   end
 
   def remove_item_quantity
-    if session[:cart][params[:item_id]] < 1
+    if session[:cart][params[:item_id]] < 2
       session[:cart].delete(params[:item_id])
       redirect_to '/cart'
     else
