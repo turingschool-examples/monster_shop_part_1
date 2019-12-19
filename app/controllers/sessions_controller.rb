@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user
+    if user && user.authenticate(params[:password])
       login(user)
     else
       flash[:error] = 'Invalid email or password'
