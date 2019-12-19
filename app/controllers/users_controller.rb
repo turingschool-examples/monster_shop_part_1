@@ -16,18 +16,30 @@ class UsersController < ApplicationController
   end
 
   def show
-    # require "pry"; binding.pry
-    @user = User.find_by(params[:id])
+    @user = current_user
     render file: '/public/404' unless current_user && current_user.user?
   end
 
   def edit
-    
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    @user.update(user_params)
+    if @user.save
+      flash[:success] = "Your profile has been updated."
+      redirect_to '/profile'
+    end
   end
 
   private
 
     def user_params
       params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    end
+
+    def password_params
+      params.permit(:password, :password_confirmation)
     end
 end
