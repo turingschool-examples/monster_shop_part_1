@@ -1,28 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe "As an merchant" do
-  it "I go to my merchant profile page" do
-    merchant = User.create(
-      name: "Joey",
-      street_address: "123 Five Street",
-      city: "Denver",
-      state: "CO",
-      zip: "80210",
-      email: "fake@gmail.com",
-      password: "wordpass",
-      role: 2
-    )
-
+RSpec.describe "As a merchant user" do
+  let!(:merchant) { create(:user, :merchant_user) }
+  before {
     visit "/login"
 
     fill_in :email, with: merchant.email
-    fill_in :password, with: "wordpass"
+    fill_in :password, with: merchant.password
 
     click_on "Sign In"
+  }
 
-    expect(current_path).to eq("/merchants/profile")
-    expect(page).to have_content("Welcome merchant, #{merchant.name}!")
-    expect(page).to have_content("Welcome, user. You are the Merchant.")
-
+  context 'when I visit my dashboard' do
+    it 'it should display content relevant to my role' do
+      expect(page).to have_content("Merchant Dashboard")
+    end
   end
+
 end
