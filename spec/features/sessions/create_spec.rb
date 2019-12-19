@@ -72,25 +72,25 @@ RSpec.describe 'User logging in' do
 
   context 'with invalid credentials' do
     context 'prevents them from logging in' do
+      before(:each) { fill_in :password, with: "wrongPassword" }
       after(:each) do
         click_on "Sign In"
         expect(current_path).to eq("/login")
-        expect(page).to have_content("Sorry, wrong username or password.")
+        within("#main-flash") do
+          expect(page).to have_content("Sorry, wrong username or password.")
+        end
       end
 
       it 'as an admin' do
         fill_in :email, with: admin.email
-        fill_in :password, with: "wrongPassword"
       end
 
       it 'as a merchant' do
         fill_in :email, with: merchant.email
-        fill_in :password, with: "wrongPassword"
       end
 
       it 'as a user' do
         fill_in :email, with: user.email
-        fill_in :password, with: "wrongPassword"
       end
     end
   end
