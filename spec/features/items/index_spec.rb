@@ -10,7 +10,7 @@ RSpec.describe "Items Index Page" do
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
       
-      @coffee = create_list(:item, 10, merchant: @meg)
+      @coffee = create_list(:item, 10, merchant: @meg, inventory: 10)
       @orders = create_list(:order,10)
       #@orders[1].items << @coffee[1]
       #@item_order = ItemOrder.create!(item_id: @coffee[1].id, order_id: @orders[1].id, 2, 3)  
@@ -85,13 +85,15 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      expect(page).to_not have_css("#item-#{@dog_bone.id}")
-      expect(page).to_not have_link(@dog_bone.name)
-      expect(page).to_not have_content(@dog_bone.description)
-      expect(page).to_not have_content("Price: $#{@dog_bone.price}")
-      expect(page).to_not have_content("Inactive")
-      expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
-      expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
+      #within "#item-#{@dog_bone.id}" do
+        expect(page).to_not have_css("#item-#{@dog_bone.id}")
+        expect(page).to_not have_link(@dog_bone.name)
+        expect(page).to_not have_content(@dog_bone.description)
+        expect(page).to_not have_content("Price: $#{@dog_bone.price}")
+        expect(page).to_not have_content("Inactive")
+        expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
+        expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
+      #end
     end
 
     it "shows me a page with statistics of my items" do 
@@ -113,7 +115,7 @@ RSpec.describe "Items Index Page" do
         item_order_5 = create(:item_order, item_id: item_5.id, quantity: 1)
 
         item_6 = create(:item)
-        item_order_6 = create(:item_order, item_id: item_6.id, quantity: 1)
+        item_order_6 = create(:item_order, item_id: item_6.id, quantity: 0)
 
         visit '/items'
 
@@ -137,11 +139,9 @@ RSpec.describe "Items Index Page" do
           expect(page).to have_content(item_5.name)
           expect(page).to have_content(1)
         end
-        #within ".top" do 
-        #  expect(page).to_not have_content(item_6.name)
-        #end
-        save_and_open_page 
-        binding.pry
+        within ".top" do 
+          expect(page).to_not have_content(item_6.name)
+        end
 
     end 
 
