@@ -63,12 +63,12 @@ RSpec.describe "as a visitor" do
         expect(page).to have_content("Address can't be blank")
       end
 
-      xit 'fails to register user with non-unique email' do
+      it 'fails to register user with non-unique email' do
         user = create :random_user
 
         visit '/register'
 
-        fill_in :name, with: 'kjhkjhlhkljh'
+        fill_in :name, with: 'billy'
         fill_in :address, with: '100 million drive'
         fill_in :city, with: 'denver'
         fill_in :state, with: 'co'
@@ -80,11 +80,11 @@ RSpec.describe "as a visitor" do
         click_button "Create New User"
 
         expect(current_path).to eq('/register')
-        expect(User.last.name).to_not eq('kjhkjhlhkljh')
-        expect(page).to have_content('100 million drive')
-        expect(page).to have_content('denver')
-        expect(page).to have_content('co')
-        expect(page).to have_content(80023)
+        expect(User.last.name).to_not eq('billy')
+        expect(page).to_not have_content('100 million drive')
+        expect(page).to_not have_content('denver')
+        expect(page).to_not have_content('co')
+        expect(page).to_not have_content(80023)
         expect(page).to have_content('Email has already been taken')
 
       end
