@@ -26,10 +26,15 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new'
   post '/register', to: "users#create"
 
+  get '/user/edit-pw', to: 'user_password#edit'
+  patch '/user/edit-pw', to: 'user_password#update'
+
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/profile', to: "sessions#show"
+
+
 
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'
