@@ -19,6 +19,10 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Theres a link to checkout' do
+      user = create(:random_user)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
       visit "/cart"
 
       expect(page).to have_link("Checkout")
@@ -26,6 +30,18 @@ RSpec.describe 'Cart show' do
       click_on "Checkout"
 
       expect(current_path).to eq("/orders/new")
+    end
+
+    describe 'As a visitor' do
+      it "tells me I must register or login before checking out" do
+        visit '/cart'
+
+        within "#checkout" do
+          expect(page).to_not have_link("Checkout")
+          expect(page).to have_link('login')
+          expect(page).to have_link('register')
+        end
+      end
     end
   end
 
