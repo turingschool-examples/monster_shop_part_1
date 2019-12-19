@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
   end
 
-	helper_method :current_user, :current_default?
+	helper_method :current_user, :current_default?, :current_admin?
 
 	def current_user
 		@current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
 
   def current_admin?
     return false unless session[:user_id]
-    current_user && current_user.admin?
+    @user = User.find(session[:user_id])
+    @user.admin?
   end
 
   def current_merchant?
