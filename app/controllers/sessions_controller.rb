@@ -38,6 +38,7 @@ class SessionsController < ApplicationController
   
   def destroy
     session.delete(:user_id)
+    session.delete(:cart)
     flash[:success] = "You have been signed out."
     redirect_to "/welcome/home"
 	end

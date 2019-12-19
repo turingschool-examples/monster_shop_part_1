@@ -33,8 +33,10 @@ RSpec.describe 'User logging out', type: :feature do
       end
     end
 
-    xit 'their shopping cart is empty' do
-
+    it 'their shopping cart is emptied' do
+      within("#top-nav") do
+        expect(page).to have_content("Cart: 0")
+      end
     end
 
   end
