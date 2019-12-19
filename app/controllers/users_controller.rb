@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
   def new
-<<<<<<< HEAD
 
-=======
->>>>>>> master
+    
   end
 
   def create
