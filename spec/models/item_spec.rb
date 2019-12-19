@@ -66,15 +66,15 @@ describe Item, type: :model do
         ItemOrder.create!(item: item_5, order: order_1, price: item_5.price, quantity: 2)
         ItemOrder.create!(item: item_6, order: order_1, price: item_6.price, quantity: 7)
 
-        expect(Item.most_popular[0]).to eq(item_3)
-        expect(Item.most_popular[1]).to eq(item_6)
-        expect(Item.most_popular[2]).to eq(item_1)
-        expect(Item.most_popular[3]).to eq(item_4)
-        expect(Item.most_popular[4]).to eq(item_2)
+        expect(Item.popularity('desc')[0]).to eq(item_3)
+        expect(Item.popularity('desc')[1]).to eq(item_6)
+        expect(Item.popularity('desc')[2]).to eq(item_1)
+        expect(Item.popularity('desc')[3]).to eq(item_4)
+        expect(Item.popularity('desc')[4]).to eq(item_2)
       end
     end
 
-    describe "most_popular" do
+    describe "least_popular" do
       it "can find five least popular items" do
         item_1 = create(:random_item, merchant_id: @bike_shop.id)
         item_2 = create(:random_item, merchant_id: @bike_shop.id)
@@ -92,11 +92,11 @@ describe Item, type: :model do
         ItemOrder.create!(item: item_5, order: order_1, price: item_5.price, quantity: 2)
         ItemOrder.create!(item: item_6, order: order_1, price: item_6.price, quantity: 7)
 
-        expect(Item.least_popular[0]).to eq(item_5)
-        expect(Item.least_popular[1]).to eq(item_2)
-        expect(Item.least_popular[2]).to eq(item_4)
-        expect(Item.least_popular[3]).to eq(item_1)
-        expect(Item.least_popular[4]).to eq(item_6)
+        expect(Item.popularity[0]).to eq(item_5)
+        expect(Item.popularity[1]).to eq(item_2)
+        expect(Item.popularity[2]).to eq(item_4)
+        expect(Item.popularity[3]).to eq(item_1)
+        expect(Item.popularity[4]).to eq(item_6)
       end
     end
   end
