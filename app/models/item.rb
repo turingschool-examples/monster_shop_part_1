@@ -30,7 +30,7 @@ class Item <ApplicationRecord
   end 
 
   def self.bottom_five
-    joins(:item_orders).select("items.*, sum(item_orders.quantity) as quantity").group(:id).order("quantity").limit(5)
+    joins(:item_orders).select("items.*, sum(item_orders.quantity) as quantity").group(:id).order("quantity asc").limit(5)
   end 
 
 end

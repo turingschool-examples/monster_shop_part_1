@@ -137,10 +137,20 @@ RSpec.describe "Items Index Page" do
           expect(page).to have_content(item_5.name)
           expect(page).to have_content(1)
         end
-        within ".top" do 
-          expect(page).to_not have_content(item_6.name)
-        end
+        #within ".top" do 
+        #  expect(page).to_not have_content(item_6.name)
+        #end
+        save_and_open_page 
+        binding.pry
 
+    end 
+
+    it "shows that the image is a link" do 
+      visit "/items"
+
+      page.find("#img_link-#{@pull_toy.id}" ).click
+
+      expect(current_path).to eq("/items/#{@pull_toy.id}")
     end 
   end
 end

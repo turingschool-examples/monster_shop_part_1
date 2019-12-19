@@ -64,9 +64,6 @@ describe Item, type: :model do
       item_5 = create(:item)
       create(:item_order, item_id: item_5.id, quantity: 1)
 
-    #  item_6 = create(:item)
-    #  create(:item_order, item_id: item_6.id, quantity: 1)
-
       top_five = Item.top_five
       expect(top_five[0].id).to eq(item_1.id)
       expect(top_five[1].id).to eq(item_2.id)
@@ -77,7 +74,7 @@ describe Item, type: :model do
       expect(top_five[3].quantity).to eq(2)
     end 
 
-    xit "bottom_five" do 
+    it "bottom_five" do 
       #adding
       item_1 = create(:item)
       create(:item_order, item_id: item_1.id, quantity: 5)
@@ -91,7 +88,11 @@ describe Item, type: :model do
       create(:item_order, item_id: item_5.id, quantity: 1)
 
       bottom_five = Item.bottom_five
-      expect(bottom_five).to eq([item_5, item_4, item_3, item_2, item_1])
+      expect(bottom_five[0].id).to eq(item_5.id)
+      expect(bottom_five[1].id).to eq(item_4.id)
+      expect(bottom_five[2].id).to eq(item_3.id)
+      expect(bottom_five[3].id).to eq(item_2.id)
+      expect(bottom_five[4].id).to eq(item_1.id)
 
       expect(bottom_five[3].quantity).to eq(4)
     end 

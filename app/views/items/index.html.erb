@@ -4,12 +4,34 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+
+      <section class = "top">
+        <h1> The top producers </h1>
+        <% @items.top_five.each_with_index do |item, index| %>
+          <section class = "top_five_<%= index %>">
+          <%= item.name %>
+          <%= item.quantity %>
+          </section>
+        <% end %>
+      </section>
+      <section class = "bottom">
+        <h1> The bottom producers </h1>
+        <% @items.bottom_five.each do |item, index| %>
+          <section class = "bottom_five_<%= index %>">
+            <%= item.name %>
+            <%= item.quantity %>
+          </section>
+        <% end %>
+      </section>
+
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <img src= <%= item.image %>>
+      <%= link_to "/items/#{item.id}", id: "img_link-#{item.id}" do %>
+        <%=image_tag item.image %> 
+      <% end %>
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
@@ -22,16 +44,4 @@
       <% end %>
     </section>
     <% end %>
-      <section class = "top">
-        <% @items.top_five.each_with_index do |item, index| %>
-          <section class = "top_five_<%= index %>">
-          <%= item.name %>
-          <%= item.quantity %>
-          </section>
-        <% end %>
-        </section>
-      <% @items.bottom_five.each do |item| %>
-        <%= item.name %>
-        <%= item.quantity %>
-      <% end %>
 </section>
