@@ -14,7 +14,7 @@ RSpec.describe "a user can visit their profile page" do
     click_link("Change Password")
     expect(current_path).to eq("/user/password/edit")
 
-    password = new_password
+    password = "new_password"
 
     fill_in :new_password, with: password
     fill_in :new_password_confirmation, with: password
