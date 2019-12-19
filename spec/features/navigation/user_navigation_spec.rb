@@ -40,10 +40,10 @@ RSpec.describe "As a registered regular user" do
   describe "User Navigation Restrictions" do
     it "When I try to access any path that begins with /merchant or /admin, then I see a 404 error" do
       visit '/merchant'
-      expect(page).to have_content("You don't have access to this section.")
+      expect(page).to have_content("Error 404: You don't have access to this section.")
 
       visit '/admin'
-      expect(page).to have_content("You don't have access to this section.")
+      expect(page).to have_content("Error 404: You don't have access to this section.")
     end
   end
 end
