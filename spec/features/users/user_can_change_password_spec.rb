@@ -28,7 +28,7 @@ RSpec.describe "a user can visit their profile page" do
     click_link "Login"
     fill_in :email, with: user.email
     fill_in :password, with: password
-    click_on "Login"
+    click_button "Login"
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Welcome, #{user.name}, you are logged in!")
   end
