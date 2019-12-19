@@ -14,6 +14,14 @@
       <%= link_to "All Items", "/items"%>
       <%= link_to "Cart: #{cart.total_items}", "/cart" %>
 			<%= link_to "Register", "/register" %>
+      <section id="user-access">
+        <% if current_user %>
+          <%= link_to "Logout", "/logout" %>
+        <% else %>
+          <%= link_to "Register as a User", "/register" %>
+          <%= link_to "I already have an account", "/login" %>
+        <% end %>
+      </section>
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
