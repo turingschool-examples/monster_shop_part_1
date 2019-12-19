@@ -14,8 +14,8 @@
       <%= link_to "All Items", "/items"%>
       <%= link_to "Cart: #{cart.total_items}", "/cart" unless current_admin? %>
       <% if current_default? %>
-        <%= link_to "My Profile Page", "/profile" %>
-        <p> Logged in as <%= current_user_name %></p>
+        <%= link_to "My Profile Page", "/users/profile" %>
+        <p> Logged in as <%= current_user.name %></p>
       <% end %>
       <% if current_admin? %>
         <%= link_to "Admin Dashboard", "/admin" %>
