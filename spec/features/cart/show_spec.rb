@@ -9,6 +9,7 @@ RSpec.describe 'Cart show' do
 
         @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
+        @coffee = @mike.items.create(name: "The Best Cup o' Jo!", description: "Keeps you awake for days!", price: 20, image: "https://cdn.caskers.com/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/d/e/death-wish_01.jpg", inventory: 2)
         @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
         visit "/items/#{@paper.id}"
         click_on "Add To Cart"
@@ -55,8 +56,43 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it "Shows a button next to each item to increment the count of that item by 1,
+          max quantity is the inventory quantity" do
+
+        visit "/items/#{@coffee.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        within "#add-count-#{@coffee.id}" do
+          expect(page).to have_content("1")
+          click_button "+"
+          expect(page).to have_content("2")
+          click_button "+"
+          expect(page).to have_content("2")
+        end
+      end
+
+      it "Shows a button next to each item to decrement the count of that item by 1,
+          min quantity is 0, and the item is immediately removed from the cart" do
+
+        visit "/items/#{@coffee.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+
+        within "#cart-item-#{@coffee.id}" do
+          expect(page).to have_content("1")
+          click_button "-"
+        end
+
+        expect(page).to_not have_content(@coffee.name)
+
+      end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
@@ -73,3 +109,12 @@ RSpec.describe 'Cart show' do
     end
   end
 end
+
+# User Story 23, Adding Item Quantity to Cart
+#
+# As a visitor
+# When I have items in my cart
+# And I visit my cart
+# Next to each item in my cart
+# I see a button or link to increment the count of items I want to purchase
+# I cannot increment the count beyond the item's inventory size
