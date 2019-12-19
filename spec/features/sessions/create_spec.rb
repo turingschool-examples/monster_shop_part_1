@@ -12,11 +12,11 @@ RSpec.describe 'User logging in' do
       before {
         fill_in :email, with: admin.email
         fill_in :password, with: admin.password
-    
+
         click_on "Sign In"
       }
       it 'they can sign in' do
-        expect(current_path).to eq("/admin/profile")
+        expect(current_path).to eq("/admin/dashboard")
       end
 
       it 'they see a welcome flash message' do
@@ -32,11 +32,11 @@ RSpec.describe 'User logging in' do
       before {
         fill_in :email, with: merchant.email
         fill_in :password, with: merchant.password
-    
+
         click_on "Sign In"
       }
       it 'they can sign in' do
-        expect(current_path).to eq("/merchants/profile")
+        expect(current_path).to eq("/merchants/dashboard")
       end
 
       it 'they see a welcome flash message' do
@@ -52,7 +52,7 @@ RSpec.describe 'User logging in' do
       before {
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-    
+
         click_on "Sign In"
       }
       it 'they can sign in' do
@@ -110,7 +110,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
 
         visit "/login"
-        expect(current_path).to eq("/admin/profile")
+        expect(current_path).to eq("/admin/dashboard")
       end
 
       it 'if an merchant, back to their merchant dashboard' do
@@ -119,7 +119,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
 
         visit "/login"
-        expect(current_path).to eq("/merchants/profile")
+        expect(current_path).to eq("/merchants/dashboard")
       end
 
       it 'if an user, back to their user dashboard' do
