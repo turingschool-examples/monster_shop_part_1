@@ -39,7 +39,5 @@ RSpec.describe 'As a user' do
     expect(page).to have_content("#{user.email}")
 
     expect(page).to have_link("Edit Profile")
-    save_and_open_page
-
   end
 end
