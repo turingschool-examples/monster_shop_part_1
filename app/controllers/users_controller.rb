@@ -22,14 +22,27 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    if request.env['PATH_INFO'] == "/profile/edit"
+      render partial: 'edit_profile'
+    else
+      render partial: 'edit_password'
+    end
   end
 
   def update
     @user = current_user
-    @user.update(user_params)
-    if @user.save
-      flash[:success] = "Your profile has been updated."
-      redirect_to '/profile'
+    if request.env['PATH_INFO'] == "/profile"
+      @user.update(user_params)
+      if @user.save
+        flash[:success] = "Your profile has been updated."
+        redirect_to '/profile'
+      end
+    else request.env['PATH_INFO'] == "/profile/password"
+      @user.update(password_params)
+      if @user.save
+        flash[:success] = "Your password has been updated."
+        redirect_to '/profile'
+      end
     end
   end
 

@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
+  get "/profile/password/edit", to: "users#edit"
+  patch "/profile/password", to: "users#update"
 
   namespace :merchant do
     get '/', to: "merchant_admins#show"

@@ -59,4 +59,47 @@ RSpec.describe 'User profile page' do
     expect(page).to have_content("90210 Different Address Dr.")
     expect(page).to_not have_content("Changed User")
   end
+
+  it "I can click a link that allows me to edit my password through a form" do
+    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+
+    visit '/'
+
+    within '.topnav' do
+      click_link "Log In"
+    end
+
+    fill_in :email, with: "user@user.com"
+    fill_in :password, with: "user"
+    click_button "Log In"
+
+    within '.topnav' do
+      click_link "Profile"
+    end
+
+    click_link "Edit your password"
+
+    password = "newpassword"
+    password_confirmation = "newpassword"
+
+    fill_in :password, with: password
+    fill_in :password_confirmation, with: password_confirmation
+    click_button "Update My Password"
+
+    expect(current_path).to eq('/profile')
+    expect(page).to have_content("Your password has been updated.")
+
+    within '.topnav' do
+      click_link "Log Out"
+    end
+
+    visit '/'
+
+    click_link "Log In"
+
+    fill_in :email, with: "user@user.com"
+    fill_in :password, with: "newpassword"
+    click_button 'Log In'
+    expect(current_path).to eq('/profile')
+  end
 end
