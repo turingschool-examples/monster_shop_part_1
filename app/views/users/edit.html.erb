@@ -1,9 +1,9 @@
 <%= form_tag "/user/id", method: :patch do %>
-  <%= label_tag :new_password %>
-  <%= password_field_tag :new_password %>
+  <%= label_tag :password %>
+  <%= password_field_tag :password %>
 
-  <%= label_tag :new_password_confirmation %>
-  <%= text_field_tag :new_password_confirmation %>
+  <%= label_tag :password_confirmation %>
+  <%= password_field_tag :password_confirmation %>
 
   <%= submit_tag "Create New Password" %>
 <% end %>
