@@ -81,9 +81,7 @@ RSpec.describe "Items Index Page" do
       expect(current_path).to eq("/items/#{pull_toy.id}")
     end
 
-    xit "shows most popular items" do
-      visit '/items'
-
+    it "shows most and least popular items" do
       item_1 = create(:random_item, merchant_id: @meg.id)
       item_2 = create(:random_item, merchant_id: @meg.id)
       item_3 = create(:random_item, merchant_id: @meg.id)
@@ -105,11 +103,30 @@ RSpec.describe "Items Index Page" do
       ItemOrder.create!(item: item_6, order: order_2, price: item_6.price, quantity: 3)
       ItemOrder.create!(item: item_7, order: order_2, price: item_7.price, quantity: 10)
 
+      visit '/items'
+
       within "#stats" do
         within "#most-popular" do
           expect(page).to have_content("Most popular items on the site:")
-          expect(page).to have_content("")
+          expect(page).to have_content(item_5.name)
+          expect(page).to have_content(item_7.name)
+          expect(page).to have_content(item_2.name)
+          expect(page).to have_content(item_1.name)
+          expect(page).to have_content(item_4.name)
+          expect(page).to_not have_content(item_3.name)
+          expect(page).to_not have_content(item_6.name)
         end
+
+        within "#least-popular" do
+          expect(page).to have_content("Not our best sellers:")
+          expect(page).to have_content(item_6.name)
+          expect(page).to have_content(item_3.name)
+          expect(page).to have_content(item_2.name)
+          expect(page).to have_content(item_1.name)
+          expect(page).to have_content(item_4.name)
+          expect(page).to_not have_content(item_5.name)
+          expect(page).to_not have_content(item_7.name)
+        end     
       end
     end
   end
