@@ -24,6 +24,12 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
+    email_in_use = User.where('id != ? and email = ?',params[:id],params[:email]).count
+    if email_in_use > 0
+      flash[:notice] = 'Email address already in use by another user, please enter a different email address'
+      @new_user = user
+      render :edit
+    end
     user.update(user_params)
     if user.save
       flash[:notice] = "Data updated successfully"
