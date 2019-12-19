@@ -29,10 +29,14 @@
         <p><%=number_to_currency(item.price)%></p>
       </td>
       <td>
+        <section id = "add-count-<%=item.id%>">
         <center>
+          <%= button_to '+', "/cart?increment_decrement=increment&item_id=#{item.id}", method: :patch %>
           <p><%=quantity%></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
+          <p><%= link_to "Remove", "/cart/#{item.id}", method: :delete %></p>
         </center>
+      </section>
         </td>
       <td>
         <p><%=number_to_currency(cart.subtotal(item))%></p>
