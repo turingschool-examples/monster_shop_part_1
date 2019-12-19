@@ -53,4 +53,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'
   end
+
+  get '/user/password/edit', to: 'users#edit'
+  patch '/user/id', to: 'users#update'
 end
