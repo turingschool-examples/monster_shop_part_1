@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User logging out', type: :feature do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :default_user) }
   before {
     visit "/login"
 
