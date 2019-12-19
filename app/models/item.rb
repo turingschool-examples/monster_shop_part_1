@@ -25,4 +25,10 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.popular(asc_or_desc = "desc")
+    # takes argument of asc or desc. Default is to list most_popular
+    Item.select('items.*, SUM(quantity) AS total_quantity').limit(5).joins(:item_orders).group('items.id').order("total_quantity #{asc_or_desc}")
+
+    # SELECT items.*, sum(item_orders.quantity) AS total_quantity FROM items LEFT JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id;
+  end
 end

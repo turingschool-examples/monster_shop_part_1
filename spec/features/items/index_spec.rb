@@ -56,4 +56,80 @@ RSpec.describe "Items Index Page" do
       expect(page).to_not have_content("#{@dog_bone.name}")
     end
   end
+
+  describe "it has a most popular and least popular section" do
+    it "I see a section for most popular items" do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      bike = meg.items.create(name: "Cool Bike", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      pedal = meg.items.create(name: "Pedal", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      brake = meg.items.create(name: "Brake", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      handlebar = meg.items.create(name: "Handlebar", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      helmet = meg.items.create(name: "Helmet", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_2 = Order.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_3 = Order.create!(name: 'Person', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      item_order_1 = order_1.item_orders.create!(item: bike, price: bike.price, quantity: 1)
+      item_order_2 = order_2.item_orders.create!(item: bike, price: bike.price, quantity: 20)
+      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 5)
+      item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 7)
+      item_order_1 = order_1.item_orders.create!(item: pedal, price: pedal.price, quantity: 10)
+      item_order_3 = order_3.item_orders.create!(item: handlebar, price: handlebar.price, quantity: 6)
+      item_order_3 = order_3.item_orders.create!(item: helmet, price: handlebar.price, quantity: 4)
+      item_order_3 = order_3.item_orders.create!(item: brake, price: brake.price, quantity: 2)
+
+      visit "/items"
+
+      within "#most-popular" do
+        expect(page.all('li')[0]).to have_content(bike.name)
+        expect(page.all('li')[0]).to have_content("21")
+        expect(page.all('li')[1]).to have_content(tire.name)
+        expect(page.all('li')[1]).to have_content("12")
+        expect(page.all('li')[2]).to have_content(pedal.name)
+        expect(page.all('li')[2]).to have_content("10")
+        expect(page.all('li')[3]).to have_content(handlebar.name)
+        expect(page.all('li')[3]).to have_content("6")
+        expect(page.all('li')[4]).to have_content(helmet.name)
+        expect(page.all('li')[4]).to have_content("4")
+        expect(page).to_not have_content(brake.name)
+      end
+    end
+
+    it "I see a section for least popular items" do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      bike = meg.items.create(name: "Cool Bike", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      pedal = meg.items.create(name: "Pedal", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      brake = meg.items.create(name: "Brake", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      handlebar = meg.items.create(name: "Handlebar", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      helmet = meg.items.create(name: "Helmet", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_2 = Order.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_3 = Order.create!(name: 'Person', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      item_order_1 = order_1.item_orders.create!(item: bike, price: bike.price, quantity: 1)
+      item_order_2 = order_2.item_orders.create!(item: bike, price: bike.price, quantity: 20)
+      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 5)
+      item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 7)
+      item_order_1 = order_1.item_orders.create!(item: pedal, price: pedal.price, quantity: 10)
+      item_order_3 = order_3.item_orders.create!(item: handlebar, price: handlebar.price, quantity: 6)
+      item_order_3 = order_3.item_orders.create!(item: helmet, price: handlebar.price, quantity: 4)
+      item_order_3 = order_3.item_orders.create!(item: brake, price: brake.price, quantity: 2)
+
+      visit "/items"
+
+      within "#least-popular" do
+        expect(page.all('li')[0]).to have_content(brake.name)
+        expect(page.all('li')[0]).to have_content("2")
+        expect(page.all('li')[1]).to have_content(helmet.name)
+        expect(page.all('li')[1]).to have_content("4")
+        expect(page.all('li')[2]).to have_content(handlebar.name)
+        expect(page.all('li')[2]).to have_content("6")
+        expect(page.all('li')[3]).to have_content(pedal.name)
+        expect(page.all('li')[3]).to have_content("10")
+        expect(page.all('li')[4]).to have_content(tire.name)
+        expect(page.all('li')[4]).to have_content("12")
+        expect(page).to_not have_content(bike.name)
+      end
+    end
+  end
 end
