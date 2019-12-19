@@ -57,5 +57,19 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@dog_bone.image}']")
       end
     end
+
+    xit "text" do
+      visit '/items'
+
+      within "#stats" do
+        within "#most-popular" do
+          expect(page).to have_content("Most popular items on the site:")
+        end
+
+        within "#least-popular" do
+          expect(page).to have_content("Least popular items on the site:")
+        end
+      end
+    end
   end
 end
