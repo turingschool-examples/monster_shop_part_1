@@ -7,7 +7,11 @@ class ApplicationController < ActionController::Base
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
   end
 
+<<<<<<< HEAD
 	helper_method :current_user, :current_merchant?
+=======
+	helper_method :current_user, :current_default?, :current_admin?, :current_user_name
+>>>>>>> master
 
 	def current_user
 		@current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -28,4 +32,10 @@ class ApplicationController < ActionController::Base
     return false unless session[:user_id]
     current_user && current_user.default?
   end
+
+  def current_user_name
+    user = User.find(session[:user_id])
+    user.name
+  end
+
 end

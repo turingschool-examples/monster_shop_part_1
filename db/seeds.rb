@@ -22,34 +22,33 @@ dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it
 
 
 user = User.create(
-  name: "Monica",
-  street_address: "Fort Gordon st 1",
-  city: "Fort Gordon",
-  state: "GA",
-  zip: "30905",
+  name:  Faker::Name.first_name,
+  street_address: Faker::Address.street_address,
+  city: Faker::Address.city,
+  state: Faker::Address.state,
+  zip: Faker::Address.zip,
   email: "user@gmail.com",
   password: "user",
   role: 0
 )
-
 admin = User.create(
-  name: "Joey",
-  street_address: "123 Five Street",
-  city: "Denver",
-  state: "CO",
-  zip: "80210",
-  email: "admin@gmail.com",
-  password: "admin",
-  role: 1
+    name:  Faker::Name.first_name,
+    street_address: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    zip: Faker::Address.zip,
+    email: "admin@gmail.com",
+    password: "admin",
+    role: 1
+)
+merchant = User.create(
+    name:  Faker::Name.first_name,
+    street_address: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    zip: Faker::Address.zip,
+    email: "merchant@gmail.com",
+    password: "merchant",
+    role: 2
 )
 
-merchant = User.create(
-  name: "Ross",
-  street_address: "123 Broad Street",
-  city: "Augusta",
-  state: "GA",
-  zip: "30905",
-  email: "merchant@gmail.com",
-  password: "merchant",
-  role: 2
-)
