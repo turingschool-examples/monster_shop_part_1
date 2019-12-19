@@ -16,7 +16,13 @@ class UsersController < ApplicationController
   end
 
   def show
+    # require "pry"; binding.pry
+    @user = User.find_by(params[:id])
     render file: '/public/404' unless current_user && current_user.user?
+  end
+
+  def edit
+    
   end
 
   private
