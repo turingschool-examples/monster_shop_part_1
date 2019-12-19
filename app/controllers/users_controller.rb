@@ -18,6 +18,21 @@ class UsersController < ApplicationController
     @user = User.find(session[:user_id])
   end
 
+  def edit
+    @new_user = User.find(params[:id])
+  end
+
+  def update
+    user = User.find(params[:id])
+    user.update(user_params)
+    if user.save
+      flash[:notice] = "Data updated successfully"
+      redirect_to "/profile"
+    else
+      flash[:notice] = "Data not saved"
+    end
+  end
+
   private
 
   def user_params
