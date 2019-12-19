@@ -16,4 +16,28 @@ RSpec.describe 'As a user' do
     expect(page).to have_content("The page you were looking for doesn't exist (404)")
 
   end
+
+  it "can see the user's profile" do
+
+    user = create(:random_user, role: 0)
+
+    visit '/'
+
+    click_link "Login"
+    expect(current_path).to eq('/login')
+
+    fill_in :email, with: user.email
+    fill_in :password, with: user.password
+
+    click_button "Login"
+
+    expect(page).to have_content("#{user.name}")
+    expect(page).to have_content("#{user.address}")
+    expect(page).to have_content("#{user.city}")
+    expect(page).to have_content("#{user.state}")
+    expect(page).to have_content("#{user.zip_code}")
+    expect(page).to have_content("#{user.email}")
+
+    expect(page).to have_link("Edit Profile")
+  end
 end
