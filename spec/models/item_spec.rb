@@ -17,7 +17,7 @@ describe Item, type: :model do
     it {should have_many(:orders).through(:item_orders)}
   end
 
-  describe "instance methods" do
+  describe "model methods" do
     before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
@@ -46,6 +46,58 @@ describe Item, type: :model do
       order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
+    end
+
+    describe "most_popular" do
+      it "can find five most popular items" do
+        item_1 = create(:random_item, merchant_id: @bike_shop.id)
+        item_2 = create(:random_item, merchant_id: @bike_shop.id)
+        item_3 = create(:random_item, merchant_id: @bike_shop.id)
+        item_4 = create(:random_item, merchant_id: @bike_shop.id)
+        item_5 = create(:random_item, merchant_id: @bike_shop.id)
+        item_6 = create(:random_item, merchant_id: @bike_shop.id)
+
+        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+
+        ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
+        ItemOrder.create!(item: item_2, order: order_1, price: item_2.price, quantity: 3)
+        ItemOrder.create!(item: item_3, order: order_1, price: item_3.price, quantity: 9)
+        ItemOrder.create!(item: item_4, order: order_1, price: item_4.price, quantity: 4)
+        ItemOrder.create!(item: item_5, order: order_1, price: item_5.price, quantity: 2)
+        ItemOrder.create!(item: item_6, order: order_1, price: item_6.price, quantity: 7)
+
+        expect(Item.most_popular[0]).to eq(item_3)
+        expect(Item.most_popular[1]).to eq(item_6)
+        expect(Item.most_popular[2]).to eq(item_1)
+        expect(Item.most_popular[3]).to eq(item_4)
+        expect(Item.most_popular[4]).to eq(item_2)
+      end
+    end
+
+    describe "most_popular" do
+      it "can find five least popular items" do
+        item_1 = create(:random_item, merchant_id: @bike_shop.id)
+        item_2 = create(:random_item, merchant_id: @bike_shop.id)
+        item_3 = create(:random_item, merchant_id: @bike_shop.id)
+        item_4 = create(:random_item, merchant_id: @bike_shop.id)
+        item_5 = create(:random_item, merchant_id: @bike_shop.id)
+        item_6 = create(:random_item, merchant_id: @bike_shop.id)
+
+        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+
+        ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
+        ItemOrder.create!(item: item_2, order: order_1, price: item_2.price, quantity: 3)
+        ItemOrder.create!(item: item_3, order: order_1, price: item_3.price, quantity: 9)
+        ItemOrder.create!(item: item_4, order: order_1, price: item_4.price, quantity: 4)
+        ItemOrder.create!(item: item_5, order: order_1, price: item_5.price, quantity: 2)
+        ItemOrder.create!(item: item_6, order: order_1, price: item_6.price, quantity: 7)
+
+        expect(Item.least_popular[0]).to eq(item_5)
+        expect(Item.least_popular[1]).to eq(item_2)
+        expect(Item.least_popular[2]).to eq(item_4)
+        expect(Item.least_popular[3]).to eq(item_1)
+        expect(Item.least_popular[4]).to eq(item_6)
+      end
     end
   end
 end
