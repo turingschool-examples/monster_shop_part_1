@@ -82,7 +82,7 @@ RSpec.describe "as a user" do
   end
 
   describe "all users can log out" do
-      it 'can log out as a registered user' do
+     it 'can log out as a registered user' do
         user = create(:random_user)
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -93,6 +93,8 @@ RSpec.describe "as a user" do
         visit "/items/#{@tire.id}"
         click_on "Add To Cart"
         click_on "Log Out"
+
+
 
         expect(current_path).to eq("/")
         expect(page).to have_content("You have been logged out")
