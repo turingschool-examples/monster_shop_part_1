@@ -7,4 +7,5 @@
   <%= @user.zip %><br/>
   <%= @user.email %><br/><br/>
 
-  <%=link_to "Edit Profile", "/profile/edit" %>
+  <%= link_to "Edit Profile", "/profile/edit", class: 'btn btn-primary' %>
+  <%= link_to 'Update password', '/user/edit-pw', class: 'btn btn-success' %>
