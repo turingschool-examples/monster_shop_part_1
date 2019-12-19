@@ -28,7 +28,11 @@ class Item <ApplicationRecord
   def self.most_popular
     # will return top 5 by quantity. Can call total_quantity on objects
     Item.select('items.*, SUM(quantity) AS total_quantity').limit(5).joins(:item_orders).group('items.id').order('total_quantity desc')
-    
+
     # SELECT items.*, sum(item_orders.quantity) AS total_quantity FROM items LEFT JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id;
+  end
+
+  def self.least_popular
+    Item.select('items.*, SUM(quantity) AS total_quantity').limit(5).joins(:item_orders).group('items.id').order('total_quantity')
   end
 end
