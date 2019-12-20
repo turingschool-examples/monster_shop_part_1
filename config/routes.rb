@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
-  
+
   delete "/cart/:item_id/quantity", to: "cart#remove_item_quantity"
 
   get "/orders/new", to: "orders#new"
@@ -57,5 +57,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: "admins#show"
     get '/users', to: "users#index"
+    patch '/orders/:id', to: "orders#update"
   end
 end
