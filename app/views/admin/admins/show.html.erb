@@ -7,7 +7,7 @@
     <%= link_to "#{order.name}", "/admin" %>
     <%= order.id %>
     <%= order.created_at %>
-    <%= link_to "Ship Order", "/orders/:id" %>
+    <%= link_to "Ship Order", "admin/orders/#{order.id}", method: :patch %>
   </div>
   <% end %>
 </section>
