@@ -28,12 +28,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(session[:user_id])
-    user.update(user_params)
-    if user.save
+    @user = User.find(session[:user_id])
+    @user.update(user_params)
+    if @user.save
       flash[:success] = "You have successfully edited your profile!"
       redirect_to '/profile'
     else
+      flash[:error] = @user.errors.full_messages.to_sentence
       render :edit
     end
   end
