@@ -40,4 +40,24 @@ RSpec.describe 'As a user' do
 
     expect(page).to have_link("Edit Profile")
   end
+  describe 'registered user can not edit profile email that belongs to other user' do
+    it 'redirects back to edit profile page and displays flash message if duplicate' do
+
+      user2 = create(:random_user, role: 0)
+      user = create(:random_user, role: 0)
+      visit '/'
+      click_link "Login"
+      fill_in :email, with: user.email
+      fill_in :password, with: user.password
+      click_button "Login"
+      expect(current_path).to eq("/profile")
+      click_link "Edit Profile"
+      fill_in :email, with: user2.email
+      click_button "Submit"
+
+      expect(page).to have_content("Email has already been taken")
+      expect(current_path).to eq('/profile/edit')
+
+    end
+  end
 end
