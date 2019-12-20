@@ -1,37 +1,46 @@
 <h1>Orders:</h1>
 
-<h2>Packaged:</h2>
-<% @orders.status("packaged").each do |order| %>
+<section id="packaged">
+  <h2>Packaged:</h2>
+  <% @orders.status("packaged").each do |order| %>
   <div id="order-<%= order.id %>">
     <%= link_to "#{order.name}", "/admin" %>
     <%= order.id %>
     <%= order.created_at %>
+    <%= link_to %>
   </div>
-<% end %>
+  <% end %>
+</section>
 
-<h2>Pending:</h2>
-<% @orders.status("pending").each do |order| %>
-  <div id="order-<%= order.id %>">
-    <%= link_to "#{order.name}", "/admin" %>
-    <%= order.id %>
-    <%= order.created_at %>
-  </div>
-<% end %>
+<section id="pending">
+  <h2>Pending:</h2>
+  <% @orders.status("pending").each do |order| %>
+    <div id="order-<%= order.id %>">
+      <%= link_to "#{order.name}", "/admin" %>
+      <%= order.id %>
+      <%= order.created_at %>
+    </div>
+  <% end %>
+</section>
 
-<h2>Shipped:</h2>
-<% @orders.status("shipped").each do |order| %>
+<section id="shipped">
+  <h2>Shipped:</h2>
+  <% @orders.status("shipped").each do |order| %>
   <div id="order-<%= order.id %>">
     <%= link_to "#{order.name}", "/admin" %>
     <%= order.id %>
     <%= order.created_at %>
   </div>
-<% end %>
+  <% end %>
+</section>
 
-<h2>Cancelled:</h2>
-<% @orders.status("cancelled").each do |order| %>
+<section id="cancelled">
+  <h2>Cancelled:</h2>
+  <% @orders.status("cancelled").each do |order| %>
   <div id="order-<%= order.id %>">
     <%= link_to "#{order.name}", "/admin" %>
     <%= order.id %>
     <%= order.created_at %>
   </div>
-<% end %>
+  <% end %>
+</section>
