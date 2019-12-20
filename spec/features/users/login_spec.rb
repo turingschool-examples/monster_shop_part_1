@@ -40,6 +40,7 @@ RSpec.describe "as a user" do
 
     fill_in :email, with: user.email
     fill_in :password, with: 'jumbalaya'
+    click_button 'Login'
 
     expect(current_path).to eq('/login')
     expect(page).not_to have_link('Logout')
@@ -47,6 +48,7 @@ RSpec.describe "as a user" do
 
     fill_in :email, with: 'prisonmike@gmail.com'
     fill_in :password, with: 'jumbalaya'
+    click_button "Login"
 
     expect(current_path).to eq('/login')
     expect(page).not_to have_link('Logout')
