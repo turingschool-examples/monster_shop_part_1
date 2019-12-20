@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
-  
+
   delete "/cart/:item_id/quantity", to: "cart#remove_item_quantity"
 
   get "/orders/new", to: "orders#new"
@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get "/users", to: "sessions#show"
   get "/profile", to: "users#show"
   get "/profile/orders", to: "orders#index"
+  get "profile/orders/:id", to: "orders#show"
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
