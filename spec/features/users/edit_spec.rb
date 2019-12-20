@@ -39,7 +39,7 @@ RSpec.describe 'User profile page' do
     fill_in :city, with: "Different City"
     fill_in :state, with: "TX"
     fill_in :zip, with: 70291
-    click_button "Update Profile"
+    click_button "Update My Profile"
 
     expect(current_path).to eq('/profile')
     expect(page).to have_content("Your profile has been updated.")
@@ -52,7 +52,7 @@ RSpec.describe 'User profile page' do
 
     click_link "Edit your profile"
     fill_in :name, with: "Changed my name again"
-    click_button "Update Profile"
+    click_button "Update My Profile"
 
     expect(current_path).to eq('/profile')
     expect(page).to have_content("Changed my name again")
@@ -129,7 +129,7 @@ RSpec.describe 'User profile page' do
     fill_in :state, with: "TX"
     fill_in :zip, with: 70291
     fill_in :email, with: "another_user@user.com"
-    click_button "Update Profile"
+    click_button "Update My Profile"
 
     expect(current_path).to eq('/profile')
     expect(page).to have_content('Email has already been taken')
