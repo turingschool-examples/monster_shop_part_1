@@ -23,9 +23,9 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
     if request.env['PATH_INFO'] == "/profile/edit"
-      render partial: 'edit_profile'
+      @profile_change = true
     else
-      render partial: 'edit_password'
+      @profile_change = false
     end
   end
 
@@ -38,7 +38,8 @@ class UsersController < ApplicationController
         redirect_to '/profile'
       else
         flash.now[:error] = @user.errors.full_messages.to_sentence
-        redirect_to '/profile/edit'
+        @profile_change = true
+        render :edit
       end
     else request.env['PATH_INFO'] == "/profile/password"
       @user.update(password_params)
