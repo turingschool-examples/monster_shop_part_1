@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Order show page", type: :feature do
-  it "Can show a specific order" do
-    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+  it "can show a specific order" do
+    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user1@user.com", password: "user", password_confirmation: "user")
     dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
     pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
@@ -30,13 +30,18 @@ RSpec.describe "Order show page", type: :feature do
       expect(page).to have_content(item_order_1.item.description)
       expect(page).to have_content(item_order_1.quantity)
       expect(page).to have_content(item_order_1.item.price)
-  end
-
+      click_on "#{item_order_1.item.id}-photo"
+      expect(current_path).to eq("/items/#{item_order_1.item_id}")
+    end
+    
+  visit "/profile/orders/#{order_1.id}"
     within "#item-#{item_order_2.item_id}" do
       expect(page).to have_content(item_order_2.item.name)
       expect(page).to have_content(item_order_2.item.description)
       expect(page).to have_content(item_order_2.quantity)
       expect(page).to have_content(item_order_2.item.price)
+      click_on "#{item_order_2.item.id}-photo"
+      expect(current_path).to eq("/items/#{item_order_2.item_id}")
     end
   end
 end
