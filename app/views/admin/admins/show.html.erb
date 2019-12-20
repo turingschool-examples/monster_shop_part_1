@@ -1,0 +1,9 @@
+<h2>Orders:</h2>
+
+<% @orders.each do |order| %>
+  <div id="order-<%= order.id %>">
+    <%= link_to "#{order.name}", "/admin" %>
+    <%= order.id %>
+    <%= order.created_at %>
+  </div>
+<% end %>
