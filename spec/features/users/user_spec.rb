@@ -78,11 +78,3 @@ RSpec.describe 'As a user' do
     expect(current_path).to eq("/profile/orders")
   end
 end
-  #
-  # User Story 27, User Profile displays Orders link
-  #
-  # As a registered user
-  # When I visit my Profile page
-  # And I have orders placed in the system
-  # Then I see a link on my profile page called "My Orders"
-  # When I click this link my URI path is "/profile/orders"
