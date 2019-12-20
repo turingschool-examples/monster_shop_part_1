@@ -11,11 +11,12 @@ Rails.application.routes.draw do
 
   resources :items do
     resources :reviews, only: [:new, :create]
-  end
+  end 
 
   resources :reviews, only: [:edit, :update, :destroy]
 
   post "/cart/:item_id", to: "cart#add_item"
+  patch "/cart", to: "cart#increment_decrement"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
@@ -25,13 +26,18 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new'
   post '/register', to: "users#create"
 
+  get '/user/edit-pw', to: 'user_password#edit'
+  patch '/user/edit-pw', to: 'user_password#update'
+
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/profile', to: "sessions#show"
 
+
   get "/users/:id/edit", to: "users#edit"
   patch "/users/:id/edit", to: "users#update"
+
 
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'

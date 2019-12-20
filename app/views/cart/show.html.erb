@@ -30,8 +30,12 @@
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
-          <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
+          <section id="add-count-<%= item.id%>">
+            <%= button_to '+', "/cart?increment_decrement=increment&item_id=#{item.id}", method: :patch %>
+              <p><%=quantity%></p>
+            <%= button_to '-', "/cart?increment_decrement=decrement&item_id=#{item.id}", method: :patch %>
+          </section>
+          <p><%= link_to "Remove", "/cart/#{item.id}", method: :delete %></p>
         </center>
         </td>
       <td>

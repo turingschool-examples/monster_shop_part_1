@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :cart, :current_user
+  helper_method :cart, :current_user, :user_redirect
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::RoutingError, with: -> { render_404  }
@@ -19,5 +19,15 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def user_redirect(user)
+    if user.admin?
+      redirect_to '/admin/dashboard'
+    elsif user.merchant?
+      redirect_to '/merchant/dashboard'
+    else
+      redirect_to '/profile'
+   end
   end
 end

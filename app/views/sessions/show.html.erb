@@ -8,3 +8,5 @@
   <%= @user.email %><br/><br/>
 
   <%=link_to "Edit Profile", "/users/#{@user.id}/edit" %>
+  <%= link_to 'Update password', '/user/edit-pw', class: 'btn btn-success' %>
+
