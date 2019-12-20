@@ -102,4 +102,36 @@ RSpec.describe 'User profile page' do
     click_button 'Log In'
     expect(current_path).to eq('/profile')
   end
+
+  it "I must enter a unique email when I try to edit my profile or I receive an error message" do
+    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+    user_2 = User.create!(name: "User 2", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "another_user@user.com", password: "user2", password_confirmation: "user2")
+
+    visit '/'
+
+    within '.topnav' do
+      click_link "Log In"
+    end
+
+    fill_in :email, with: "user@user.com"
+    fill_in :password, with: "user"
+    click_button "Log In"
+
+    within '.topnav' do
+      click_link "Profile"
+    end
+
+    click_link "Edit your profile"
+
+    fill_in :name, with: "Changed User"
+    fill_in :address, with: "90210 Different Address Dr."
+    fill_in :city, with: "Different City"
+    fill_in :state, with: "TX"
+    fill_in :zip, with: 70291
+    fill_in :email, with: "another_user@user.com"
+    click_button "Update Profile"
+
+    expect(current_path).to eq('/profile/edit')
+    expect(page).to have_content('Email has already been taken')
+  end
 end
