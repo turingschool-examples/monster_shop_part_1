@@ -82,6 +82,8 @@ RSpec.describe "Items Index Page" do
     end
 
     it "shows most and least popular items" do
+      user = create(:random_user)
+
       item_1 = create(:random_item, merchant_id: @meg.id)
       item_2 = create(:random_item, merchant_id: @meg.id)
       item_3 = create(:random_item, merchant_id: @meg.id)
@@ -90,8 +92,8 @@ RSpec.describe "Items Index Page" do
       item_6 = create(:random_item, merchant_id: @meg.id)
       item_7 = create(:random_item, merchant_id: @meg.id)
 
-      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      order_2 = Order.create!(name: 'Madi', address: '123 Hi Ave', city: 'Denver', state: 'CO', zip: '80211')
+      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_2 = user.orders.create!(name: 'Madi', address: '123 Hi Ave', city: 'Denver', state: 'CO', zip: '80211')
 
       ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
       ItemOrder.create!(item: item_1, order: order_2, price: item_1.price, quantity: 3)
@@ -126,7 +128,7 @@ RSpec.describe "Items Index Page" do
           expect(page).to have_content(item_4.name)
           expect(page).to_not have_content(item_5.name)
           expect(page).to_not have_content(item_7.name)
-        end     
+        end
       end
     end
   end

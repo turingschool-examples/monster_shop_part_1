@@ -27,6 +27,9 @@ describe Item, type: :model do
       @review_3 = @chain.reviews.create(title: "Meh place", content: "They have meh bike stuff and I probably won't come back", rating: 1)
       @review_4 = @chain.reviews.create(title: "Not too impressed", content: "v basic bike shop", rating: 2)
       @review_5 = @chain.reviews.create(title: "Okay place :/", content: "Brian's cool and all but just an okay selection of items", rating: 3)
+
+      @user = create(:random_user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
 
     it "calculate average review" do
@@ -43,7 +46,7 @@ describe Item, type: :model do
 
     it 'no orders' do
       expect(@chain.no_orders?).to eq(true)
-      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order = @user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
@@ -57,7 +60,7 @@ describe Item, type: :model do
         item_5 = create(:random_item, merchant_id: @bike_shop.id)
         item_6 = create(:random_item, merchant_id: @bike_shop.id)
 
-        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+        order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
         ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
         ItemOrder.create!(item: item_2, order: order_1, price: item_2.price, quantity: 3)
@@ -83,7 +86,7 @@ describe Item, type: :model do
         item_5 = create(:random_item, merchant_id: @bike_shop.id)
         item_6 = create(:random_item, merchant_id: @bike_shop.id)
 
-        order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+        order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
         ItemOrder.create!(item: item_1, order: order_1, price: item_1.price, quantity: 5)
         ItemOrder.create!(item: item_2, order: order_1, price: item_2.price, quantity: 3)

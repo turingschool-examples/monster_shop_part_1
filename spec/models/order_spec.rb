@@ -17,15 +17,7 @@ describe Order, type: :model do
 
   describe 'instance methods' do
     before :each do
-      user = User.create!(name: "Jordan",
-                          address: "394 High St",
-                          city: "Denver",
-                          state: "CO",
-                          zip_code: "80602",
-                          email: "hotones@hotmail.com",
-                          password: 'dementors',
-                          password_confirmation: 'dementors',
-                          role: 0)
+      user = create(:random_user)
 
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
