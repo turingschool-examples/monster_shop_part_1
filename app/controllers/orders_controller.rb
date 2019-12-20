@@ -1,7 +1,6 @@
 class OrdersController <ApplicationController
 
   def new
-
   end
 
   def show
@@ -9,7 +8,8 @@ class OrdersController <ApplicationController
   end
 
   def create
-    order = Order.create(order_params)
+    user = current_user
+    order = user.orders.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({
@@ -22,7 +22,7 @@ class OrdersController <ApplicationController
       redirect_to "/profile/orders"
       flash[:notice] = "Your order was created!"
     else
-      flash[:notice] = "Please complete address form to create an order."
+      flash[:notice] = order.errors.full_messages.to_sentence
       render :new
     end
   end
