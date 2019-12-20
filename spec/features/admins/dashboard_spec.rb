@@ -3,15 +3,18 @@ require 'rails_helper'
 RSpec.describe "admin dashboard" do
   before :each do
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
     @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @bike = @meg.items.create(name: "Cool Bike", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @pedal = @meg.items.create(name: "Pedal", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @brake = @meg.items.create(name: "Brake", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @handlebar = @meg.items.create(name: "Handlebar", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @helmet = @meg.items.create(name: "Helmet", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-    @order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-    @order_2 = Order.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
-    @order_3 = Order.create!(name: 'Person', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
+
+    @user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+    @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+    @order_2 = @user.orders.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+    @order_3 = @user.orders.create!(name: 'Person', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
     @item_order_1 = @order_1.item_orders.create!(item: @bike, price: @bike.price, quantity: 1)
     @item_order_2 = @order_2.item_orders.create!(item: @bike, price: @bike.price, quantity: 20)
     @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 5)
@@ -65,7 +68,7 @@ RSpec.describe "admin dashboard" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-    order_4 = Order.create!(name: 'Shipme', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+    order_4 = @user.orders.create!(name: 'Shipme', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
 
     visit "/admin"
 

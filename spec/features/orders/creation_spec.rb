@@ -114,7 +114,7 @@ RSpec.describe("Order Creation") do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       name = "Bert"
-      address = "123 Sesame St."
+      address = "123 Sesame St"
       city = "NYC"
       state = "New York"
       zip = 10001
@@ -128,7 +128,6 @@ RSpec.describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
-
       expect(current_path).to eq("/profile/orders")
       expect(page).to have_content("Your order was created!")
       expect(page).to have_content("Order number: #{new_order.id}")
