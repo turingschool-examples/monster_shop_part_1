@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   get 'profile/edit', to:'users#edit'
   patch 'profile/edit', to:'users#update'
-  get  '/profile/orders', to:'userorders#index'
+  get  '/profile/orders', to:'orders#index'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

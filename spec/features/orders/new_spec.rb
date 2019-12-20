@@ -50,6 +50,7 @@ RSpec.describe("New Order Page") do
       end
 
       expect(page).to have_content("Total: $142")
+
     end
 
     it "I see a form where I can enter my shipping info" do
