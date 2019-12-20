@@ -3,7 +3,7 @@
 <% @user.orders.each do |order| %>
   <section class="shipping-address">
       <ul>
-        <li><b>Order ID:</b> <%= order.id %></li>
+        <li><b>Order ID:</b> <%= link_to "#{order.id}", "/profile/orders/#{order.id}" %></li>
         <li><b>Name on Order:</b> <%= order.name %></li>
         <li><b>Address:</b> <%= order.address %>, <%= order.city %>,
           <%= order.state %> <%= order.zip %></li>
