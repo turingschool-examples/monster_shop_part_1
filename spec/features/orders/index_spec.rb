@@ -19,8 +19,11 @@ RSpec.describe 'as a user when i visit my orders page', type: :feature do
   it 'will display all orders' do
     visit '/profile/orders'
 
-    expect(page).to have_content(@order[0].id)
-    expect(page).to have_content(@order[1].id)
-    expect(page).to have_content(@order[2].id)
+    expect(page).to have_content(@orders[0].id)
+    expect(page).to have_content(@orders[0].status)
+    expect(page).to have_content(@orders[1].id)
+    expect(page).to have_content(@orders[1].status)
+    expect(page).to have_content(@orders[2].id)
+    expect(page).to have_content(@orders[2].status)
   end
 end
