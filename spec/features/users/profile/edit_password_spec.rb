@@ -37,16 +37,16 @@ RSpec.describe "As a User" do
 
 			click_on 'Edit Password'
 
-			expect(page).to eq("/users/profile/edit_password")
+			expect(current_path).to eq("/users/profile/edit_password")
 			expect(page).to have_content("Password")
-			expect(page).to have_content("Confirm Password")
+			expect(page).to have_content("Password confirmation")
 
 			fill_in :password, with: 'user2'
-			fill_in :confirm_password, with: 'user2'
+			fill_in :password_confirmation, with: 'user2'
 
 			click_button "Change Password"
 
-			expect(page).to eq('/users/profile')
+			expect(current_path).to eq('/users/profile')
 			expect(page).to have_content('Your Password has been updated!')
 		end
 
@@ -54,16 +54,16 @@ RSpec.describe "As a User" do
 
 			click_on 'Edit Password'
 
-			expect(page).to eq("/users/profile/edit_password")
+			expect(current_path).to eq("/users/profile/edit_password")
 			expect(page).to have_content("Password")
-			expect(page).to have_content("Confirm Password")
+			expect(page).to have_content("Password confirmation")
 
 			fill_in :password, with: 'user2'
-			fill_in :confirm_password, with: 'user1'
+			fill_in :password_confirmation, with: 'user1'
 
 			click_button "Change Password"
 
-			expect(page).to eq('/users/profile/edit_password')
+			expect(current_path).to eq('/users/profile/edit_password')
 			expect(page).to have_content('What you entered did not match, Please try again')
 		end
 	end

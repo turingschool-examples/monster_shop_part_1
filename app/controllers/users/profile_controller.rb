@@ -3,19 +3,25 @@ class Users::ProfileController < Users::BaseController
 		# @user = User.find(params[:profile])
   end
 
+	def edit_password
+
+	end
+
 	def update_password
-	  @user = current_user
-	  if @user.update(user_params)
-	    bypass_sign_in(@user)
-	    redirect_to "users/profile"
+	  @user = User.create(password_params)
+	  if @user.password == @user.password_confirmation
+			@user.save
+			flash[:success] = "Your Password has been updated!"
+	    redirect_to "/users/profile"
 	  else
-	    render "edit"
+			flash[:error] = "What you entered did not match, Please try again"
+	    redirect_to "/users/profile/edit_password"
 	  end
 	end
 
 	private
 
- def user_params
-	 params.require(:user).permit(:password, :password_confirmation)
+ def password_params
+	 params.permit(:password, :password_confirmation)
  end
 end
