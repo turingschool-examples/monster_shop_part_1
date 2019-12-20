@@ -7,7 +7,11 @@ class OrdersController < ApplicationController
 
 
   def show
-    @order = Order.find(params[:id])
+    if current_user && current_user.default?
+      @order = Order.find(params[:id])
+    else
+      render 'errors/404'
+    end     
   end
 
   def create
@@ -34,7 +38,7 @@ class OrdersController < ApplicationController
       @orders = current_user.orders
     else
       render 'errors/404'
-    end     
+    end
   end
 
   private
