@@ -14,6 +14,6 @@ RSpec.describe 'As an Admin' do
 
     visit '/cart'
     expect(page).to have_content("The page you were looking for doesn't exist (404)")
-    
+ 
   end
 end
