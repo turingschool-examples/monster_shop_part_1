@@ -1,9 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+<<<<<<< HEAD
   describe 'relationships' do 
     it {should belong_to :merchant}
   end 
+=======
+  describe 'relationships' do
+    it {should have_many :orders}
+  end
+
+
+>>>>>>> 43f2313e3b5427dc348962b0420f9f8ce0e6b6b1
 
   describe 'roles' do
     before :each do
