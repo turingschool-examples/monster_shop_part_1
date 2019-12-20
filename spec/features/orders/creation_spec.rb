@@ -40,7 +40,7 @@ RSpec.describe("Order Creation") do
 
       new_order = Order.last
 
-      expect(current_path).to eq("/orders/#{new_order.id}")
+      expect(current_path).to eq("/profile/orders")
 
       within '.shipping-address' do
         expect(page).to have_content(name)
@@ -128,6 +128,9 @@ RSpec.describe("Order Creation") do
 
         flash = 'You have placed your order!'
         expect(page).to have_content(flash)
+
+        expect(page).to have_content(new_order.grandtotal.to_i)
+        expect(page).to have_content("4")
       end
     end
     # User Story 26, Registered users can check out

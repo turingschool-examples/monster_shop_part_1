@@ -1,0 +1,32 @@
+<h1><%= @user.name %>'s Orders</h1>
+
+<% @user.orders.each do |order| %>
+  <section class="shipping-address">
+      <ul>
+        <li><%= order.name %></li>
+        <li><%= order.address %></li>
+        <li><%= order.city %></li>
+        <li><%= order.state %></li>
+        <li><%= order.zip %></li>
+      </ul>
+  </section>
+    <% order.item_orders.each do |item_order| %>
+  <section id="item-<%= item_order.item.id %>">
+    <ul>
+      <li><%= link_to "#{item_order.item.name}", "/items/#{item_order.item.id}" %></li>
+      <li><%= link_to "#{item_order.item.merchant.name}", "merchants/#{item_order.item.merchant.id}" %></li>
+      <li><%= number_to_currency(item_order.price) %></li>
+      <li><%= item_order.quantity %></li>
+      <li><%= number_to_currency(item_order.subtotal) %></li>
+    </ul>
+  </section>
+  <% end %>
+  <p><%= order.items.length %></p>
+  <section id="grandtotal">
+    <p>Total: <%= number_to_currency(order.grandtotal.to_i) %></p>
+  </section>
+
+  <section id="datecreated">
+    <%= order.created_at %>
+  </section>
+<% end %>
