@@ -42,7 +42,7 @@ RSpec.describe "As a registered user" do
     expect(page).to have_content(order.id)
     expect(page).to have_content(order.created_at)
     expect(page).to have_content(order.updated_at)
-    expect(page).to have_content(order.current_status)
+    expect(page).to have_content(order.current_status.upcase)
     expect(page).to have_content(order.items.count)
     expect(page).to have_content(order.grandtotal)
 
