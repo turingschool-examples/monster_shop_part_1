@@ -1,0 +1,14 @@
+<h1>All Default Users</h1>
+
+<% @users.each do |user| %>
+  <section id= 'user-<%=user.id%>'>
+    <%= user.name %>
+    <%= user.city %>
+    <%= user.state %>
+    <%= user.address %>
+    <%= user.zip %>
+    <%= user.email %>
+    <%= link_to "Edit #{user.name}'s Profile", "/admin/users/#{user.id}/profile/edit" %>
+    <%= link_to "Edit #{user.name}'s Password", "/admin/users/#{user.id}/password/edit" %>
+  </section>
+<% end %>
