@@ -61,12 +61,15 @@ RSpec.describe "admin dashboard" do
   end
 
   it "has a button next to all packaged orders for the admin to ship the order" do
+    admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
     order_4 = Order.create!(name: 'Shipme', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
 
     visit "/admin"
 
-    within "#packaged" do
+    within '#packaged' do
       within "#order-#{@order_2.id}" do
         expect(page).to have_link("Ship Order")
       end
@@ -75,6 +78,8 @@ RSpec.describe "admin dashboard" do
         click_on "Ship Order"
       end
     end
+
+    order_4.reload
 
     expect(order_4.status).to eq("shipped")
 
