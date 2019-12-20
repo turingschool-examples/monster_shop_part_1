@@ -3,6 +3,8 @@ class User < ApplicationRecord
   validates_presence_of :password_digest, require: true
   validates :email, uniqueness: true, presence: true
 
+  has_many :orders
+
   enum role: %w(default admin merchant)
 
   has_secure_password
