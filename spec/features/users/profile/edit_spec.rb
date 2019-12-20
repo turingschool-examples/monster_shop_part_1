@@ -21,13 +21,13 @@ RSpec.describe "As a default user" do
 
 		click_on 'Edit Profile'
 
-		expect(page).to eq("/users/profile/edit")
-		expect(page).to have_content("name")
-		expect(page).to have_content("street address")
-		expect(page).to have_content("city")
-		expect(page).to have_content("state")
-		expect(page).to have_content("zip")
-		expect(page).to have_content("email")
+		expect(current_path).to eq("/users/profile/edit")
+		expect(page).to have_content("Name")
+		expect(page).to have_content("Street address")
+		expect(page).to have_content("City")
+		expect(page).to have_content("State")
+		expect(page).to have_content("Zip")
+		expect(page).to have_content("Email")
 
 		fill_in :name, with: "edit test"
 		fill_in :name, with: "6678 fake st."
