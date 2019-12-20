@@ -65,7 +65,7 @@ RSpec.describe 'Cart show' do
 
         visit '/cart'
 
-        within "#add-count-#{@coffee.id}" do
+        within "#add-count-#{@coffee.id}" do 
           expect(page).to have_content("1")
           click_button "+"
           expect(page).to have_content("2")

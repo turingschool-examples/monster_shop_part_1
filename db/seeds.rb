@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+ItemOrder.destroy_all
 Merchant.destroy_all
 Item.destroy_all
 User.destroy_all
@@ -23,6 +24,16 @@ admin = User.create(
   state: 'CO',
   zip: '80000',
   role: 1
+)
+merchant= User.create(
+  name: 'merchant',
+  email: 'merchant@merchant.com',
+  password: 'password',
+  address: '420 Coffee St',
+  city: 'Coffeetown',
+  state: 'CO',
+  zip: '80000',
+  role: 2 
 )
 merchants.each do |merchant|
   FactoryBot.create_list(:item, 30, merchant: merchant)

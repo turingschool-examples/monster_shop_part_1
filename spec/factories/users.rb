@@ -10,7 +10,7 @@ FactoryBot.define do
   end
 
   factory :random_merchant_user, class: User do
-    name {Faker::Name.name_with_middle}
+    name {Faker::Name.name}
     address {Faker::Address.street_address}
     city {Faker::Address.city}
     state {Faker::Address.state}
