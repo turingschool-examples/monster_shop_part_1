@@ -3,13 +3,11 @@
 <% @user.orders.each do |order| %>
   <section class="shipping-address">
       <ul>
-        <li><b><%= order.id %></li></b>
-        <li><%= order.name %></li>
-        <li><%= order.address %></li>
-        <li><%= order.city %></li>
-        <li><%= order.state %></li>
-        <li><%= order.zip %></li>
-        <li><b>Order Status:<%=order.current_status%></b></li>
+        <li><b>Order ID:</b> <%= order.id %></li>
+        <li><b>Name on Order:</b> <%= order.name %></li>
+        <li><b>Address:</b> <%= order.address %>, <%= order.city %>,
+          <%= order.state %> <%= order.zip %></li>
+        <li><b>Order Status:</b> <%=order.current_status.upcase%></li>
       </ul>
   </section>
     <% order.item_orders.each do |item_order| %>
@@ -23,12 +21,12 @@
     </ul>
   </section>
   <% end %>
-  <p><%= order.items.count %></p>
+  <center>Number of Items in This Order: <%= order.items.count %>
   <section id="grandtotal">
-    <p>Total: <%= number_to_currency(order.grandtotal.to_i) %></p>
+    Total: <%= number_to_currency(order.grandtotal.to_i) %></center>
   </section>
 
-  <section id="datecreated">
-    <%= order.created_at %>
-  </section>
+  <center><section id="datecreated">
+    Order Created On: <%= order.created_at %>
+  </section></center>
 <% end %>
