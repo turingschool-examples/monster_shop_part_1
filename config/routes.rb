@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
 	namespace :users do
 		get "/profile", to: 'profile#show'
+		get "/profile/edit", to: 'profile#edit'
+		patch "/profile", to: 'profile#update'
 	end
 
   get "/merchants", to: "merchants#index"
