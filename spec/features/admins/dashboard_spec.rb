@@ -22,7 +22,7 @@ RSpec.describe "admin dashboard" do
     @item_order_3 = @order_3.item_orders.create!(item: @brake, price: @brake.price, quantity: 2)
   end
 
-  it "displays all orders in the system" do
+  it "displays all orders in the system categorized by order status" do
     admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
@@ -35,16 +35,51 @@ RSpec.describe "admin dashboard" do
       expect(page).to have_content(@order_1.created_at)
     end
 
-    within "#order-#{@order_2.id}" do
+    within "#pending" do
+      expect(page).to have_link(@order_1.name)
+      expect(page).to have_content(@order_1.id)
+      expect(page).to have_content(@order_1.created_at)
+      expect(page).to_not have_content(@order_2.name)
+      expect(page).to_not have_content(@order_3.name)
+    end
+
+    within "#packaged" do
       expect(page).to have_link(@order_2.name)
       expect(page).to have_content(@order_2.id)
       expect(page).to have_content(@order_2.created_at)
+      expect(page).to_not have_content(@order_1.name)
+      expect(page).to_not have_content(@order_3.name)
     end
 
-    within "#order-#{@order_3.id}" do
+    within "#shipped" do
       expect(page).to have_link(@order_3.name)
       expect(page).to have_content(@order_3.id)
       expect(page).to have_content(@order_3.created_at)
+      expect(page).to_not have_content(@order_1.name)
+      expect(page).to_not have_content(@order_2.name)
+    end
+  end
+
+  it "has a button next to all packaged orders for the admin to ship the order" do
+
+    order_4 = Order.create!(name: 'Shipme', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+
+    visit "/admin"
+
+    within "#packaged" do
+      within "#order-#{@order_2.id}" do
+        expect(page).to have_link("Ship Order")
+      end
+
+      within "#order-#{order_4.id}" do
+        click_on "Ship Order"
+      end
+    end
+
+    expect(order_4.status).to eq("shipped")
+
+    within "#packaged" do
+      expect(page).to_not have_content(order_4.name)
     end
   end
 end
