@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
   helper_method :cart, :current_user, :current_default?, :current_admin?, :current_user_name
 
   def cart
@@ -26,4 +25,4 @@ class ApplicationController < ActionController::Base
   def current_default?
     current_user && current_user.default?
   end
-end
+end 

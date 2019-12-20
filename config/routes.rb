@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
 	namespace :users do
 		get "/profile", to: 'profile#show'
+		get "/profile/edit_password", to: 'sessions#edit_password'
+		patch "/profile", to: 'sessions#update_password'
 	end
 
   get "/merchants", to: "merchants#index"
@@ -49,7 +51,6 @@ Rails.application.routes.draw do
 
 	get "/users", to: 'users#index'
 	get "/register", to: 'users#new'
-	# get "/users/profile", to: 'users#show'
 	post "/register", to: 'users#create'
 
 	get '/login', to: 'sessions#new'
