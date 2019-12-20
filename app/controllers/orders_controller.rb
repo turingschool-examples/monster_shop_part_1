@@ -30,7 +30,11 @@ class OrdersController < ApplicationController
   end
 
   def index
-
+    if current_user && current_user.default?
+      @orders = current_user.orders
+    else
+      render 'errors/404'
+    end     
   end
 
   private
@@ -39,13 +43,4 @@ class OrdersController < ApplicationController
     params.permit(:name, :address, :city, :state, :zip)
   end
 
-  def by_user_type
-    if !current_user
-      render 'errors/404'
-    elsif current_user.admin?
-      @orders = Order.all
-    elsif current_user
-      @orders = current_user.orders
-    end
-  end
 end
