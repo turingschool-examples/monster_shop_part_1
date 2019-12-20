@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :items do
     resources :reviews, only: [:new, :create]
-  end 
+  end
 
   resources :reviews, only: [:edit, :update, :destroy]
 
@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
 
   resources :orders, only: [:new, :create, :show]
+  get '/profile/orders', to: 'orders#index'
+  get '/profile/orders/:id', to: 'orders#show'
+  patch '/profile/orders/:id', to: 'order_status#update'
 
   get '/register', to: 'users#new'
   post '/register', to: "users#create"
