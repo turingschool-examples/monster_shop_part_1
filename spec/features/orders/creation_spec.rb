@@ -15,6 +15,13 @@ RSpec.describe("Order Creation") do
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
+      @user = User.create(name: 'Granicus Higgins', email: 'lol@ex.com', address: '123 mail', city: 'Denver', state: 'CO', zip: '80123', password: 'pass123')
+      visit '/'
+      click_link 'Login'
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
+      click_button 'Log In'
+
       visit "/items/#{@paper.id}"
       click_on "Add To Cart"
       visit "/items/#{@paper.id}"
