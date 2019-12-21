@@ -47,7 +47,7 @@ RSpec.describe "user logging out" do
     click_on 'Order number:'
     # binding.pry
     expect(page).to have_link('Cancel Order')
-
+    click_on 'Cancel Order'
 
   end
 end
