@@ -58,6 +58,9 @@ RSpec.describe "user logging out" do
     expect(Order.last.item_orders[0].status).to have_content('unfulfilled')
 
     expect(Order.last.item_orders[1].status).to have_content('unfulfilled')
+
+    expect(tire.inventory).to eq(12)
+
   end
 end
 
