@@ -1,0 +1,9 @@
+<% if @user.merchant != nil %>
+  <h1><%= @user.merchant.name %></h1>
+  <p>Address: <%= @user.merchant.address %></p>
+  <p>City: <%= @user.merchant.city %></p>
+  <p>State: <%= @user.merchant.state %></p>
+  <p>Zip: <%= @user.merchant.zip %></p>
+<% else %>
+  <p> You do not currently belong to a merchant in the system. </p>
+<% end %>

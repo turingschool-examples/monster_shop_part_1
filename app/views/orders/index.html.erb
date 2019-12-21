@@ -4,6 +4,7 @@
     <p><%= link_to "Order number: #{order.id}", "/orders/#{order.id}" %></p>
     <p> Order Created at:<%= "#{order.created_at.day}/#{order.created_at.month}/#{order.created_at.year}" %></p>
     <p> Order Updated at:<%= "#{order.updated_at.day}/#{order.updated_at.month}/#{order.updated_at.year}" %></p>
+    <p><%= link_to "Order number: #{order.id}", "/profile/orders/#{order.id}" %></p>
     <p>Order status: <%= order.status %></p>
     <% if order.total_items < 2%>
     <p>You Order <%= order.total_items %> Item</p>
