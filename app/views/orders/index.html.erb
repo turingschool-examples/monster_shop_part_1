@@ -6,7 +6,7 @@
     <p> Order Updated at:<%= "#{order.updated_at.day}/#{order.updated_at.month}/#{order.updated_at.year}" %></p>
     <p>Order status: <%= order.status %></p>
     <% if order.total_items < 2%>
-      <p>You Order <%= order.total_items %> Item</p>
+    <p>You Order <%= order.total_items %> Item</p>
     <% else %>
       <p>You Order <%= order.total_items %> Items</p>
     <% end %>
