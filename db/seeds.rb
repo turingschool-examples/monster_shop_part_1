@@ -30,8 +30,8 @@ merchant_admin = User.create!(name: "Merchant Admin", address: "1230 East Street
 admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
 
 #orders
-order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-order_2 = Order.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+order_2 = user.orders.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 5)
 item_order_1 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
 item_order_1 = order_1.item_orders.create!(item: dog_bone, price: dog_bone.price, quantity: 10)
