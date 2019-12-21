@@ -13,6 +13,36 @@ describe User, type: :model do
     it {should validate_presence_of :password_confirmation}
   end
 
+  describe 'relationships' do
+    it 'has an optional attribute of merchant_id' do
+      merchant = User.create!(name: "Ima Merchant",
+                              address: "1230 East Street",
+                              city: "Boulder",
+                              state: "CO",
+                              zip: 98273,
+                              email: "veryoriginalemail@gmail.com",
+                              password: "polyester",
+                              password_confirmation: "polyester",
+                              role: 2)
+
+      expect(User.find(merchant.id)).to eq(merchant)
+      expect(User.find(merchant.id).merchant).to eq(nil)
+
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      merchant2 = meg.users.create!(name: "Ima Merchant",
+                              address: "1230 East Street",
+                              city: "Boulder",
+                              state: "CO",
+                              zip: 98273,
+                              email: "differentemail@gmail.com",
+                              password: "polyester",
+                              password_confirmation: "polyester",
+                              role: 2)
+
+      expect(merchant2.merchant).to eq(meg)
+    end
+  end
+
   describe 'roles' do
     it "can be created as a default user" do
       user = User.create!(name: "Normal Person",
