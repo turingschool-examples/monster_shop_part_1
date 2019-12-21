@@ -3,6 +3,10 @@ class Admin::UsersController < Admin::BaseController
     @users = User.where(role: 0)
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   def edit
     @user = User.find(params[:user_id])
     if request.env['PATH_INFO'] == "/admin/users/#{@user.id}/profile/edit"

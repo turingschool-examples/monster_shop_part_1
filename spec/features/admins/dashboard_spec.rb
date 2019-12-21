@@ -60,7 +60,10 @@ RSpec.describe "admin dashboard" do
       expect(page).to have_content(@order_3.created_at)
       expect(page).to_not have_content(@order_1.name)
       expect(page).to_not have_content(@order_2.name)
+      click_on "#{@order_3.name}"
     end
+
+    expect(current_path).to eq("/admin/users/#{@order_3.user.id}/profile")
   end
 
   it "has a button next to all packaged orders for the admin to ship the order" do
