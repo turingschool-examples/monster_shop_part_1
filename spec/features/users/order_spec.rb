@@ -49,6 +49,8 @@ RSpec.describe "user logging out" do
     expect(page).to have_link('Cancel Order')
     click_on 'Cancel Order'
 
+      expect(current_path).to eq("/profile")
+
   end
 end
 
