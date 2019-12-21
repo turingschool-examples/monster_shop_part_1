@@ -54,6 +54,8 @@ RSpec.describe "user logging out" do
     expect(page).to have_content('Your order has been cancelled')
 
     expect(Order.last.status).to eq('cancelled')
+
+    expect(Order.last.item_orders[0].status).to have_content('unfulfilled')
   end
 end
 
