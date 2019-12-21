@@ -1,7 +1,10 @@
 class OrdersController < ApplicationController
 
   def new
-
+    if !session[:user_id]
+      flash[:notice] = 'Please register or login before trying to checkout'
+      redirect_to '/cart'
+    end
   end
 
 
