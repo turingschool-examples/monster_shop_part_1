@@ -35,13 +35,13 @@ RSpec.describe "admin dashboard" do
     within "#order-#{@order_1.id}" do
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content(@order_1.id)
-      expect(page).to have_content(@order_1.created_at)
+      expect(page).to have_content(@order_1.created_at.strftime('%m/%d/%Y'))
     end
 
     within "#pending" do
       expect(page).to have_link(@order_1.name)
       expect(page).to have_content(@order_1.id)
-      expect(page).to have_content(@order_1.created_at)
+      expect(page).to have_content(@order_1.created_at.strftime('%m/%d/%Y'))
       expect(page).to_not have_content(@order_2.name)
       expect(page).to_not have_content(@order_3.name)
     end
@@ -57,7 +57,7 @@ RSpec.describe "admin dashboard" do
     within "#shipped" do
       expect(page).to have_link(@order_3.name)
       expect(page).to have_content(@order_3.id)
-      expect(page).to have_content(@order_3.created_at)
+      expect(page).to have_content(@order_3.created_at.strftime('%m/%d/%Y'))
       expect(page).to_not have_content(@order_1.name)
       expect(page).to_not have_content(@order_2.name)
       click_on "#{@order_3.name}"
