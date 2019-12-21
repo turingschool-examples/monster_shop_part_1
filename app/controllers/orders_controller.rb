@@ -1,7 +1,6 @@
 class OrdersController <ApplicationController
 
   def new
-
   end
 
   def show
@@ -9,7 +8,8 @@ class OrdersController <ApplicationController
   end
 
   def create
-    order = Order.create(order_params)
+    user = current_user
+    order = user.orders.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({
@@ -19,13 +19,29 @@ class OrdersController <ApplicationController
           })
       end
       session.delete(:cart)
-      redirect_to "/orders/#{order.id}"
+      redirect_to "/profile/orders"
+      flash[:notice] = "Your order was created!"
     else
-      flash[:notice] = "Please complete address form to create an order."
+      flash[:notice] = order.errors.full_messages.to_sentence
       render :new
     end
   end
 
+  def index
+    @orders = Order.all
+  end
+
+  def cancele
+    order = Order.find(params[:id])
+    if order.status == "pending"
+      order.update("status" => "cancelled")
+      redirect_to '/profile'
+      flash[:notice] = 'Your order has been cancelled'
+    else
+      redirect_to "/orders/#{order.id}"
+      flash[:error] = 'Your cant be cancelled because the seller has shipped'
+    end
+  end
 
   private
 

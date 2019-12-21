@@ -1,0 +1,5 @@
+<% if @profile_change == true %>
+  <%= render partial: "edit_profile", locals: {path: '/profile', method: :patch, button: 'Update My Profile'} %>
+<% elsif @profile_change == false %>
+  <%= render partial: "edit_password", locals: {path: '/profile/password', method: :patch, button: 'Update My Password'} %>
+<% end %>
