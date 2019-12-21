@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe 'relationships' do
+    it {should have_many :orders}
+  end
+
+
+
   describe 'roles' do
     before :each do
       @admin_user = User.create(

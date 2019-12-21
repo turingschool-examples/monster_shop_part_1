@@ -43,13 +43,15 @@ describe Item, type: :model do
 
     it 'no orders' do
       expect(@chain.no_orders?).to eq(true)
-      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      user = create :random_reg_user_test
+      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
 
-    it "top_five" do 
+    it "top_five" do
       item_1 = create(:item)
+    
       create(:item_order, item_id: item_1.id, quantity: 5)
 
       item_2 = create(:item)
@@ -72,9 +74,9 @@ describe Item, type: :model do
       expect(top_five[4].id).to eq(item_5.id)
 
       expect(top_five[3].quantity).to eq(2)
-    end 
+    end
 
-    it "bottom_five" do 
+    it "bottom_five" do
       #adding
       item_1 = create(:item)
       create(:item_order, item_id: item_1.id, quantity: 5)
@@ -95,6 +97,6 @@ describe Item, type: :model do
       expect(bottom_five[4].id).to eq(item_1.id)
 
       expect(bottom_five[3].quantity).to eq(4)
-    end 
+    end
   end
 end

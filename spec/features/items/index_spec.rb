@@ -9,11 +9,11 @@ RSpec.describe "Items Index Page" do
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
-      
+      @user = create :random_reg_user_test
       @coffee = create_list(:item, 10, merchant: @meg, inventory: 10)
-      @orders = create_list(:order,10)
+      @orders = create_list(:order, 10, user: @user)
       #@orders[1].items << @coffee[1]
-      #@item_order = ItemOrder.create!(item_id: @coffee[1].id, order_id: @orders[1].id, 2, 3)  
+      #@item_order = ItemOrder.create!(item_id: @coffee[1].id, order_id: @orders[1].id, 2, 3)
 
       User.destroy_all
       @user = User.create(
@@ -94,7 +94,7 @@ RSpec.describe "Items Index Page" do
       expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
     end
 
-    it "shows me a page with statistics of my items" do 
+    it "shows me a page with statistics of my items" do
 
         item_1 = create(:item)
         item_order_1 = create(:item_order, item_id: item_1.id, quantity: 5)
@@ -117,41 +117,38 @@ RSpec.describe "Items Index Page" do
 
         visit '/items'
 
-        within ".top_five_0" do 
+        within ".top_five_0" do
           expect(page).to have_content(item_1.name)
           expect(page).to have_content(10)
         end
-        within ".top_five_1" do 
+        within ".top_five_1" do
           expect(page).to have_content(item_2.name)
           expect(page).to have_content(4)
         end
-        within ".top_five_2" do 
+        within ".top_five_2" do
           expect(page).to have_content(item_3.name)
           expect(page).to have_content(3)
         end
-        within ".top_five_3" do 
+        within ".top_five_3" do
           expect(page).to have_content(item_4.name)
           expect(page).to have_content(2)
         end
-        within ".top_five_4" do 
+        within ".top_five_4" do
           expect(page).to have_content(item_5.name)
           expect(page).to have_content(1)
         end
-        within ".top" do 
+        within ".top" do
           expect(page).to_not have_content(item_6.name)
         end
 
-    end 
+    end
 
-    it "shows that the image is a link" do 
+    it "shows that the image is a link" do
       visit "/items"
 
       page.find("#img_link-#{@pull_toy.id}" ).click
 
       expect(current_path).to eq("/items/#{@pull_toy.id}")
-    end 
+    end
   end
 end
-
-
-

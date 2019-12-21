@@ -11,17 +11,17 @@ RSpec.describe "As a registered user and visit my profile page" do
       zip: '80123',
       password: 'pass123'
       )
+
+      visit '/login'
+
+      fill_in :email, with: @user.email
+      fill_in :password, with: 'pass123'
+
+      click_button 'Log In'
+      expect(current_path).to eq('/profile')
   end
 
   it "shows all of my profile data minus my password and I see a link to edit my profile" do
-
-    visit '/login'
-
-    fill_in :email, with: @user.email
-    fill_in :password, with: 'pass123'
-
-    click_button 'Log In'
-    expect(current_path).to eq('/profile')
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
@@ -34,5 +34,11 @@ RSpec.describe "As a registered user and visit my profile page" do
     expect(page).to_not have_content(@user.password)
 
     expect(page).to have_link("Edit Profile")
+  end
+
+  it 'has button leading to order index page' do
+    click_on 'My Orders'
+
+    expect(current_path).to eq('/profile/orders')
   end
 end
