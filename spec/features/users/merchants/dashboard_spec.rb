@@ -6,7 +6,7 @@ RSpec.describe "merchant dashboard" do
       bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant_admin = bike_shop.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
 
-      allow_any_instance_of(ApplicationController).to recieve(:current_user).and_return(merchant_admin)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
       visit '/merchant'
 
@@ -23,7 +23,9 @@ RSpec.describe "merchant dashboard" do
       ski_shop = Merchant.create(name: "Ski Palace", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant_employee = ski_shop.users.create!(name: "Merchant Employee", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee", password_confirmation: "merchant_employee", role: 1)
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
+
+      visit '/merchant'
 
       expect(page).to have_content(ski_shop.name)
       expect(page).to have_content(ski_shop.address)
