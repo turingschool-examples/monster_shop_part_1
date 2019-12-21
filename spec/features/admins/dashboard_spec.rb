@@ -49,7 +49,7 @@ RSpec.describe "admin dashboard" do
     within "#packaged" do
       expect(page).to have_link(@order_2.name)
       expect(page).to have_content(@order_2.id)
-      expect(page).to have_content(@order_2.created_at)
+      expect(page).to have_content(@order_2.created_at.strftime('%m/%d/%Y'))
       expect(page).to_not have_content(@order_1.name)
       expect(page).to_not have_content(@order_3.name)
     end
