@@ -19,4 +19,9 @@ class Order <ApplicationRecord
   def total_quantity
     item_orders.sum(:quantity)
   end
+
+  def self.status(status_searching_for)
+    # can take argument of "packaged", "pending", "shipped", or "cancelled"
+    where(status: "#{status_searching_for}")
+  end
 end

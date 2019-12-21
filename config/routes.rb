@@ -59,11 +59,13 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: "admins#show"
     get '/users', to: "users#index"
+    get '/users/:id/profile', to: "users#show"
     get '/users/:user_id/profile/edit', to: "users#edit"
     patch '/users/:user_id/profile', to: "users#update"
     get '/users/:user_id/password/edit', to: "users#edit"
     patch 'users/:user_id/password', to: "users#update"
     get '/users/:user_id/upgrade_to_merchant_employee', to: "users#change_role"
     get '/users/:user_id/upgrade_to_merchant_admin', to: "users#change_role"
+    patch '/orders/:id', to: "orders#update"
   end
 end
