@@ -46,22 +46,7 @@ RSpec.describe "user logging out" do
 
     click_on 'Order number:'
     # binding.pry
-    expect(page).to have_link('Cancel Order')
 
-
-    click_on 'Cancel Order'
-
-    # binding.pry
-    expect(current_path).to eq("/profile")
-
-    expect(page).to have_content('Your order has been cancelled')
-
-    expect(Order.last.status).to eq('cancelled')
-    expect(Order.last.item_orders[0].status).to have_content('unfulfilled')
-    expect(Order.last.item_orders[1].status).to have_content('unfulfilled')
-
-    expect(tire.inventory).to eq(12)
-    expect(pull_toy.inventory).to eq(32)
 
 
   end
