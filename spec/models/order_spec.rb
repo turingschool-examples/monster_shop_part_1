@@ -33,5 +33,13 @@ describe Order, type: :model do
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+
+    it "change_current_status_to_cancelled" do
+      expect(@order_1.current_status).to eq("PENDING")
+
+      @order_1.cancel
+
+      expect(@order_1.current_status).to eq("CANCELLED")
+    end
   end
 end
