@@ -17,7 +17,9 @@ FactoryBot.define do
     zip {Faker::Address.zip_code}
     email {Faker::Internet.email}
     password {'password'}
-    role {2}
+    role {2} 
+    association :merchant 
+    #merchant_id create :merchant
   end
 
   factory :random_admin_user, class: User do

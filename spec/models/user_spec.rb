@@ -1,12 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'relationships' do 
-    it {should belong_to :merchant}
-  end 
   describe 'relationships' do
     it {should have_many :orders}
-    it {should belong_to :merchant}
+    it {should belong_to(:merchant).optional }
   end
 
 

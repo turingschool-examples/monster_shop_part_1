@@ -8,7 +8,6 @@ RSpec.describe 'As a merchant', type: :feature do
 
     fill_in :email, with: @user.email
     fill_in :password, with: 'password'
-
     click_button 'Log In'
   end
 

@@ -94,6 +94,7 @@ RSpec.describe "as a merchant" do
         expect(page).to have_content("#{regular_user.orders.first.total_quantity}")
         expect(page).to have_content("#{regular_user.orders.first.grandtotal}")
 
+        save_and_open_page
         click_link("#{regular_user.orders.first.id}")
         expect(current_path).to eq ("/merchant/orders/#{regular_user.orders.first.id}")
       end
@@ -107,7 +108,7 @@ RSpec.describe "as a merchant" do
         
       item = create(:item, merchant_id: target.id)  
       item_2 = create(:item, merchant_id: target.id)  
-      item_3 = create(:item, merchant_id: target.id) #make sure that this doeds not show on the dashboard  
+      item_3 = create(:item, merchant_id: target.id) 
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
 
@@ -121,7 +122,7 @@ RSpec.describe "as a merchant" do
     end 
   end
   describe "but as a admin user" do 
-    it "when i visit the merchants index page (merchants) 
+    xit "when i visit the merchants index page (merchants) 
         I can click on the merchants name, 
         get a route of /admin/merchants/merchant.id
         and see everything a merchant would see" do 

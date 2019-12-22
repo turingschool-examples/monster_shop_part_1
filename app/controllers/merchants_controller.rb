@@ -1,10 +1,7 @@
-class MerchantsController <ApplicationController
+class MerchantsController < ApplicationController
 
   def index
     @merchants = Merchant.all
-    if current_user.admin?
-      @link_route = "/admin"  
-    end
   end
 
   def show
