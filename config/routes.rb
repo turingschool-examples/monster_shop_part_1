@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   post "/profile/orders", to: "orders#create"
   get '/profile/orders', to: 'orders#index'
   get "/orders/:id", to: "orders#show"
+  patch "/orders/:id", to: "orders#update"
 
   get '/register', to: 'users#new'
   post '/users', to: 'users#create'
