@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'
+    get '/orders/', to: 'orders#index'
+    get '/orders/:id', to: 'orders#show'
   end
 
   unless Rails.application.config.consider_all_requests_local

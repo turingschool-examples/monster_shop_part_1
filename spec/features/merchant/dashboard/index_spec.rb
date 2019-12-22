@@ -25,7 +25,7 @@ RSpec.describe "as a merchant" do
         expect(page).to have_content(@target.city)
         expect(page).to have_content(@target.state)
         expect(page).to have_content(@target.zip)
-      end
+      end 
     end 
     it "shows me a list of orders pending that I sell (if any) in a list -
         the ID of the order, which is a link to the order show page /merchant/orders/15)
@@ -33,24 +33,102 @@ RSpec.describe "as a merchant" do
         the total quantity of my items in the order
         the total value of my items for that order" do 
 
-      @merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe@ge.com", password: "password") 
+      merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe3@ge.com", password: "password") 
+      regular_user = User.create!(name: "regular user", address: "show", city: "denver", state: "co", zip: 80023, role: 0, email: "joe2@ge.com", password: "password") 
       
-      @target = create :merchant
+      another_regular_user = User.create!(name: "another user", address: "show", city: "denver", state: "co", zip: 80023, role: 0, email: "joe4@ge.com", password: "password") 
+      target = Merchant.create!(name: "target", address: "100 some drive", city: "denver", state: "co", zip: 80023) 
 
-      @target.users << @merchant_user
+      target.users << merchant_user
+        
+      #order = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: regular_user.id, status: )
+      item = create(:item, merchant_id: target.id)  
+      item_2 = create(:item, merchant_id: target.id)  
+      item_3 = create(:item, merchant_id: target.id) #make sure that this doeds not show on the dashboard  
+
+#log in as reg 1
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
+
+      #add to cart
+      visit item_path(item)
+      click_button "Add To Cart"
+      visit item_path(item_2)
+      click_button "Add To Cart"
+
+      #visit cart and checkout 
+      visit cart_path
+      click_link "Checkout" 
+
+      #new form and fill in 
+      fill_in :name, with: regular_user.name
+      fill_in :address,  with: regular_user.address
+      fill_in :city, with: regular_user.city
+      fill_in :state, with: regular_user.state
+      fill_in :zip, with: regular_user.zip
+
+      click_button "Create Order"
       
-      visit '/login'
+      #log in as reg 2
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(another_regular_user)
+      #create second order for the same user 
+      #add to cart
+      visit item_path(item)
+      click_button "Add To Cart"
+      visit item_path(item_2)
+      click_button "Add To Cart"
 
-      fill_in :email, with: @merchant_user.email
-      fill_in :password, with: 'password'
+      #visit cart and checkout 
+      visit cart_path
+      click_link "Checkout" 
 
-      click_button 'Log In'
+      #new form and fill in 
+      fill_in :name, with: another_regular_user.name
+      fill_in :address,  with: another_regular_user.address
+      fill_in :city, with: another_regular_user.city
+      fill_in :state, with: another_regular_user.state
+      fill_in :zip, with: another_regular_user.zip
 
+      click_button "Create Order"
+
+      #then log in as merchant
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
+      #visit /merchant
+      #in pry to access 
+      visit merchant_dashboard_path
+
+
+      expect(page).to have_content(regular_user.orders.first.id)
+
+      within "#merchant_dashboard_orders" do 
+        expect(page).to have_content("#{regular_user.orders.first.created_at}")
+        expect(page).to have_content("#{regular_user.orders.first.total_quantity}")
+        expect(page).to have_content("#{regular_user.orders.first.grandtotal}")
+
+        save_and_open_page
+        click_link("#{regular_user.orders.first.id}")
+        expect(current_path).to eq ("/merchant/orders/#{regular_user.orders.first.id}")
+      end
+
+      #expect(page).to have_content(item.name)
+      #expect(page).to have_content(item.id)
+
+      #expect(page).to have_content(order.id)
+      #click_link  
+      #expect(page).to have_content(regular_user.order.first)
+      #current_user.merchant.orders.distinct
+      #expect(page)
+
+    end
+
+    it "testing that a user can be added to a merchant" do 
+      merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe3@ge.com", password: "password") 
+      regular_user = User.create!(name: "regular user", address: "show", city: "denver", state: "co", zip: 80023, role: 0, email: "joe2@ge.com", password: "password") 
+      target = Merchant.create!(name: "target", address: "100 some drive", city: "denver", state: "co", zip: 80023) 
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
+      target.users << merchant_user
       visit '/merchant/dashboard'
-      
-      expect(page).to have_content()
-    
-      
+    end 
   end
 end
 

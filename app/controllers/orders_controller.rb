@@ -1,10 +1,7 @@
 class OrdersController < ApplicationController
 
   def new
-
   end
-
-
 
   def show
     if current_user && current_user.default?
