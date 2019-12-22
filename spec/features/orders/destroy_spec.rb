@@ -25,7 +25,21 @@ RSpec.describe "As a default user" do
       end
     end
 
-    xit "button " do
+    it "the order is given a status of cancelled and I am redirected to my profile page" do
+
+      visit "/login"
+
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+
+      visit "/profile/orders/#{@order.id}"
+
+      click_button "Cancel Order"
+
+      order = Order.find(@order.id)
+      expect(order.current_status).to eq("CANCELLED")
+      expect(current_path).to eq("/profile")
     end
   end
 end
