@@ -27,8 +27,8 @@ describe Order, type: :model do
 
       @order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @tire_item_order = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @pt_item_order = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
@@ -40,6 +40,16 @@ describe Order, type: :model do
       @order_1.cancel
 
       expect(@order_1.current_status).to eq("CANCELLED")
+    end
+
+    it "changes all item orders to unfulfilled" do
+      expect(@tire_item_order.fulfilled?).to be_truthy
+      expect(@pt_item_order.fulfilled?).to be_truthy
+
+      @order_1.cancel
+
+      expect(@tire_item_order.unfulfilled?).to be_truthy
+      expect(@pt_item_order.unfulfilled?).to be_truthy
     end
   end
 end
