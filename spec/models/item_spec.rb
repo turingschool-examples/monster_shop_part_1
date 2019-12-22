@@ -7,7 +7,6 @@ describe Item, type: :model do
     it { should validate_presence_of :price }
     it { should validate_presence_of :image }
     it { should validate_presence_of :inventory }
-    it { should validate_inclusion_of(:active?).in_array([true,false]) }
   end
 
   describe "relationships" do
@@ -51,7 +50,7 @@ describe Item, type: :model do
 
     it "top_five" do
       item_1 = create(:item)
-    
+
       create(:item_order, item_id: item_1.id, quantity: 5)
 
       item_2 = create(:item)
