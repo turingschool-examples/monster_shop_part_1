@@ -1,4 +1,3 @@
-
 class Merchant::OrdersController < Merchant::BaseController
   
   def index 

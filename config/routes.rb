@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#index'
     get '/orders/', to: 'orders#index'
     get '/orders/:id', to: 'orders#show'
+    get '/items', to: 'items#index' 
   end
 
   unless Rails.application.config.consider_all_requests_local
