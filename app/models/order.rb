@@ -15,7 +15,15 @@ class Order < ApplicationRecord
     item_orders.sum('quantity')
   end
 
+  def self.custom_sort
+    orders = self.all.joins(:user)
+    sort_order = ['Packaged','Pending','Shipped','Cancelled']
+    sorted = orders.sort_by do |order|
+      sort_order.index(order.status)
+    end
+  end
+
   def self.packaged
-    Order.where(status: 'Packaged')
+    self.where(status: 'Packaged')
   end
 end
