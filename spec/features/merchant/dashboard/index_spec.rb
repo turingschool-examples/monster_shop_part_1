@@ -118,9 +118,38 @@ RSpec.describe "as a merchant" do
       expect(page).to have_content(item.name)
       expect(page).to have_content(item_2.name)
       expect(page).to have_content(item_3.name)
-
-
     end 
   end
+  describe "but as a admin user" do 
+    it "when i visit the merchants index page (merchants) 
+        I can click on the merchants name, 
+        get a route of /admin/merchants/merchant.id
+        and see everything a merchant would see" do 
+
+      admin_user = User.create!(name: "admin", address: "show", city: "denver", state: "co", zip: 80023, role: 1, email: "joe4@ge.com", password: "password")
+      merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe3@ge.com", password: "password") 
+      target = Merchant.create!(name: "target", address: "100 some drive", city: "denver", state: "co", zip: 80023) 
+
+      target.users << merchant_user
+        
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin_user)
+
+      visit merchants_path
+
+      click_link "#{target.name}"
+
+      expect(current_path).to eq("/admin/merchants/#{target.id}")
+
+      within "#merchant_dashboard-#{merchant_user.merchant_id}" do 
+        expect(page).to have_content(target.name)
+        expect(page).to have_content(target.address)
+        expect(page).to have_content(target.city)
+        expect(page).to have_content(target.state)
+        expect(page).to have_content(target.zip)
+      end 
+
+      expect(page).to have_link("View Items for #{target.name}")
+    end
+  end 
 end
 
