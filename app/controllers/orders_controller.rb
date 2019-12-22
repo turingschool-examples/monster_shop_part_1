@@ -24,17 +24,26 @@ class OrdersController <ApplicationController
       session.delete(:cart)
       flash[:success] = 'You have placed your order!'
       redirect_to '/profile/orders'
-      # redirect_to "/orders/#{order.id}"
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
     end
   end
 
+  def update
+    order = Order.find(params[:id])
+    order.cancel
+    redirect_to "/profile"
+  end
+
 
   private
 
   def order_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.permit(:name, :address, :city, :state, :zip, :current_status)
   end
+
+  # def create_item_order(cart)
+  #
+  # end
 end
