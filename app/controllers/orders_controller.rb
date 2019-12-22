@@ -34,6 +34,7 @@ class OrdersController <ApplicationController
     order = Order.find(params[:id])
     order.cancel
     redirect_to "/profile"
+    flash[:notice] = "Your order has been cancelled."
   end
 
 
