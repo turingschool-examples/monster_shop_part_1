@@ -14,7 +14,7 @@ class Order <ApplicationRecord
     update(current_status: "CANCELLED")
 
     item_orders.each do |item_order|
-      item_order.update(status: 1)
+      item_order.update(status: 0)
       item_order.item.update(inventory: item_order.item.inventory + item_order.quantity)
     end
   end
