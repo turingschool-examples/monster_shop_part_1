@@ -9,4 +9,8 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def cancel
+    self.update(current_status: "CANCELLED")
+  end
 end
