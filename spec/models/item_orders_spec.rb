@@ -27,7 +27,7 @@ describe ItemOrder, type: :model do
       expect(item_order_1.subtotal).to eq(200)
     end
 
-    it 'has a default status of fulfilled when the order is created' do
+    it 'has a default status of unfulfilled when the order is created' do
       user = create(:random_user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
@@ -36,7 +36,7 @@ describe ItemOrder, type: :model do
       order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
 
-      expect(item_order_1.fulfilled?).to be_truthy
+      expect(item_order_1.unfulfilled?).to be_truthy
     end
   end
 
