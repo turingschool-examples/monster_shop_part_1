@@ -28,9 +28,10 @@ describe Order, type: :model do
 
       @order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
-      @tire_item_order = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @pt_item_order = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @tire_item_order = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: 1)
+      @pt_item_order = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: 1)
     end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
@@ -54,7 +55,7 @@ describe Order, type: :model do
     end
 
     it "updates inventory for each item" do
-      
+
     end
   end
 end
