@@ -46,9 +46,14 @@ RSpec.describe "as a merchant" do
       item_2 = create(:item, merchant_id: target.id)  
       item_3 = create(:item, merchant_id: target.id) #make sure that this doeds not show on the dashboard  
 
-      #log in as regular user #1
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
+      #log in as regular user #1 this is not working      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user)
+      visit '/login'
 
+      fill_in :email, with: regular_user.email
+      fill_in :password, with: 'password'
+
+      click_button 'Log In'
+ 
       visit item_path(item)
       click_button "Add To Cart"
       visit item_path(item_2)
@@ -57,6 +62,7 @@ RSpec.describe "as a merchant" do
       visit cart_path
       click_link "Checkout" 
 
+      expect(current_path).to eq("/orders/new")
       fill_in :name, with: regular_user.name
       fill_in :address,  with: regular_user.address
       fill_in :city, with: regular_user.city
@@ -66,7 +72,14 @@ RSpec.describe "as a merchant" do
       click_button "Create Order"
       
       #log in as reg 2
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(another_regular_user)
+      click_link 'Log Out'
+      visit '/login'
+
+      fill_in :email, with: another_regular_user.email
+      fill_in :password, with: 'password'
+
+      click_button 'Log In'
+ 
 
       visit item_path(item)
       click_button "Add To Cart"
@@ -85,8 +98,14 @@ RSpec.describe "as a merchant" do
       click_button "Create Order"
 
       #then log in as merchant
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
+      click_link 'Log Out'
 
+      visit '/login'
+
+      fill_in :email, with: merchant_user.email
+      fill_in :password, with: 'password'
+
+      click_button 'Log In'
       visit merchant_dashboard_path
 
       within "#merchant_dashboard_orders" do 
@@ -94,7 +113,6 @@ RSpec.describe "as a merchant" do
         expect(page).to have_content("#{regular_user.orders.first.total_quantity}")
         expect(page).to have_content("#{regular_user.orders.first.grandtotal}")
 
-        save_and_open_page
         click_link("#{regular_user.orders.first.id}")
         expect(current_path).to eq ("/merchant/orders/#{regular_user.orders.first.id}")
       end
