@@ -53,6 +53,6 @@
 </section>
 <section id="cancel">
   <% if @order.current_status == "PENDING" %>
-    <%= button_to "Cancel Order", method: :delete %>
+    <%= button_to "Cancel Order", "/orders/#{@order.id}", method: :patch %>
   <% end %>
 </section>
