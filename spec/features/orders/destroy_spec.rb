@@ -31,7 +31,6 @@ RSpec.describe "As a default user" do
     end
 
     it "the order is given a status of cancelled and I am redirected to my profile page" do
-
       visit "/login"
 
       fill_in :email, with: @user.email
@@ -54,6 +53,8 @@ RSpec.describe "As a default user" do
         fill_in :email, with: @user.email
         fill_in :password, with: @user.password
         click_button "Login"
+        order_2 = @user.orders.create(name: "Jordan", address: "123 Hi Road", city: "Cleveland", state: "OH", zip: "44333")
+        ItemOrder.create!(item: @tire, order: order_2, price: @tire.price, quantity: 5)
 
         @order.item_orders.each do |item_order|
           expect(item_order.fulfilled?).to be_truthy
@@ -64,7 +65,37 @@ RSpec.describe "As a default user" do
         @order.item_orders.each do |item_order|
           expect(item_order.unfulfilled?).to be_truthy
         end
+
+        order_2.item_orders.each do |item_order|
+          expect(item_order.unfulfilled?).to be_falsey
+        end
       end
+
+      it "adds item_order quantity back to item inventory" do
+        visit "/login"
+        fill_in :email, with: @user.email
+        fill_in :password, with: @user.password
+        click_button "Login"
+
+        visit "/profile/orders/#{@order.id}"
+        click_button "Cancel Order"
+
+        expect(@meg.items.first.inventory).to eq(17)
+        expect(@meg.items.last.inventory).to eq(6)
+      end
+
+      it "sends flash message that order has been cancelled" do
+        visit "/login"
+        fill_in :email, with: @user.email
+        fill_in :password, with: @user.password
+        click_button "Login"
+
+        visit "/profile/orders/#{@order.id}"
+        click_button "Cancel Order"
+
+        expect(page).to have_content("Your order has been cancelled.")
+      end
+
     end
   end
 end
