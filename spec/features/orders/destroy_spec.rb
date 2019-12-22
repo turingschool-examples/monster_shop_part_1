@@ -73,7 +73,7 @@ end
 
 
 
-#   As a registered user
+# As a registered user
 # When I visit an order's show page
 # I see a button or link to cancel the order only if the order is still pending
 # When I click the cancel button for an order, the following happens:

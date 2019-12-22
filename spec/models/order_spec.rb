@@ -49,8 +49,8 @@ describe Order, type: :model do
 
       @order_1.cancel
 
-      expect(@tire_item_order.unfulfilled?).to be_truthy
-      expect(@pt_item_order.unfulfilled?).to be_truthy
+      expect(@order_1.item_orders[0].unfulfilled?).to be_truthy
+      expect(@order_1.item_orders[1].unfulfilled?).to be_truthy
     end
   end
 end
