@@ -14,4 +14,8 @@ class Order < ApplicationRecord
   def total_quantity
     item_orders.sum('quantity')
   end
+
+  def self.packaged
+    Order.where(status: 'Packaged')
+  end
 end
