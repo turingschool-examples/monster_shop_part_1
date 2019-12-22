@@ -6,9 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
+ItemOrder.destroy_all
 Merchant.destroy_all
 Item.destroy_all
-User.destroy_all
 #merchants
 # bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 # dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
@@ -24,9 +25,24 @@ admin = User.create(
   zip: '80000',
   role: 1
 )
+merchant_test = FactoryBot.create(:merchant)
+merchant= User.create(
+  name: 'merchant',
+  email: 'merchant@merchant.com',
+  password: 'password',
+  address: '420 Coffee St',
+  city: 'Coffeetown',
+  state: 'CO',
+  zip: '80000',
+  role: 2,
+  merchant_id: merchant_test.id
+)
+#merchant_test.users << merchant
+
 merchants.each do |merchant|
   FactoryBot.create_list(:item, 30, merchant: merchant)
 end
+
 #bike_shop items
 # tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
 #

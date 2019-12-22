@@ -34,6 +34,8 @@ RSpec.describe 'when a user logs in', type: :feature do
       password: 'pass123',
       role: 2
     )
+     @merchant = create :merchant
+     @merchant.users << @merchant_user
   end
 
   it 'will log in user and create new session' do

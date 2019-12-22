@@ -43,11 +43,15 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'
     get '/users', to: 'users#index'
+    get '/merchants/:merchant_id', to: 'merchants#show'
     get '/users/:id', to: 'users#show'
   end
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'
+    get '/orders/', to: 'orders#index'
+    get '/orders/:id', to: 'orders#show'
+    get '/items', to: 'items#index' 
   end
 
   unless Rails.application.config.consider_all_requests_local

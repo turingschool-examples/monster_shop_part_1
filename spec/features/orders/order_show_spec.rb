@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'as a user when i visit an orders show page', type: :feature do
   before :each do
-    # @user = create :random_reg_user_test
-    # @order = create :order, user: @user
-
     @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -87,6 +84,7 @@ RSpec.describe 'as a user when i visit an orders show page', type: :feature do
 
   it 'will 404 if not default user' do
     click_link 'Log Out'
+
     visit "/profile/orders/#{@order.id}"
 
     expect(page).to have_content('404 Page Not Found')
