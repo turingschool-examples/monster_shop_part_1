@@ -6,8 +6,6 @@ RSpec.describe User, type: :model do
     it {should belong_to(:merchant).optional }
   end
 
-
-
   describe 'roles' do
     before :each do
       @admin_user = User.create(
@@ -42,7 +40,6 @@ RSpec.describe User, type: :model do
         password: 'pass153',
       )
     end
-
 
     it 'can be created as an admin' do
       expect(@admin_user.role).to eq('admin')

@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
 
   def new
+    if !session[:user_id]
+      flash[:notice] = 'Please register or login before trying to checkout'
+      redirect_to '/cart'
+    end
   end
 
   def show
@@ -8,7 +12,7 @@ class OrdersController < ApplicationController
       @order = Order.find(params[:id])
     else
       render 'errors/404'
-    end     
+    end
   end
 
   def create
@@ -23,7 +27,8 @@ class OrdersController < ApplicationController
           })
       end
       session.delete(:cart)
-      redirect_to "/orders/#{order.id}"
+      flash[:success] = 'Order created successfully'
+      redirect_to "/profile/orders"
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
