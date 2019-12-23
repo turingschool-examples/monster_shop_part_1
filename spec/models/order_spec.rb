@@ -37,11 +37,11 @@ describe Order, type: :model do
     end
 
     it "change_current_status_to_cancelled" do
-      expect(@order_1.current_status).to eq("PENDING")
+      expect(@order_1.current_status).to eq("pending")
 
       @order_1.cancel
 
-      expect(@order_1.current_status).to eq("CANCELLED")
+      expect(@order_1.current_status).to eq("cancelled")
     end
 
     it "changes all item orders to unfulfilled" do
