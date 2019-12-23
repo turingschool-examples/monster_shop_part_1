@@ -7,6 +7,7 @@ describe Order, type: :model do
     it { should validate_presence_of :city }
     it { should validate_presence_of :state }
     it { should validate_presence_of :zip }
+    it { should validate_presence_of :current_status }
   end
 
   describe "relationships" do
@@ -27,11 +28,34 @@ describe Order, type: :model do
 
       @order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @tire_item_order = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: 1)
+      @pt_item_order = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, status: 1)
     end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
+    end
+
+    it "change_current_status_to_cancelled" do
+      expect(@order_1.current_status).to eq("PENDING")
+
+      @order_1.cancel
+
+      expect(@order_1.current_status).to eq("CANCELLED")
+    end
+
+    it "changes all item orders to unfulfilled" do
+      expect(@tire_item_order.fulfilled?).to be_truthy
+      expect(@pt_item_order.fulfilled?).to be_truthy
+
+      @order_1.cancel
+
+      expect(@order_1.item_orders[0].unfulfilled?).to be_truthy
+      expect(@order_1.item_orders[1].unfulfilled?).to be_truthy
+    end
+
+    it "updates inventory for each item" do
+
     end
   end
 end

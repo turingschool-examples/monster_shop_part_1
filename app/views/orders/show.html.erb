@@ -49,5 +49,10 @@
   <p>Total: <%=number_to_currency(@order.grandtotal)%></p>
 </section>
 <section id="datecreated">
-  <p> <%= @order.created_at%></p>
+  <p> This order was placed at: <%= @order.created_at%></p>
+</section>
+<section id="cancel">
+  <% if @order.current_status == "PENDING" %>
+    <%= button_to "Cancel Order", "/orders/#{@order.id}", method: :patch %>
+  <% end %>
 </section>

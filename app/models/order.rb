@@ -1,5 +1,5 @@
 class Order <ApplicationRecord
-  validates_presence_of :name, :address, :city, :state, :zip
+  validates_presence_of :name, :address, :city, :state, :zip, :current_status
 
   has_many :item_orders
   has_many :items, through: :item_orders
@@ -8,5 +8,14 @@ class Order <ApplicationRecord
 
   def grandtotal
     item_orders.sum('price * quantity')
+  end
+
+  def cancel
+    update(current_status: "CANCELLED")
+
+    item_orders.each do |item_order|
+      item_order.update(status: 0)
+      item_order.item.update(inventory: item_order.item.inventory + item_order.quantity)
+    end
   end
 end
