@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'
+    get '/order/:id', to: 'orders#show'
   end
 
   get '/user/password/edit', to: 'users#password_edit'
