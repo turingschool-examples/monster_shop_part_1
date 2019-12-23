@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'as a merchant', type: :feature do
   it "redirects me to merchant dashboard after login" do
+    merchant_company = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+
     merchant_admin = User.create(name: "Jordan",
                            address: "394 High St",
                            city: "Denver",
@@ -21,6 +23,8 @@ RSpec.describe 'as a merchant', type: :feature do
                            password: "password",
                            password_confirmation: "password",
                            role: 3)
+
+    merchant_company.users << [merchant_admin, merchant_employee]
 
     visit '/login'
     fill_in :email, with: merchant_admin.email
