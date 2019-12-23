@@ -39,7 +39,7 @@ RSpec.describe "as a registered user" do
       expect(page).to have_content(@order.id)
       expect(page).to have_content(@order.created_at)
       expect(page).to have_content(@order.updated_at)
-      expect(page).to have_content(@order.current_status)
+      expect(page).to have_content(@order.current_status.upcase)
 
       expect(page).to have_content(@tire.name)
       expect(page).to have_css("img[src='#{@tire.image}']")
@@ -61,6 +61,39 @@ RSpec.describe "as a registered user" do
 
       expect(page).to have_content(@order.grandtotal)
       expect(page).to have_content(@order.items.count)
+    end
+
+    describe "As a merchant" do
+      it "will see that the order status changes from pending to packaged when items fulfilled" do
+
+        visit '/profile'
+
+        click_on "Log Out"
+
+        merchant_user = create(:random_user, role: 2)
+
+        visit '/'
+
+        click_link "Login"
+        expect(current_path).to eq('/login')
+
+        fill_in :email, with: merchant_user.email
+        fill_in :password, with: merchant_user.password
+        click_button "Login"
+
+        merchant_order = @user.orders.create(name: "Ali Wong", address: "123 Always Be My Maybe", city: "San Francisco", state: "CA", zip: "87654")
+
+        ItemOrder.create!(item: @tire, order: merchant_order, price: @tire.price, quantity: 2, status:1)
+        ItemOrder.create!(item: @paper, order: merchant_order, price: @paper.price, quantity: 3, status:1)
+        ItemOrder.create!(item: @pencil, order: merchant_order, price: @pencil.price, quantity: 1)
+
+        expect(merchant_order.current_status).to eql("pending")
+
+        merchant_order.fulfill
+
+        expect(merchant_order.current_status).to eql("packaged")
+
+      end
     end
   end
 end

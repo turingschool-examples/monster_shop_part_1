@@ -42,7 +42,7 @@ RSpec.describe "As a default user" do
       click_button "Cancel Order"
 
       order = Order.find(@order.id)
-      expect(order.current_status).to eq("CANCELLED")
+      expect(order.current_status).to eq("cancelled")
       expect(current_path).to eq("/profile")
     end
 
