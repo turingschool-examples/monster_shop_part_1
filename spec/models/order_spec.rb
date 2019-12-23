@@ -54,10 +54,6 @@ describe Order, type: :model do
       expect(@order_1.item_orders[1].unfulfilled?).to be_truthy
     end
 
-    xit "updates inventory for each item" do
-
-    end
-
     it ".ship" do
       @order_1.fulfill
 
