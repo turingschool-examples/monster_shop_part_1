@@ -9,7 +9,7 @@ add osmething in from the controller ... this is the dashmerch inedex but for th
   <p><%= @merchant.zip %> </p>
 </section>
 
-<%= link_to "View Items for #{@merchant.name}", "/merchant/items" %>
+<%= link_to "View Items for #{@merchant.name}", "/admin/#{@merchant.id}/items" %>
 <section id="merchant_dashboard_orders">
   <table>
     <% @merchant_active_orders.each do |order| %>
