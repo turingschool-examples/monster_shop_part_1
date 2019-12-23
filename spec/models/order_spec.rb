@@ -58,11 +58,10 @@ describe Order, type: :model do
 
     end
 
-    xit ".ship" do
+    it ".ship" do
       @order_1.fulfill
 
       expect(@order_1.current_status).to eq("packaged")
-
 
       @order_1.ship
 
