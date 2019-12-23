@@ -140,7 +140,7 @@ RSpec.describe "as a merchant" do
     end 
   end
   describe "but as a admin user" do 
-    xit "when i visit the merchants index page (merchants) 
+    it "when i visit the merchants index page (merchants) 
         I can click on the merchants name, 
         get a route of /admin/merchants/merchant.id
         and see everything a merchant would see" do 
@@ -151,8 +151,13 @@ RSpec.describe "as a merchant" do
 
       target.users << merchant_user
         
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin_user)
+      visit '/login'
 
+      fill_in :email, with: admin_user.email
+      fill_in :password, with: 'password'
+
+      click_button 'Log In'
+ 
       visit merchants_path
 
       click_link "#{target.name}"
