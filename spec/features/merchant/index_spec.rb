@@ -44,8 +44,6 @@ RSpec.describe 'as a merchant', type: :feature do
                            password_confirmation: "password",
                            role: 3)
 
-
-
     visit '/login'
 
     fill_in :email, with: merchant_admin.email
@@ -55,7 +53,7 @@ RSpec.describe 'as a merchant', type: :feature do
 
     visit "/merchant/dashboard"
 
-    expect(page).to have_content(merchant.name)
+    expect(page).to have_content(merchant_admin.name)
   #   expect(page).to have_content(merchant.address)
   end
 end
