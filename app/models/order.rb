@@ -26,4 +26,12 @@ class Order < ApplicationRecord
   def self.packaged
     self.where(status: 'Packaged')
   end
+
+  def order_status
+    if self.item_orders.all? { |item_order| item_order.fulfilled_by_merchant == true }
+      'Packaged'
+    else
+      self.status
+    end
+  end
 end
