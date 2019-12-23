@@ -1,20 +1,24 @@
 <% @orders.each do |order| %>
 <% if order.current_status == "packaged" %>
+<h1> Packaged Orders </h1>
 <section id = "order-packaged" >
   Order ID: <%= order.id %>
   Name: <%= order.name %>
   Created: <%= order.created_at %></section>
 <% elsif order.current_status == "pending" %>
+<h1> Pending Orders </h1>
 <section id = "order-pending">
   Order ID: <%= order.id %>
   Name: <%= order.name %>
   Created: <%= order.created_at %></section>
 <% elsif order.current_status == "shipped" %>
+<h1> Shipped Orders </h1>
 <section id = "order-shipped">
   Order ID: <%= order.id %>
   Name: <%= order.name %>
   Created: <%= order.created_at %></section>
 <% else order.current_status == "cancelled" %>
+<h1> Cancelled Orders </h1>
 <section id = "order-cancelled">
   Order ID: <%= order.id %>
   Name: <%= order.name %>
