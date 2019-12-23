@@ -60,6 +60,6 @@ RSpec.describe 'As an Admin' do
     expect(page).to_not have_content("ID: #{order_2.id}")
 
     click_on("#{order.id}")
-    expect(current_path).to eq("/merchants/order/#{order.id}")
+    expect(current_path).to eq("/merchant/order/#{order.id}")
   end
 end
