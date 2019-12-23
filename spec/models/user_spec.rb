@@ -14,6 +14,7 @@ RSpec.describe User, type: :model do
 
   describe 'relationships' do
     it { should have_many :orders}
+    it {should belong_to(:merchant).optional}
   end
 
   describe 'roles' do
@@ -58,9 +59,8 @@ RSpec.describe User, type: :model do
                           password_confirmation: 'dementors',
                           role: 2)
 
-      expect(user.role).to eq('merchant')
-      expect(user.merchant?).to be_truthy
+      expect(user.role).to eq('merchant_admin')
+      expect(user.merchant_admin?).to be_truthy
     end
   end
 end
-

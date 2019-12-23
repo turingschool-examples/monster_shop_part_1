@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
   def login(user)
     if user.default?
       redirect_to '/profile'
-    elsif user.merchant?
+    elsif user.merchant_employee? || user.merchant_admin?
       redirect_to '/merchant/dashboard'
     elsif user.admin?
       redirect_to '/admin/dashboard'
