@@ -45,24 +45,27 @@ RSpec.describe "As an admin" do
     click_button "Login"
 
     within "#order-packaged" do
-    expect(page).to have_content(order_2.name)
+    expect(page).to have_link(order_2.name)
     expect(page).to have_content(order_2.id)
     expect(page).to have_content(order_2.created_at)
     end
     within "#order-pending" do
-    expect(page).to have_content(order.name)
+    expect(page).to have_link(order.name)
     expect(page).to have_content(order.id)
     expect(page).to have_content(order.created_at)
     end
     within "#order-shipped" do
-    expect(page).to have_content(order_3.name)
+    expect(page).to have_link(order_3.name)
     expect(page).to have_content(order_3.id)
     expect(page).to have_content(order_3.created_at)
     end
     within "#order-cancelled" do
-    expect(page).to have_content(order_4.name)
+    expect(page).to have_link(order_4.name)
     expect(page).to have_content(order_4.id)
     expect(page).to have_content(order_4.created_at)
     end
+
+    click_on("#{order_4.name}")
+    expect(current_path).to eql("/admin/profile")
   end
 end
