@@ -12,10 +12,6 @@ class Order <ApplicationRecord
     item_orders.sum('price * quantity')
   end
 
-  def update
-  end
-
-
   def cancel
     item_orders.each do |item_order|
       item_order.update(status: 0)
@@ -31,7 +27,7 @@ class Order <ApplicationRecord
     update(current_status: 1)
   end
 
-  # def ship
-  #
-  # end
+  def ship
+    update(current_status: 2)
+  end
 end
