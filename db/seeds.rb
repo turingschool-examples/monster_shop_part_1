@@ -40,12 +40,14 @@ admin = User.create(name: "Admin",
                     password_confirmation: "password",
                     role: 1)
 
-merchant = User.create(name: "Merchant",
+merchant_admin = User.create(name: "Merchant Admin",
               address: "394 High St",
               city: "Denver",
               state: "CO",
               zip_code: "80602",
-              email: "merchant@hotmail.com",
+              email: "merchantadmin@hotmail.com",
               password: "password",
               password_confirmation: "password",
               role: 2)
+
+bike_shop.users << merchant_admin

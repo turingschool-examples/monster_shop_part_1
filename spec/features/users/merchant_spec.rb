@@ -6,7 +6,7 @@ RSpec.describe 'As a merchant' do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
-    expect(merchant.role).to eq('merchant')
+    expect(merchant.role).to eq('merchant_admin')
 
     visit '/admin/dashboard'
     expect(page).to have_content("The page you were looking for doesn't exist (404)")
