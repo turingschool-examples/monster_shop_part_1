@@ -24,13 +24,11 @@ RSpec.describe 'As an Admin' do
     item = create(:random_item, merchant_id: merchant.id)
     item_2 = create(:random_item, merchant_id: merchant.id)
     order = create(:random_order, user_id: user.id, current_status: 0)
-    order_2 = create(:random_order, user_id: user.id, current_status: 0)
-    order_3 = create(:random_order, user_id: user.id, current_status: 1)
-    order_4 = create(:random_order, user_id: user.id, current_status: 3)
-    item_order = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 2)
-    item_order_2 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 3)
-    item_order_3 = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 4)
-    item_order_4 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 5)
+    order_2 = create(:random_order, user_id: user.id, current_status: 1)
+    item_order = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 2, status: 1)
+    item_order_2 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 1, status: 1)
+    item_order_3 = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 4, status: 1)
+    item_order_4 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 5, status: 1)
 
     visit '/'
 
@@ -45,6 +43,12 @@ RSpec.describe 'As an Admin' do
     visit "/merchants"
     click_on("#{merchant.name}")
     expect(current_path).to eql("/admin/merchants/#{merchant.id}")
+
+    expect(page).to have_content("#{merchant.name}")
+    expect(page).to have_content("#{merchant.address}")
+    expect(page).to have_content("#{merchant.city}")
+    expect(page).to have_content("#{merchant.state}")
+    expect(page).to have_content("#{merchant.zip}")
 
     within "#order-pending-#{order.id}" do
     expect(page).to have_link("#{order.id}")
