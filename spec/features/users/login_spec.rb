@@ -124,7 +124,9 @@ RSpec.describe "as a user" do
     end
 
     it 'redirects when they visit the login path for merchant' do
+      bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant = create(:random_user, role: 2)
+      bike_shop.users << merchant
 
       visit '/login'
 
