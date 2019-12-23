@@ -41,6 +41,8 @@ RSpec.describe 'as a merchant', type: :feature do
   end
 
   it "displays full address of the merchant I work for" do
+    merchant_company = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+
     merchant_admin = User.create(name: "Jordan",
                            address: "394 High St",
                            city: "Denver",
@@ -61,11 +63,29 @@ RSpec.describe 'as a merchant', type: :feature do
                            password_confirmation: "password",
                            role: 3)
 
-    visit '/login'
+    merchant_company.users << [merchant_employee, merchant_admin]
 
+    visit '/login'
     fill_in :email, with: merchant_admin.email
     fill_in :password, with: merchant_admin.password
-
     click_button "Login"
+
+    expect(page).to have_content(merchant_company.name)
+    expect(page).to have_content(merchant_company.address)
+    expect(page).to have_content(merchant_company.city)
+    expect(page).to have_content(merchant_company.state)
+    expect(page).to have_content(merchant_company.zip)
+    click_link "Log Out"
+
+    visit '/login'
+    fill_in :email, with: merchant_employee.email
+    fill_in :password, with: merchant_employee.password
+    click_button "Login"
+
+    expect(page).to have_content(merchant_company.name)
+    expect(page).to have_content(merchant_company.address)
+    expect(page).to have_content(merchant_company.city)
+    expect(page).to have_content(merchant_company.state)
+    expect(page).to have_content(merchant_company.zip)
   end
 end
