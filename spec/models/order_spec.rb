@@ -61,6 +61,14 @@ describe Order, type: :model do
       @order_4 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user_1.id)
       @order_4.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_4.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+
+      @order_5 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user_1.id, status: 1)
+      @order_5.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @order_5.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+
+      @order_6 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user_1.id, status: 1)
+      @order_6.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @order_6.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
     it 'displays orders by custom order status: Packaged then Pending then Shipped then Cancelled' do
@@ -68,7 +76,11 @@ describe Order, type: :model do
       @order_2.update(status: 2) # change status to shipped
       @order_3.update(status: 0) # change status to pending
       @order_4.update(status: 1) # change status to packaged
-      expect(Order.custom_sort).to eq([@order_4, @order_3, @order_2, @order_1])
+      expect(Order.custom_sort).to eq([@order_5, @order_6, @order_4, @order_3, @order_2, @order_1])
+    end
+
+    it 'packaged orders' do
+      expect(Order.packaged).to eq([@order_5, @order_6])
     end
   end
 end

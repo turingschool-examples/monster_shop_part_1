@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: 'orders#show'
   patch '/profile/orders/:id', to: 'order_status#update'
 
+
   get '/register', to: 'users#new'
   post '/register', to: "users#create"
 
