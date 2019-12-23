@@ -39,7 +39,7 @@ RSpec.describe "as a registered user" do
       expect(page).to have_content(@order.id)
       expect(page).to have_content(@order.created_at)
       expect(page).to have_content(@order.updated_at)
-      expect(page).to have_content(@order.current_status)
+      expect(page).to have_content(@order.current_status.upcase)
 
       expect(page).to have_content(@tire.name)
       expect(page).to have_css("img[src='#{@tire.image}']")
@@ -87,11 +87,11 @@ RSpec.describe "as a registered user" do
         ItemOrder.create!(item: @paper, order: merchant_order, price: @paper.price, quantity: 3, status:1)
         ItemOrder.create!(item: @pencil, order: merchant_order, price: @pencil.price, quantity: 1)
 
-        expect(merchant_order.current_status).to eql("PENDING")
+        expect(merchant_order.current_status).to eql("pending")
 
         merchant_order.fulfill
 
-        expect(merchant_order.current_status).to eql("FULFILLED")
+        expect(merchant_order.current_status).to eql("packaged")
 
       end
     end
