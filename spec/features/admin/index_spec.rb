@@ -69,7 +69,7 @@ RSpec.describe "As an admin" do
     expect(current_path).to eql("/admin/profile")
   end
 
-  xit "can ship packaged orders" do
+  it "can ship packaged orders" do
     admin = create(:random_user, role: 1)
     user = create(:random_user, role: 0)
     user_2 = create(:random_user, role: 0)
@@ -102,10 +102,10 @@ RSpec.describe "As an admin" do
     expect(page).not_to have_css("#order-#{order_1.id}")
     expect(page).to have_css("#order-#{order_2.id}")
 
-    within "order-shipped" do
-      expect(page).to have-content(order_1.id)
-      expect(page).to have-content(order_1.name)
-      expect(page).to have-content(order_1.created_at)
+    within "#order-shipped" do
+      expect(page).to have_content(order_1.id)
+      expect(page).to have_content(order_1.name)
+      expect(page).to have_content(order_1.created_at)
     end
   end
 end
