@@ -32,11 +32,17 @@ RSpec.describe 'As an Admin' do
     item_order_3 = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 4)
     item_order_4 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 5)
 
+    visit '/'
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+    click_link "Login"
+    expect(current_path).to eq('/login')
+
+    fill_in :email, with: admin.email
+    fill_in :password, with: admin.password
+
+    click_button "Login"
 
     visit "/merchants"
-
     click_on("#{merchant.name}")
     expect(current_path).to eql("/admin/merchants/#{merchant.id}")
 
