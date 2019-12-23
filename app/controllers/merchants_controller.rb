@@ -1,8 +1,9 @@
 class MerchantsController < ApplicationController
 
   def index
+    @path = ""
     @merchants = Merchant.all
-    if current_user.role == "admin" 
+    if current_user && current_user.role == "admin" 
       @path = "admin"
     end 
   end
