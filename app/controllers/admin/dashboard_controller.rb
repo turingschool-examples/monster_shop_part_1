@@ -4,5 +4,7 @@ class Admin::DashboardController < Admin::BaseController
   end
 
   def update
+    order = Order.find(params[:id])
+    order.ship
   end
 end
