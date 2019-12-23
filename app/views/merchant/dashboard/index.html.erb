@@ -10,12 +10,14 @@
 
 <%= link_to "View Items for #{@merchant.name}", "/merchant/items" %>
 <section id="merchant_dashboard_orders">
-  <table>
-    <% @merchant_active_orders.each do |order| %>
-      <tr>  <p>Order number: <%= link_to order.id, "/merchant/orders/#{order.id}" %></p> </tr>
-      <tr><p>Created At:   <%= order.created_at %></p></tr>
-      <tr><p>Total Qty:    <%= order.total_quantity %></p></tr>
-      <tr><p>Total Order Sum: <%= order.grandtotal %> </p></tr>
+  <% if @merchant.active_orders.count == 0 %>
+    <h2>Currently there are no active orders </h2>
+  <%end%>
+    <% @merchant.active_orders.each do |order| %>
+      <p>Order number: <%= link_to order.id, "/merchant/orders/#{order.id}" %></p> 
+      <p>Created At:   <%= order.created_at %></p>
+      <p>Total Qty:    <%= order.total_quantity %></p>
+      <p>Total Order Sum: <%= order.grandtotal %> </p>
     <% end %>
     </table>
 </section>
