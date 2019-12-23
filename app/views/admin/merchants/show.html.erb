@@ -1,0 +1,15 @@
+<h1 align = "center">Merchant Dashboard</h1>
+<%= @merchant.name %></br></br>
+<%= @merchant.address %>
+<p><%= @merchant.city %>
+<%= @merchant.state %>
+<%= @merchant.zip %></p>
+<% binding.pry %>
+<% @merchant.item_orders.each do |item_order| %>
+  <section id ="order-pending">
+  within "#order-pending-#{order.id}" do
+  expect(page).to have_link("#{order.id}")
+  expect(page).to have_content("Date Created: #{order.created_at}")
+  expect(page).to have_content("Total Quantity: #{order.items.count}")
+  expect(page).to have_content("Total: #{order.grandtotal}")
+<% end %>
