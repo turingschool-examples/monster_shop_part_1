@@ -3,25 +3,25 @@
 <h1> Packaged Orders </h1>
 <section id = "order-packaged" >
   Order ID: <%= order.id %>
-  Name: <%= order.name %>
+  Name: <%=link_to "order.name", "/admin/profile" %>
   Created: <%= order.created_at %></section>
 <% elsif order.current_status == "pending" %>
 <h1> Pending Orders </h1>
 <section id = "order-pending">
   Order ID: <%= order.id %>
-  Name: <%= order.name %>
+  Name: Name: <%=link_to "order.name", "/admin/profile" %>
   Created: <%= order.created_at %></section>
 <% elsif order.current_status == "shipped" %>
 <h1> Shipped Orders </h1>
 <section id = "order-shipped">
   Order ID: <%= order.id %>
-  Name: <%= order.name %>
+  Name: Name: <%=link_to "order.name", "/admin/profile" %>
   Created: <%= order.created_at %></section>
 <% else order.current_status == "cancelled" %>
 <h1> Cancelled Orders </h1>
 <section id = "order-cancelled">
   Order ID: <%= order.id %>
-  Name: <%= order.name %>
+  Name: Name: <%=link_to "order.name", "/admin/profile" %>
   Created: <%= order.created_at %></section>
 <% end %>
 <% end %>
