@@ -21,14 +21,14 @@ RSpec.describe 'As an Admin' do
     admin = create(:random_user, role: 1)
     merchant = create(:random_merchant)
     user = create(:random_user, role: 0)
+    user_2 = create(:random_user, role: 0)
     item = create(:random_item, merchant_id: merchant.id)
     item_2 = create(:random_item, merchant_id: merchant.id)
     order = create(:random_order, user_id: user.id, current_status: 0)
-    order_2 = create(:random_order, user_id: user.id, current_status: 1)
+    order_2 = create(:random_order, user_id: user_2.id, current_status: 1)
+
     item_order = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 2, status: 1)
     item_order_2 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 1, status: 1)
-    item_order_3 = ItemOrder.create!(item: item, order: order, price: item.price, quantity: 4, status: 1)
-    item_order_4 = ItemOrder.create!(item: item_2, order: order_2, price: item_2.price, quantity: 5, status: 1)
 
     visit '/'
 
@@ -57,11 +57,9 @@ RSpec.describe 'As an Admin' do
     expect(page).to have_content("Total: #{order.grandtotal}")
     end
 
-    within "#order-pending-#{order_2.id}" do
-    expect(page).to have_link("#{order_2.id}")
-    expect(page).to have_content("Date Created: #{order_2.created_at}")
-    expect(page).to have_content("Total Quantity: #{order_2.items.count}")
-    expect(page).to have_content("Total: #{order.grandtotal}")
-    end
+    expect(page).to_not have_content("ID: #{order_2.id}")
+
+    click_on("#{order.id}")
+    expect(current_path).to eq("/merchants/order/#{order.id}")
   end
 end
