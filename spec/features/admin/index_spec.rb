@@ -44,7 +44,7 @@ RSpec.describe "As an admin" do
 
     click_button "Login"
 
-    within "#order-packaged" do
+    within "#order-#{order_2.id}" do
     expect(page).to have_link(order_2.name)
     expect(page).to have_content(order_2.id)
     expect(page).to have_content(order_2.created_at)
