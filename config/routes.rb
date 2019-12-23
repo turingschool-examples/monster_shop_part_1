@@ -46,8 +46,8 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
   get '/profile', to: 'users#show'
 
-  get 'profile/edit', to:'users#edit'
-  patch 'profile/edit', to:'users#update'
+  get '/profile/edit', to:'users#edit'
+  patch '/profile/edit', to:'users#update'
   get '/profile/orders/:id', to: 'orders#show'
 
   get '/login', to: 'sessions#new'
@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#index'
     get '/profile', to: 'users#index'
     get '/merchants/:id', to: 'merchants#show'
+    get '/dashboard/items', to: 'dashboard#items'
   end
 
   namespace :merchant do
