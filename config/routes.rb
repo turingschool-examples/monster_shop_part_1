@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/dashboard', to: 'dashboard#index'
     get '/profile', to: 'users#index'
+    get '/merchant/:id', to: 'merchants#show'
   end
 
   get '/user/password/edit', to: 'users#password_edit'
