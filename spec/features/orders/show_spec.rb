@@ -65,12 +65,14 @@ RSpec.describe "as a registered user" do
 
     describe "As a merchant" do
       it "will see that the order status changes from pending to packaged when items fulfilled" do
+        mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
         visit '/profile'
 
         click_on "Log Out"
 
         merchant_user = create(:random_user, role: 2)
+        mike.users << merchant_user
 
         visit '/'
 
