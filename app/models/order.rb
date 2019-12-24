@@ -15,6 +15,14 @@ class Order < ApplicationRecord
     item_orders.sum('quantity')
   end
 
+  def merchant_grandtotal(merchant)
+    '%.2f' % items.where(merchant: merchant).sum("item_orders.price * item_orders.quantity")
+  end
+
+  def merchant_total_quantity(merchant)
+    items.where(merchant: merchant).sum("item_orders.quantity")
+  end
+
   def self.custom_sort
     orders = self.all.joins(:user)
     sort_order = ['Packaged','Pending','Shipped','Cancelled']

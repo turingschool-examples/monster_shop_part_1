@@ -23,6 +23,8 @@ describe Order, type: :model do
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @user_1 = create :random_reg_user_test
+       
+      
       @order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user_1.id)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
@@ -34,6 +36,14 @@ describe Order, type: :model do
 
     it 'total_quantity' do
       expect(@order_1.total_quantity).to eq(5)
+    end
+    
+    it 'merchant_grandtotal' do
+      expect(@order_1.merchant_grandtotal(@brian)).to eq('30.00')
+    end
+
+    it 'merchant_total_quantity' do
+      expect(@order_1.merchant_total_quantity(@brian)).to eq(3)
     end
   end
 
