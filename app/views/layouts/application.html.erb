@@ -25,6 +25,7 @@
             <%= link_to 'Dashboard','/merchant/dashboard', class: 'nav-item nav-link' if current_user.merchant? %>
             <%= link_to 'Dashboard','/admin/dashboard', class: 'nav-item nav-link' if current_user.admin? %>
             <%= link_to 'Log Out','/logout', method: :delete, class: 'nav-item nav-link' %>
+            <a class="nav-item nav-link" >|| You are logged in as <%= current_user.name %> || </a>
         <% else %>
             <a class="nav-item nav-link" href="/register">Register</a>
             <a class="nav-item nav-link" href="/login">Login</a>
