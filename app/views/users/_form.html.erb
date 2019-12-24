@@ -11,7 +11,7 @@
   <%= text_field_tag :zip, (@new_user.zip if @new_user) %>
   <%= label_tag :email %>
   <%= text_field_tag :email, (@new_user.email if @new_user) %>
-  <% if params[:action] == "new" %>
+  <% if params[:action] == "new" || request.path_info == "/register"%>
     <%= label_tag :password %>
     <%= password_field_tag :password %>
     <%= label_tag :confirm_password %>
