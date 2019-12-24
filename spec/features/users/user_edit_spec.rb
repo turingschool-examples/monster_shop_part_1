@@ -20,7 +20,6 @@ RSpec.describe 'User Can Edit their Profile Data' do
     click_link 'Edit Profile'
     expect(current_path).to eq("/users/#{user.id}/edit")
 
-    save_and_open_page
     expect(page).to have_selector("input[value='Granicus Higgins']")
     expect(page).to have_selector("input[value='lol@ex.com']")
     expect(page).to have_selector("input[value='123 mail']")
