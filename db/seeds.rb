@@ -48,7 +48,7 @@ merchant= User.create(
   state: 'CO',
   zip: '80000',
   role: 2,
-  merchant_id: merchant_test.id
+  merchant_id: merchants.first.id
 )
 
 
