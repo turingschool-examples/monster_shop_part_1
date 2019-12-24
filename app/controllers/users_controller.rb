@@ -21,11 +21,6 @@ class UsersController < ApplicationController
     render '/errors/404' unless current_user
   end
 
-  def update
-    user = User.find(current_user)
-    user.update(user_params)
-  end
-
   def edit
     @new_user = User.find(params[:id])
   end
@@ -41,7 +36,8 @@ class UsersController < ApplicationController
     user.update(user_params)
     if user.save
       flash[:notice] = "Data updated successfully"
-      redirect_to "/profile"
+      redirect_to "/profile" if current_user.default?
+      redirect_to "/admin/users/#{@user.id}" if current_user.admin?
     else
       flash[:notice] = "Data not saved"
     end
