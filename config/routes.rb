@@ -48,13 +48,16 @@ Rails.application.routes.draw do
     get '/merchants/:merchant_id', to: 'merchants#show'
     get '/users/:id', to: 'users#show'
     get '/:merchant_id/items', to: 'items#index'
+    get '/users/:id/orders', to: 'orders#index'
+    patch '/orders/:id', to: 'orders#update'
+    get '/users/:id/orders/:id', to: 'orders#show'
   end
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'
     get '/orders/', to: 'orders#index'
     get '/orders/:id', to: 'orders#show'
-    get '/items', to: 'items#index' 
+    get '/items', to: 'items#index'
   end
 
   unless Rails.application.config.consider_all_requests_local
