@@ -10,7 +10,7 @@
   <%= label_tag :zip %>
   <%= text_field_tag :zip, (@new_user.zip if @new_user) %>
   <%= label_tag :email %>
-  <%= text_field_tag :email, (@new_user.email if @new_user) %>
+  <%= text_field_tag :email, (@new_user.email if @new_user && (params[:action] == "edit" || params[:action] == "update")) %>
   <% if params[:action] == "new" || request.path_info == "/register"%>
     <%= label_tag :password %>
     <%= password_field_tag :password %>
