@@ -54,8 +54,14 @@ describe Order, type: :model do
       expect(@order_1.item_orders[1].unfulfilled?).to be_truthy
     end
 
-    it "updates inventory for each item" do
+    it ".ship" do
+      @order_1.fulfill
 
+      expect(@order_1.current_status).to eq("packaged")
+
+      @order_1.ship
+
+      expect(@order_1.current_status).to eq("shipped")
     end
   end
 end

@@ -27,4 +27,8 @@ class Order <ApplicationRecord
     end
     update(current_status: 1)
   end
+
+  def ship
+    update(current_status: 2)
+  end
 end
