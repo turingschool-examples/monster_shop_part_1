@@ -16,8 +16,8 @@
     <% @merchant.active_orders.each do |order| %>
       <p>Order number: <%= link_to order.id, "/merchant/orders/#{order.id}" %></p> 
       <p>Created At:   <%= order.created_at %></p>
-      <p>Total Qty:    <%= order.total_quantity %></p>
-      <p>Total Order Sum: <%= order.grandtotal %> </p>
+      <p>Total Qty:    <%= order.merchant_total_quantity(@merchant) %></p>
+      <p>Total Order Sum: <%= order.merchant_grandtotal(@merchant) %> </p>
     <% end %>
     </table>
 </section>

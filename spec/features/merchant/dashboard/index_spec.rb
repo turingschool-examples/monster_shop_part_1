@@ -6,9 +6,9 @@ RSpec.describe "as a merchant" do
 
       @merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe@ge.com", password: "password") 
       
-      @target = create :merchant
+      target = create :merchant
 
-      @target.users << @merchant_user
+      target.users << @merchant_user
       
       visit '/login'
 
@@ -20,11 +20,11 @@ RSpec.describe "as a merchant" do
       visit '/merchant/dashboard'
 
       within "#merchant_dashboard-#{@merchant_user.merchant_id}" do 
-        expect(page).to have_content(@target.name)
-        expect(page).to have_content(@target.address)
-        expect(page).to have_content(@target.city)
-        expect(page).to have_content(@target.state)
-        expect(page).to have_content(@target.zip)
+        expect(page).to have_content(target.name)
+        expect(page).to have_content(target.address)
+        expect(page).to have_content(target.city)
+        expect(page).to have_content(target.state)
+        expect(page).to have_content(target.zip)
       end 
     end 
     it "shows me a list of orders pending that I sell (if any) in a list -
@@ -112,9 +112,8 @@ RSpec.describe "as a merchant" do
 
       within "#merchant_dashboard_orders" do 
         expect(page).to have_content("#{regular_user.orders.first.created_at}")
-        expect(page).to have_content("#{regular_user.orders.first.total_quantity}")
-        expect(page).to have_content("#{regular_user.orders.first.grandtotal}")
-        binding.pry
+        expect(page).to have_content("#{regular_user.orders.first.merchant_total_quantity(target)}")
+        expect(page).to have_content("#{regular_user.orders.first.merchant_grandtotal(target)}")
         #expect(page).to_not have_content("#{regular_user.orders.first.items}")
 
         click_link("#{regular_user.orders.first.id}")
@@ -124,8 +123,8 @@ RSpec.describe "as a merchant" do
       visit merchant_dashboard_path
       within "#merchant_dashboard_orders" do 
         expect(page).to have_content("#{another_regular_user.orders.first.created_at}")
-        expect(page).to have_content("#{another_regular_user.orders.first.total_quantity}")
-        expect(page).to have_content("#{another_regular_user.orders.first.grandtotal}")
+        expect(page).to have_content("#{another_regular_user.orders.first.merchant_total_quantity(target)}")
+        expect(page).to have_content("#{another_regular_user.orders.first.merchant_grandtotal(target)}")
 
         click_link("#{another_regular_user.orders.first.id}")
         expect(current_path).to eq ("/merchant/orders/#{another_regular_user.orders.first.id}")
