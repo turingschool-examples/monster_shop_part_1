@@ -151,6 +151,10 @@ RSpec.describe "as a merchant" do
 
       target.users << merchant_user
         
+      item = create(:item, merchant_id: target.id)  
+      item_2 = create(:item, merchant_id: target.id)  
+      item_3 = create(:item, merchant_id: target.id) #make sure that this doeds not show on the dashboard  
+
       visit '/login'
 
       fill_in :email, with: admin_user.email
@@ -173,6 +177,11 @@ RSpec.describe "as a merchant" do
       end 
 
       expect(page).to have_link("View Items for #{target.name}")
+      click_link("View Items for #{target.name}")
+
+      expect(page).to have_content(item.name)
+      expect(page).to have_content(item_2.name)
+      expect(page).to have_content(item_3.name)
     end
   end 
 end
