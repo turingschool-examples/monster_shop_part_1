@@ -1,4 +1,12 @@
-class OrderStatusController < ApplicationController
+class Admin::OrdersController < Admin::BaseController
+  def index
+    @user = User.find(params[:id])
+  end
+
+  def show
+    @order = Order.find(params[:id])
+  end
+
   def update
     order = Order.find(params[:id])
     if (params[:status] == 'cancelled') && order.status != 'Shipped'

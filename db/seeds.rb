@@ -5,16 +5,29 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-User.destroy_all
 ItemOrder.destroy_all
+User.destroy_all
+Order.destroy_all
 Merchant.destroy_all
 Item.destroy_all
 #merchants
 # bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 # dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 merchants = FactoryBot.create_list(:merchant, 12)
+items = Array.new
+merchants.each do |merchant|
+  items << FactoryBot.create_list(:item, 30, merchant: merchant)
+end
+items.flatten!
 users = FactoryBot.create_list(:random_user, 100)
+orders = FactoryBot.create_list(:order, 15)
+orders.each do |order|
+  order_items = items.sample(3)
+  order_items.each do |item|
+    ItemOrder.create(order_id: order.id, item_id: item.id, price: item.price, quantity: rand(item.inventory))
+  end
+end
+
 admin = User.create(
   name: 'admin',
   email: 'admin@coffee.io',
@@ -35,13 +48,13 @@ merchant= User.create(
   state: 'CO',
   zip: '80000',
   role: 2,
-  merchant_id: merchant_test.id
+  merchant_id: merchants.first.id
 )
-#merchant_test.users << merchant
 
-merchants.each do |merchant|
-  FactoryBot.create_list(:item, 30, merchant: merchant)
-end
+
+
+
+
 
 #bike_shop items
 # tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)

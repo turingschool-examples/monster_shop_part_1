@@ -9,4 +9,4 @@
 
   <%=link_to "Edit #{@user.name}'s Profile", "/users/#{@user.id}/edit" %>
   <%= link_to "Update #{@user.name}'s password", '/user/edit-pw', class: 'btn btn-success' %>
-  <%= link_to "#{@user.name}'s Orders", '/profile/orders', class: 'btn btn-secondary' %>
+  <%= link_to "#{@user.name}'s Orders", "/admin/users/#{@user.id}/orders", class: 'btn btn-secondary' %>

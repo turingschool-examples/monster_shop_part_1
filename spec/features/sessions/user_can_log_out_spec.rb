@@ -34,20 +34,33 @@ RSpec.describe 'when the user clicks the logout button', type: :feature do
       password: 'pass123',
       role: 2
     )
-  end
 
-  it 'can log out' do
     visit '/login'
 
     fill_in :email, with: @user.email
     fill_in :password, with: 'pass123'
 
     click_button 'Log In'
+  end
+
+  it 'can log out' do
 
     expect(page).to have_content('Log Out')
     click_on 'Log Out'
 
     expect(current_path).to eq('/')
     expect(page).to have_content('Goodbye!')
+  end
+
+  it 'will clear cart upon logout' do
+    item = create :item
+
+    visit "/items/#{item.id}"
+    click_button 'Add To Cart'
+
+    expect(page).to have_content('Cart: 1')
+
+    click_on 'Log Out'
+    expect(page).to have_content('Cart: 0')
   end
 end
