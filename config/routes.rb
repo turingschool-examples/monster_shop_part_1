@@ -51,6 +51,8 @@ Rails.application.routes.draw do
     get '/users/:id/orders', to: 'orders#index'
     patch '/orders/:id', to: 'orders#update'
     get '/users/:id/orders/:id', to: 'orders#show'
+    get '/merchants', to: 'merchants#index'
+    patch '/merchants/:id', to: 'merchants#update'
   end
 
   namespace :merchant do
