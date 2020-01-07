@@ -2,9 +2,9 @@ class Merchant <ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
   #added for 35
-  has_many :orders, through: :item_orders # this was added 
-  has_many :users 
- 
+  has_many :orders, through: :item_orders # this was added
+  has_many :users
+
   validates_presence_of :name,
                         :address,
                         :city,
@@ -29,6 +29,6 @@ class Merchant <ApplicationRecord
   end
 
   def active_orders
-    orders.where(status:"Pending").distinct 
-  end 
+    orders.where(status: ["Pending", "Packaged"]).distinct
+  end
 end
