@@ -20,7 +20,7 @@ describe Item, type: :model do
     before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
-
+      @item_2 = create :item, merchant: @bike_shop, active?: false
       @review_1 = @chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
       @review_2 = @chain.reviews.create(title: "Cool shop!", content: "They have cool bike stuff and I'd recommend them to anyone.", rating: 4)
       @review_3 = @chain.reviews.create(title: "Meh place", content: "They have meh bike stuff and I probably won't come back", rating: 1)
@@ -96,6 +96,16 @@ describe Item, type: :model do
       expect(bottom_five[4].id).to eq(item_1.id)
 
       expect(bottom_five[3].quantity).to eq(4)
+    end
+
+    # it 'change_inventory' do
+    #   item_1 = create(:item, inventory: 5)
+    #   item_1.
+    #
+    # end
+
+    it 'not_active' do
+      expect(@item_2.not_active?).to be true
     end
   end
 end
