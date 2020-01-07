@@ -72,6 +72,11 @@ RSpec.describe 'Cart show' do
       click_link 'Checkout'
       expect(current_path).to eq('/cart')
       expect(page).to have_content('Please register or login before trying to checkout')
+
+      within ".navbar" do
+        expect(page).to have_link('Login')
+        expect(page).to have_link('Register')
+      end
     end
   end
 end
