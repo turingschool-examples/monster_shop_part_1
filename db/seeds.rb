@@ -71,6 +71,17 @@ merchant= User.create(
   merchant_id: merchants.first.id
 )
 
+regular_user= User.create(
+  name: 'Regular User',
+  email: 'regularuser@user.com',
+  password: 'password',
+  address: '420 Coffee St',
+  city: 'Coffeetown',
+  state: 'CO',
+  zip: '80000',
+  role: 0
+)
+
 
 
 
