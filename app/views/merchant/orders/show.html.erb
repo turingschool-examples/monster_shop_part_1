@@ -1,7 +1,7 @@
 <h1>Items on Order <%= @current_order.id %></h1>
 <br>
 <table>
-<th></th><th>Name</th><th>Price</th><th>Quantity</th><th>Fulfill?</th>
+<th></th><th>Name</th><th>Price</th><th>Quantity</th> <th>My Inventory</th> <th>Fulfill?</th>
 <% @current_order.item_orders.each do |item_order|%>
   <tr>
   <section id = "item-<%=item_order.item_id%>">
@@ -9,7 +9,12 @@
       <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
       <td><p><%= number_to_currency(item_order.price)%></p></td>
       <td><p><%= item_order.quantity%></p></td>
-      <% if item_order.fulfilled_by_merchant %>
+      <td><p><%= item_order.item.inventory %></p></td>
+
+      <% if @current_order.status == "Cancelled" %>
+      <td><%= button_to "User Cancelled", "/merchant/orders/#{item_order.id}", method: :patch, class: 'btn btn-primary', disabled: true %></td>
+
+      <% elsif item_order.fulfilled_by_merchant %>
         <td><%= button_to "Unfulfill", "/merchant/orders/#{item_order.id}", method: :patch %></td>
       <% else %>
         <% if item_order.item.inventory > item_order.quantity %>
