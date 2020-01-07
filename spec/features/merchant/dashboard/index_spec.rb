@@ -115,6 +115,7 @@ RSpec.describe "as a merchant" do
         expect(page).to have_content("#{regular_user.orders.first.merchant_total_quantity(target)}")
         expect(page).to have_content("#{regular_user.orders.first.merchant_grandtotal(target)}")
         #expect(page).to_not have_content("#{regular_user.orders.first.items}")
+        expect(page).to have_content("#{regular_user.orders.first.order_status}")
 
         click_link("#{regular_user.orders.first.id}")
         expect(current_path).to eq ("/merchant/orders/#{regular_user.orders.first.id}")
