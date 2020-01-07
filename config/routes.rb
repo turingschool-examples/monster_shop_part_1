@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     patch '/orders/:item_order_id', to: 'orders#update'
     get '/orders/:id', to: 'orders#show'
     get '/items', to: 'items#index'
+    patch '/items/:id', to: 'items#update'
   end
 
   unless Rails.application.config.consider_all_requests_local
