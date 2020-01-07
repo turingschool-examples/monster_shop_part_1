@@ -35,11 +35,13 @@
     </nav>
     <div class="container" style="margin-top:50px">
       <% flash.each do |name, msg| %>
-      <% if name = 'happy' %>
+      <% if name == 'happy' %>
           <p class='alert alert-success'><%= msg %></p>
-      <% elsif name = 'sad' %>
+      <% elsif name == 'sad' %>
           <p class='alert alert-danger'><%= msg %></p>
-      <% end %>    
+      <% else %>
+          <p class='alert alert-secondary'><%= msg %></p>  
+      <% end %>
       <% end %>
       <%= yield %>
     </div>
