@@ -26,7 +26,7 @@ RSpec.describe 'Merchant Order Show Page' do
       click_button 'Log In'
 
       within "#merchant_dashboard_orders" do
-        click_link @order.id
+        click_link "#{@order.id}"
       end
 
       expect(current_path).to eq("/merchant/orders/#{@order.id}")
