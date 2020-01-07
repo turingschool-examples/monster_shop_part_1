@@ -37,6 +37,7 @@ RSpec.describe 'Merchant Order Show Page' do
           expect(page).to have_link(item_order.item.name)
           expect(page).to have_content("$#{item_order.price}")
           expect(page).to have_content(item_order.quantity)
+          expect(page).to have_content(item_order.item.inventory)
           expect(page).to have_button('Fulfill')
 
           expect(@item.inventory).to eq(10)
