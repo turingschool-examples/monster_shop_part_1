@@ -20,11 +20,31 @@ merchants.each do |merchant|
 end
 items.flatten!
 users = FactoryBot.create_list(:random_user, 100)
+
+# create some orders
 orders = FactoryBot.create_list(:order, 15)
 orders.each do |order|
   order_items = items.sample(3)
   order_items.each do |item|
     ItemOrder.create(order_id: order.id, item_id: item.id, price: item.price, quantity: rand(item.inventory))
+  end
+end
+
+# create some fufilled orders
+orders = FactoryBot.create_list(:order, 15)
+orders.each do |order|
+  order_items = items.sample(3)
+  order_items.each do |item|
+    ItemOrder.create(order_id: order.id, item_id: item.id, price: item.price, quantity: rand(item.inventory), fulfilled_by_merchant: true)
+  end
+end
+
+# create some packaged orders
+orders = FactoryBot.create_list(:order, 15, status: 1)
+orders.each do |order|
+  order_items = items.sample(3)
+  order_items.each do |item|
+    ItemOrder.create(order_id: order.id, item_id: item.id, price: item.price, quantity: rand(item.inventory), fulfilled_by_merchant: true)
   end
 end
 
