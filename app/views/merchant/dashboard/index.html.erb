@@ -20,11 +20,11 @@
       <th>Total Order Sum</th>
       <th>Order Status</th>
         <% @merchant.active_orders.each do |order| %>
-          <tr>
-            <td><%= link_to order.id, "/merchant/orders/#{order.id}" %></td> 
+          <tr id="order-<%=order.id%>">
+            <td><%= link_to order.id, "/merchant/orders/#{order.id}" %></td>
             <td><%= order.created_at %></td>
             <td><%= order.merchant_total_quantity(@merchant) %></td>
-            <td><%= order.merchant_grandtotal(@merchant) %></td> 
+            <td><%= order.merchant_grandtotal(@merchant) %></td>
             <td><%= order.status %> </td>
           </tr>
         <% end %>

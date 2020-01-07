@@ -10,7 +10,11 @@
       <td><p><%= number_to_currency(item_order.price)%></p></td>
       <td><p><%= item_order.quantity%></p></td>
       <td><p><%= item_order.item.inventory %></p></td>
-      <% if item_order.fulfilled_by_merchant %>
+
+      <% if @current_order.status == "Cancelled" %>
+      <td><%= button_to "User Cancelled", "/merchant/orders/#{item_order.id}", method: :patch, class: 'btn btn-primary', disabled: true %></td>
+
+      <% elsif item_order.fulfilled_by_merchant %>
         <td><%= button_to "Unfulfill", "/merchant/orders/#{item_order.id}", method: :patch %></td>
       <% else %>
         <% if item_order.item.inventory > item_order.quantity %>
