@@ -98,12 +98,6 @@ describe Item, type: :model do
       expect(bottom_five[3].quantity).to eq(4)
     end
 
-    # it 'change_inventory' do
-    #   item_1 = create(:item, inventory: 5)
-    #   item_1.
-    #
-    # end
-
     it 'not_active' do
       expect(@item_2.not_active?).to be true
     end
