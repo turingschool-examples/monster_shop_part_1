@@ -4,6 +4,14 @@ RSpec.describe "Create Merchant Items" do
   describe "When I visit the merchant items index page" do
     before(:each) do
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      @user = create :random_merchant_user, merchant: @brian
+
+      visit '/login'
+
+      fill_in :email, with: @user.email
+      fill_in :password, with: 'password'
+
+      click_button 'Log In'
     end
 
     it 'I see a link to add a new item for that merchant' do
@@ -35,7 +43,7 @@ RSpec.describe "Create Merchant Items" do
 
       new_item = Item.last
 
-      expect(current_path).to eq("/merchants/#{@brian.id}/items")
+      expect(current_path).to eq("/merchant/items")
       expect(new_item.name).to eq(name)
       expect(new_item.price).to eq(price)
       expect(new_item.description).to eq(description)
@@ -44,11 +52,6 @@ RSpec.describe "Create Merchant Items" do
       expect(Item.last.active?).to be(true)
       expect("#item-#{Item.last.id}").to be_present
       expect(page).to have_content(name)
-      expect(page).to have_content("Price: $#{new_item.price}")
-      expect(page).to have_css("img[src*='#{new_item.image}']")
-      expect(page).to have_content("Active")
-      expect(page).to_not have_content(new_item.description)
-      expect(page).to have_content("Inventory: #{new_item.inventory}")
     end
 
     it 'I get an alert if I dont fully fill out the form' do
