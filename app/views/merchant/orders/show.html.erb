@@ -2,7 +2,7 @@
 <br>
 <table>
 <th></th><th>Name</th><th>Price</th><th>Quantity</th> <th>My Inventory</th> <th>Fulfill?</th>
-<% @current_order.item_orders.each do |item_order|%>
+<% @item_orders.each do |item_order|%>
   <tr>
   <section id = "item-<%=item_order.item_id%>">
       <td><img src="<%= item_order.item.image %>" style="width:75px;height:75px;"></td>
