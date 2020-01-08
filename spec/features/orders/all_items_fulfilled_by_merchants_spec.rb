@@ -9,6 +9,7 @@ RSpec.describe 'All merchants fulfill items on an order' do
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
     @user = create :random_reg_user_test
+    @merchant_user = create :random_merchant_user, merchant: @meg
   end
   it 'and the order status changes from pending to packaged' do
     visit '/login'
@@ -45,20 +46,23 @@ RSpec.describe 'All merchants fulfill items on an order' do
     click_button "Create Order"
 
     new_order = Order.last
+    expect(new_order.status).to eq('Pending')
+
+    click_link "Log Out"
+    visit '/login'
+
+    fill_in :email, with: @merchant_user.email
+    fill_in :password, with: 'password'
+    click_button "Log In"
+
+    visit "/merchant/orders/#{new_order.id}"
 
     expect(new_order.status).to eq('Pending')
 
-    new_order.item_orders.each do |item_order|
-      expect(item_order.fulfilled_by_merchant).to be false
-    end
+    click_button 'Fulfill'
 
-    new_order.item_orders.first.update(fulfilled_by_merchant: true)
-    expect(new_order.status).to eq('Pending')
+    new_order_updated = Order.last
 
-    new_order.item_orders.each do |item_order|
-      item_order.update(fulfilled_by_merchant: true)
-    end
-
-    expect(new_order.order_status).to eq('Packaged')
+    expect(new_order_updated.status).to eq('Packaged')
   end
 end
