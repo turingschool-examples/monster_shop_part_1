@@ -16,7 +16,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/merchants">All Merchants</a>
+          <% if current_user %>
+            <%= link_to 'All Merchants','/admin/merchants', class: 'nav-item nav-link' if current_user.admin? %>
+            <%= link_to 'All Merchants','/merchants', class: 'nav-item nav-link' if current_user.default? %>
+            <%= link_to 'All Merchants','/merchants', class: 'nav-item nav-link' if current_user.merchant? %>
+          <% else %>
+            <a class="nav-item nav-link" href="/merchants">All Merchants</a>
+          <% end %>
           <a class="nav-item nav-link" href="/items">All Items</a>
           <%= link_to "Cart: #{cart.total_items}", '/cart', class: 'nav-item nav-link' if !current_user %>
         <% if current_user %>
@@ -40,7 +46,7 @@
       <% elsif name == 'sad' %>
           <p class='alert alert-danger'><%= msg %></p>
       <% else %>
-          <p class='alert alert-secondary'><%= msg %></p>  
+          <p class='alert alert-secondary'><%= msg %></p>
       <% end %>
       <% end %>
       <%= yield %>
