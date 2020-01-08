@@ -1,3 +1,13 @@
-<% @users.each do |user| %>
-  <p><%= user.email %></p>
-<% end %>
+<h1>Users</h1>
+<br>
+<table>
+  <th>Name</th><th>Email</th><th>Date Registered</th><th>Type</th>
+  <% @users.each do |user| %>
+    <tr id="user-<%= user.id %>">
+      <td><%= link_to user.name, "/admin/users/#{user.id}" %></td>
+      <td><%= user.email %></td>
+      <td><%= user.created_at %></td>
+      <td><%= user.role %></td>
+    </tr>
+  <% end %>
+</table>
