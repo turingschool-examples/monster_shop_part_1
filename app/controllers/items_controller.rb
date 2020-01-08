@@ -38,7 +38,6 @@ class ItemsController<ApplicationController
   def update
     @item = Item.find(params[:id])
     @item.update(item_params)
-    binding.pry
     if @item.save
       flash[:happy] = 'Item Updated'
       redirect_to '/merchant/items' and return if current_user && current_user.merchant?
@@ -61,9 +60,6 @@ class ItemsController<ApplicationController
   private
 
   def item_params
-    defaults = {image: Item.default_image}
-    params.permit(:name,:description,:price,:inventory,:image).reverse_merge(defaults)
+    params.permit(:name,:description,:price,:inventory,:image)
   end
-
-
 end
