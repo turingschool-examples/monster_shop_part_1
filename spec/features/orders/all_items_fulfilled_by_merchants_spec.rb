@@ -9,7 +9,8 @@ RSpec.describe 'All merchants fulfill items on an order' do
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
     @user = create :random_reg_user_test
-    @merchant_user = create :random_merchant_user, merchant: @meg
+    @merchant_user_meg = create :random_merchant_user, merchant: @meg
+    @merchant_user_mike = create :random_merchant_user, merchant: @mike
   end
   it 'and the order status changes from pending to packaged' do
     visit '/login'
@@ -49,17 +50,46 @@ RSpec.describe 'All merchants fulfill items on an order' do
     expect(new_order.status).to eq('Pending')
 
     click_link "Log Out"
-    visit '/login'
 
-    fill_in :email, with: @merchant_user.email
+    # login as Meg and fulfill item ordered from her
+    visit '/login'
+    fill_in :email, with: @merchant_user_meg.email
     fill_in :password, with: 'password'
     click_button "Log In"
 
     visit "/merchant/orders/#{new_order.id}"
 
+    item_orders_meg = new_order.item_orders
+                                .joins(:item)
+                                .where('items.merchant_id = ?', @merchant_user_meg.merchant_id)
+
+    item_orders_meg.each do |item_order|
+      within "#item-order-#{item_order.id}" do
+        click_button 'Fulfill'
+      end
+    end
+
     expect(new_order.status).to eq('Pending')
 
-    click_button 'Fulfill'
+    click_link "Log Out"
+
+    # login as Mike and fulfill items ordered from him
+    visit '/login'
+    fill_in :email, with: @merchant_user_mike.email
+    fill_in :password, with: 'password'
+    click_button "Log In"
+
+    visit "/merchant/orders/#{new_order.id}"
+
+    item_orders_mike = new_order.item_orders
+                                .joins(:item)
+                                .where('items.merchant_id = ?', @merchant_user_mike.merchant_id)
+
+    item_orders_mike.each do |item_order|
+      within "#item-order-#{item_order.id}" do
+        click_button 'Fulfill'
+      end
+    end
 
     new_order_updated = Order.last
 
