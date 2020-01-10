@@ -1,7 +1,9 @@
+<img src="/app/assets/images/coverage-100-green.svg">
+
 # Welcome to CoffeeTown!   
 Rails project 
 
-## Leanring Goals
+## Learning Goals
 
 ### Rails
 * Implement partials to DRY code
